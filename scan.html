@@ -1,194 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Run LMO Scan | LuminAI</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        .score-bar {
-            transition: width 0.6s ease;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Run VizAI Scan | VizAI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Run a VizAI Scan to see how AI models represent your business across ChatGPT, Claude, and Gemini."
+  />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 </head>
+<body class="bg-white font-sans antialiased">
+  <custom-navbar></custom-navbar>
 
-<body class="bg-white text-gray-900 antialiased">
-    <!-- NAVBAR -->
-    <custom-navbar></custom-navbar>
-
-    <!-- MAIN SECTION -->
-    <section id="scanSection" class="min-h-screen py-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h1 class="text-4xl font-bold mb-4">Run LMO Scan</h1>
-                <p class="text-xl text-gray-600">See how AI models currently describe your business</p>
-            </div>
-
-            <div class="bg-white rounded-xl shadow-md overflow-hidden border">
-                <div class="p-8">
-                    <form id="scanForm" class="space-y-6">
-
-                        <!-- BUSINESS NAME -->
-                        <div>
-                            <label for="businessName" class="block text-sm font-medium text-gray-700 mb-1">
-                                Business Name
-                            </label>
-                            <input id="businessName" type="text" required
-                                   class="w-full px-4 py-3 border rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                   placeholder="Your company name">
-                        </div>
-
-                        <!-- WEBSITE -->
-                        <div>
-                            <label for="website" class="block text-sm font-medium text-gray-700 mb-1">
-                                Website URL
-                            </label>
-                            <input id="website" type="url" required
-                                   class="w-full px-4 py-3 border rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                   placeholder="https://yourbusiness.com">
-                        </div>
-
-                        <!-- MODELS -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                AI Models to Scan
-                            </label>
-
-                            <div class="space-y-2">
-                                <label class="flex items-center">
-                                    <input type="checkbox" value="chatgpt" checked name="models"
-                                           class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                                    <span class="ml-3 text-gray-700">ChatGPT</span>
-                                </label>
-
-                                <label class="flex items-center">
-                                    <input type="checkbox" value="claude" checked name="models"
-                                           class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                                    <span class="ml-3 text-gray-700">Claude</span>
-                                </label>
-
-                                <label class="flex items-center">
-                                    <input type="checkbox" value="gemini" checked name="models"
-                                           class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                                    <span class="ml-3 text-gray-700">Gemini</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- SUBMIT -->
-                        <div>
-                            <button type="submit"
-                                    class="w-full px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition flex items-center justify-center gap-2 font-medium">
-                                <i data-feather="zap"></i>
-                                Run Scan
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-
-            <!-- RESULTS -->
-            <div id="results" class="mt-12 hidden">
-                <div class="bg-white rounded-xl shadow-lg border p-8">
-                    <h2 class="text-2xl font-bold mb-6">Scan Results</h2>
-
-                    <div id="scanResultsContent" class="space-y-10"></div>
-                </div>
-            </div>
-
+  <section class="min-h-screen py-20 bg-slate-950 text-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center px-3 py-1 rounded-full border border-slate-700 text-xs uppercase tracking-wide mb-4">
+          <span class="mr-2 text-emerald-400">●</span>
+          <span>VizAI · LMO Diagnostic</span>
         </div>
-    </section>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Run your VizAI Scan.</h1>
+        <p class="text-slate-300 text-lg max-w-2xl mx-auto">
+          Enter your business details and we’ll estimate how today’s leading AI models
+          are likely to see and describe your brand.
+        </p>
+      </div>
 
-    <!-- FOOTER -->
-    <custom-footer></custom-footer>
+      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+        <div class="p-8 md:p-10">
+          <form id="scanForm" class="space-y-6">
+            <div>
+              <label for="businessName" class="block text-sm font-medium text-slate-200 mb-1">
+                Business Name
+              </label>
+              <input
+                type="text"
+                id="businessName"
+                name="businessName"
+                required
+                class="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-950/60 text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Your company name"
+              />
+            </div>
 
-    <!-- COMPONENT LOADING -->
-    <script src="components/navbar.js"></script>
-    <script src="components/footer.js"></script>
+            <div>
+              <label for="website" class="block text-sm font-medium text-slate-200 mb-1">
+                Website URL
+              </label>
+              <input
+                type="url"
+                id="website"
+                name="website"
+                required
+                class="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-950/60 text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="https://yourbusiness.com"
+              />
+            </div>
 
-    <!-- MAIN SCAN LOGIC -->
-    <script>
-        const API_URL = "https://lmo-backend.onrender.com/run_scan";
-        document.addEventListener("DOMContentLoaded", () => {
-            feather.replace();
-            // Ensure all "Run Scan" nav buttons scroll to scanSection
-            document.querySelectorAll('[href="#scan"]').forEach(btn => {
-                btn.addEventListener("click", e => {
-                    e.preventDefault();
-                    document.getElementById("scanSection").scrollIntoView({ behavior: "smooth" });
-                });
-            });
-        });
-        document.getElementById("scanForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
-            const btn = this.querySelector("button[type='submit']");
-            btn.disabled = true;
-            btn.innerHTML = `<span class="animate-pulse">Scanning...</span>`;
-            const businessName = document.getElementById("businessName").value;
-            const website = document.getElementById("website").value;
-            const models = Array.from(document.querySelectorAll("input[name='models']:checked")).map(x => x.value);
-            try {
-                const res = await fetch(API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ businessName, website, models })
-                });
-                if (!res.ok) throw new Error("Scan failed: " + res.status);
-                const data = await res.json();
-                renderResults(businessName, website, data);
-            } catch (err) {
-                alert("Something went wrong running the scan. Check API quota or try again.");
-                console.error(err);
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i data-feather="zap"></i> Run New Scan`;
-                feather.replace();
-            }
-        });
-        function renderResults(name, website, data) {
-            document.getElementById("results").classList.remove("hidden");
-            document.getElementById("scanResultsContent").innerHTML = `
-                <div>
-                    <h3 class="text-xl font-semibold mb-2">Overview</h3>
-                    <p class="text-gray-700">Business: <strong>${name}</strong></p>
-                    <p class="text-gray-600">Website:
-                        <a href="${website}" target="_blank" class="text-indigo-600 underline">${website}</a>
-                    </p>
-                </div>
-                <div class="grid gap-6 md:grid-cols-3">
-                    ${renderScore("Discovery", data.discovery_score)}
-                    ${renderScore("Accuracy", data.accuracy_score)}
-                    ${renderScore("Authority", data.authority_score)}
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-3">Key Findings</h3>
-                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
-                        ${data.findings.map(x => `<li>${x}</li>`).join("")}
-                    </ul>
-                </div>
-            `;
-        }
-        function renderScore(title, score) {
-            return `
-                <div>
-                    <h4 class="font-medium text-gray-800 mb-2">${title}</h4>
-                    <div class="w-full bg-gray-200 rounded-full h-4">
-                        <div class="bg-indigo-600 h-4 rounded-full score-bar"
-                             style="width: ${score}%"></div>
-                    </div>
-                    <p class="text-gray-700 mt-1">${score}%</p>
-                </div>
-            `;
-        }
-    </script>
+            <div>
+              <label class="block text-sm font-medium text-slate-200 mb-2">
+                AI Models to Scan
+              </label>
+              <div class="space-y-2 text-sm text-slate-200">
+                <label class="flex items-center gap-2">
+                  <input type="checkbox" name="models" value="chatgpt" checked
+                         class="h-4 w-4 rounded border-slate-600 text-indigo-500 focus:ring-indigo-500">
+                  <span>ChatGPT</span>
+                </label>
+                <label class="flex items-center gap-2">
+                  <input type="checkbox" name="models" value="claude" checked
+                         class="h-4 w-4 rounded border-slate-600 text-indigo-500 focus:ring-indigo-500">
+                  <span>Claude</span>
+                </label>
+                <label class="flex items-center gap-2">
+                  <input type="checkbox" name="models" value="gemini" checked
+                         class="h-4 w-4 rounded border-slate-600 text-indigo-500 focus:ring-indigo-500">
+                  <span>Gemini</span>
+                </label>
+              </div>
+            </div>
 
+            <div class="pt-2">
+              <button
+                type="submit"
+                id="scanSubmit"
+                class="w-full px-6 py-3 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white font-medium flex items-center justify-center gap-2 transition"
+              >
+                <span id="scanSubmitLabel">Run VizAI Scan</span>
+                <span class="inline-flex items-center justify-center">
+                  <i data-feather="zap" class="w-4 h-4"></i>
+                </span>
+              </button>
+            </div>
+
+            <p class="text-xs text-slate-400">
+              We don’t store this information permanently. It’s used only to generate your VizAI diagnostic.
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div id="resultsContainer" class="mt-12 hidden">
+        <div class="bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+            <h2 class="text-lg font-semibold">VizAI Scan Results</h2>
+            <span class="text-xs px-2 py-1 rounded-full bg-slate-900 text-slate-100">
+              Estimated from model behaviour
+            </span>
+          </div>
+          <div class="p-6 space-y-6" id="scanResultsContent">
+            <!-- Filled by script.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <custom-footer></custom-footer>
+
+  <script src="components/navbar.js"></script>
+  <script src="components/footer.js"></script>
+  <script src="script.js"></script>
+  <script>feather.replace();</script>
 </body>
 </html>
+
 

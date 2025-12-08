@@ -1,13 +1,13 @@
 class CustomFooter extends HTMLElement {
   connectedCallback() {
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: "open" });
     this.shadowRoot.innerHTML = `
       <style>
         :host {
           display: block;
           width: 100%;
           background: var(--bg-elevated);
-          padding: 32px 16px;
+          padding: 32px 16px 24px;
           border-top: 1px solid var(--border-subtle);
           margin-top: 64px;
         }
@@ -15,11 +15,11 @@ class CustomFooter extends HTMLElement {
           max-width: var(--max-width);
           margin: 0 auto;
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 32px;
         }
         .footer-column h3 {
-          font-size: 1rem;
+          font-size: 0.95rem;
           margin-bottom: 16px;
           color: var(--text);
         }
@@ -31,14 +31,15 @@ class CustomFooter extends HTMLElement {
         .footer-links a {
           color: var(--muted);
           font-size: 0.9rem;
-          transition: color 0.2s;
+          transition: color 0.15s ease;
         }
         .footer-links a:hover {
           color: var(--accent-strong);
         }
         .copyright {
+          max-width: var(--max-width);
+          margin: 24px auto 0;
           text-align: center;
-          margin-top: 32px;
           font-size: 0.8rem;
           color: var(--muted);
         }
@@ -51,19 +52,19 @@ class CustomFooter extends HTMLElement {
       </style>
       <div class="footer-container">
         <div class="footer-column">
-          <h3>LuminAI</h3>
+          <h3>VizAI</h3>
           <div class="footer-links">
             <a href="index.html">Home</a>
-            <a href="scan.html">Run Scan</a>
+            <a href="scan.html">Run VizAI Scan</a>
             <a href="index.html#pricing">Pricing</a>
           </div>
         </div>
         <div class="footer-column">
           <h3>Resources</h3>
           <div class="footer-links">
-            <a href="#">Documentation</a>
-            <a href="#">GitHub</a>
-            <a href="#">Blog</a>
+            <a href="#">What is LMO?</a>
+            <a href="#">LMO for Agencies</a>
+            <a href="#">FAQ</a>
           </div>
         </div>
         <div class="footer-column">
@@ -76,10 +77,10 @@ class CustomFooter extends HTMLElement {
         </div>
       </div>
       <div class="copyright">
-        © ${new Date().getFullYear()} LuminAI. All rights reserved.
+        © ${new Date().getFullYear()} VizAI. AI visibility diagnostics for modern businesses.
       </div>
     `;
   }
 }
+customElements.define("custom-footer", CustomFooter);
 
-customElements.define('custom-footer', CustomFooter);

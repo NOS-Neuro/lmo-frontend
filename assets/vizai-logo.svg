@@ -1,1 +1,19 @@
+<svg width="180" height="48" viewBox="0 0 620 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7b5cff"/>
+      <stop offset="100%" stop-color="#b39cff"/>
+    </linearGradient>
+  </defs>
+
+  <text x="0" y="110" font-family="Inter, sans-serif" font-size="120" font-weight="700" fill="url(#g)">
+    Viz
+  </text>
+
+  <text x="240" y="110" font-family="Inter, sans-serif" font-size="120" font-weight="300" fill="#ffffff">
+    AI
+  </text>
+
+  <circle cx="350" cy="40" r="10" fill="url(#g)"/>
+</svg>
 

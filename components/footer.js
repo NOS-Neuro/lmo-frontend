@@ -71,6 +71,7 @@ class CustomFooter extends HTMLElement {
           <div class="footer-links">
             <a href="index.html">Home</a>
             <a href="scan.html">VizAI Scan</a>
+            <a href="packages.html">Packages</a>
           </div>
         </div>
       </div>
@@ -81,5 +82,6 @@ class CustomFooter extends HTMLElement {
   }
 }
 customElements.define("custom-footer", CustomFooter);
+
 
 

@@ -5,235 +5,428 @@
   <title>Run VizAI Scan | VizAI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+  <style>
+    /* Page layout */
+    .scan-page {
+      max-width: var(--max-width, 960px);
+      margin: 0 auto;
+      padding: 96px 16px 72px;
+    }
+
+    .scan-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .scan-header h1 {
+      font-size: clamp(1.9rem, 4vw, 2.4rem);
+      margin-bottom: 8px;
+    }
+
+    .scan-header p {
+      color: var(--muted, #a0a3b1);
+      font-size: 0.98rem;
+    }
+
+    .scan-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .scan-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Card + form */
+    .scan-card {
+      background: var(--bg-elevated, #050611);
+      border-radius: 20px;
+      border: 1px solid var(--border-subtle, #262738);
+      padding: 24px 20px;
+    }
+
+    .scan-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .scan-card p {
+      color: var(--muted, #a0a3b1);
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+    }
+
+    .scan-field {
+      margin-bottom: 16px;
+    }
+
+    .scan-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--muted, #c4c5d4);
+    }
+
+    .scan-input {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle, #303244);
+      background: var(--bg-soft, #070818);
+      color: var(--text, #f9fafb);
+      font-size: 0.96rem;
+      outline: none;
+    }
+
+    .scan-input::placeholder {
+      color: var(--muted, #7c7f96);
+    }
+
+    .scan-input:focus {
+      border-color: var(--accent-strong, #8b5cff);
+      box-shadow: 0 0 0 1px rgba(139, 92, 255, 0.5);
+    }
+
+    .scan-models {
+      margin-top: 4px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .scan-model-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--muted, #a0a3b1);
+    }
+
+    .scan-model-row input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent-strong, #8b5cff);
+    }
+
+    .scan-help {
+      font-size: 0.8rem;
+      color: var(--muted, #7e8195);
+      margin-top: 2px;
+    }
+
+    .scan-submit {
+      margin-top: 12px;
+    }
+
+    .btn-primary-full {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Status + results */
+    .scan-status {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--muted, #a0a3b1);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .results-card {
+      background: var(--bg-elevated, #050611);
+      border-radius: 20px;
+      border: 1px solid var(--border-subtle, #262738);
+      padding: 24px 20px;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .results-header h2 {
+      font-size: 1.1rem;
+    }
+
+    .overall-score {
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    .overall-score span {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted, #a0a3b1);
+      margin-left: 4px;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 540px) {
+      .score-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .score-chip {
+      background: var(--bg-soft, #070818);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.85rem;
+    }
+
+    .score-label {
+      color: var(--muted, #a0a3b1);
+      margin-bottom: 2px;
+    }
+
+    .score-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .package-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(139, 92, 255, 0.12);
+      color: var(--accent-strong, #b89cff);
+      margin-bottom: 8px;
+    }
+
+    .findings-list {
+      font-size: 0.9rem;
+      color: var(--muted, #c0c2d8);
+      margin-top: 6px;
+      padding-left: 18px;
+    }
+
+    .findings-list li + li {
+      margin-top: 4px;
+    }
+
+    .strategy-block {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-subtle, #262738);
+      font-size: 0.9rem;
+    }
+
+    .strategy-title {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .strategy-text {
+      color: var(--muted, #c0c2d8);
+    }
+  </style>
 </head>
-<body class="bg-white font-sans antialiased">
+
+<body>
   <custom-navbar></custom-navbar>
 
   <main>
-    <section class="min-h-screen py-20">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h1 class="text-4xl font-bold text-gray-900 mb-4">Run VizAI Scan</h1>
-          <p class="text-xl text-gray-600">
-            Discover how AI is likely to understand and represent your business.
+    <section class="scan-page">
+      <div class="scan-header">
+        <div class="pill">VizAI Scan</div>
+        <h1>See how AI understands your business</h1>
+        <p>
+          Enter your business name and website. VizAI uses an AI model to estimate
+          how clearly today’s assistants can discover, describe, and trust you.
+        </p>
+      </div>
+
+      <div class="scan-layout">
+        <!-- Form card -->
+        <div class="scan-card">
+          <h2>Run a VizAI Scan</h2>
+          <p>
+            You’ll get scores for Discovery, Accuracy, and Authority, plus a suggested
+            VizAI package and next steps.
           </p>
-          <p class="text-sm text-gray-500 mt-3">
-            VizAI uses a GPT-powered model to estimate your AI visibility across three dimensions:
-            Discovery, Accuracy, and Authority.
-          </p>
-        </div>
 
-        <!-- Scan Form -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
-          <div class="p-8">
-            <form id="scanForm" class="space-y-6">
-              <div>
-                <label for="businessName" class="block text-sm font-medium text-gray-700 mb-1">
-                  Business Name
+          <form id="scanForm">
+            <div class="scan-field">
+              <label for="businessName" class="scan-label">Business Name</label>
+              <input
+                id="businessName"
+                type="text"
+                required
+                class="scan-input"
+                placeholder="Your company name"
+              />
+            </div>
+
+            <div class="scan-field">
+              <label for="website" class="scan-label">Website URL</label>
+              <input
+                id="website"
+                type="url"
+                required
+                class="scan-input"
+                placeholder="https://yourbusiness.com"
+              />
+            </div>
+
+            <div class="scan-field">
+              <span class="scan-label">AI Models to simulate</span>
+              <div class="scan-models">
+                <label class="scan-model-row">
+                  <input type="checkbox" name="models" value="chatgpt" checked />
+                  <span>ChatGPT-style models</span>
                 </label>
-                <input
-                  type="text"
-                  id="businessName"
-                  name="businessName"
-                  required
-                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
-                  placeholder="Your company name"
-                />
-              </div>
-
-              <div>
-                <label for="website" class="block text-sm font-medium text-gray-700 mb-1">
-                  Website URL
+                <label class="scan-model-row">
+                  <input type="checkbox" name="models" value="claude" checked />
+                  <span>Claude-style models</span>
                 </label>
-                <input
-                  type="url"
-                  id="website"
-                  name="website"
-                  required
-                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
-                  placeholder="https://yourbusiness.com"
-                />
+                <label class="scan-model-row">
+                  <input type="checkbox" name="models" value="gemini" checked />
+                  <span>Gemini-style models</span>
+                </label>
               </div>
-
-              <p class="text-xs text-gray-500">
-                The scan doesn’t crawl your site. It uses your name and domain to estimate how modern AI systems are likely to interpret your business.
-              </p>
-
-              <div>
-                <button
-                  type="submit"
-                  class="w-full px-6 py-3 bg-black text-white rounded-md hover:bg-gray-900 transition font-medium flex items-center justify-center gap-2"
-                >
-                  <span id="submitIcon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                  </span>
-                  <span id="submitLabel">Run Scan</span>
-                </button>
-              </div>
-
-              <p id="scanError" class="text-sm text-red-600 hidden">
-                Something went wrong running the scan. Please try again in a moment.
-              </p>
-            </form>
-          </div>
-        </div>
-
-        <!-- Results -->
-        <div id="results" class="mt-12 hidden">
-          <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
-            <div class="p-8">
-              <h2 class="text-2xl font-bold text-gray-900 mb-6">Scan Results</h2>
-
-              <div id="resultsOverview" class="mb-6 text-gray-700 text-sm"></div>
-
-              <!-- Scores -->
-              <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <div class="border border-gray-200 rounded-lg p-4">
-                  <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                    Discovery
-                  </div>
-                  <div id="discoveryScore" class="text-3xl font-bold text-gray-900">–</div>
-                  <p class="text-xs text-gray-500 mt-1">
-                    How easily AI is likely to find and recognize your business.
-                  </p>
-                </div>
-                <div class="border border-gray-200 rounded-lg p-4">
-                  <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                    Accuracy
-                  </div>
-                  <div id="accuracyScore" class="text-3xl font-bold text-gray-900">–</div>
-                  <p class="text-xs text-gray-500 mt-1">
-                    How well AI is likely to describe what you actually do.
-                  </p>
-                </div>
-                <div class="border border-gray-200 rounded-lg p-4">
-                  <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                    Authority
-                  </div>
-                  <div id="authorityScore" class="text-3xl font-bold text-gray-900">–</div>
-                  <p class="text-xs text-gray-500 mt-1">
-                    How confidently AI is likely to rely on your business vs. other sources.
-                  </p>
-                </div>
-                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
-                  <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                    Average Score
-                  </div>
-                  <div id="averageScore" class="text-3xl font-bold text-gray-900">–</div>
-                  <p class="text-xs text-gray-500 mt-1">
-                    Overall AI visibility score from 0–100.
-                  </p>
-                </div>
-              </div>
-
-              <!-- How to read your score -->
-              <div class="mb-8">
-                <h3 class="text-sm font-semibold text-gray-800 mb-2">
-                  How to read your scores
-                </h3>
-                <ul class="text-xs text-gray-600 space-y-1">
-                  <li><span class="font-semibold">0–39:</span> Critical AI visibility risk — AI may not identify or describe you correctly.</li>
-                  <li><span class="font-semibold">40–79:</span> Partial understanding — gaps and inconsistencies likely affecting recommendations.</li>
-                  <li><span class="font-semibold">80–100:</span> Strong AI visibility — focus on maintaining and monitoring over time.</li>
-                </ul>
-              </div>
-
-              <!-- Recommended package & strategy -->
-              <div class="mb-8 border border-gray-200 rounded-lg p-5 bg-slate-50">
-                <h3 class="text-sm font-semibold text-gray-800 mb-1">
-                  Recommended VizAI Plan
-                </h3>
-                <p class="text-sm text-gray-900">
-                  <span class="font-semibold">Package:</span>
-                  <span id="recommendedPackage">–</span>
-                </p>
-                <p id="strategyText" class="text-sm text-gray-600 mt-2">
-                  <!-- strategy goes here -->
-                </p>
-              </div>
-
-              <!-- Key findings -->
-              <div>
-                <h3 class="text-sm font-semibold text-gray-800 mb-2">Key Findings</h3>
-                <ul id="findingsList" class="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                  <!-- findings go here -->
-                </ul>
-              </div>
-
-              <div class="mt-8 flex flex-wrap gap-3">
-                <a href="packages.html" class="inline-flex items-center px-4 py-2 border border-gray-900 text-gray-900 text-sm rounded-md hover:bg-gray-900 hover:text-white transition">
-  View VizAI Packages
-</a>
-
-                  View VizAI Packages
-                </a>
-                <a href="contact.html" class="inline-flex items-center px-4 py-2 border border-transparent bg-gray-900 text-white text-sm rounded-md hover:bg-black transition">
-                  Talk about an AI visibility plan
-                </a>
+              <div class="scan-help">
+                We don’t query these APIs directly; we estimate how modern AI is
+                likely to see you from your name + domain.
               </div>
             </div>
-          </div>
+
+            <div class="scan-submit">
+              <button type="submit" class="btn-primary btn-primary-full" id="scanSubmitButton">
+                <span>Run VizAI Scan</span>
+                <span class="icon">⚡</span>
+              </button>
+            </div>
+
+            <div id="scanStatus" class="scan-status hidden"></div>
+          </form>
         </div>
 
+        <!-- Results card -->
+        <div id="results" class="results-card hidden">
+          <div class="results-header">
+            <div>
+              <div class="package-tag" id="scoreBandTag">
+                <span>◎</span>
+                <span>Score band</span>
+              </div>
+              <h2 id="resultsTitle">Your VizAI results</h2>
+            </div>
+            <div class="overall-score" id="overallScore"></div>
+          </div>
+
+          <div class="score-grid">
+            <div class="score-chip">
+              <div class="score-label">Discovery</div>
+              <div class="score-value" id="discoveryScore">–</div>
+            </div>
+            <div class="score-chip">
+              <div class="score-label">Accuracy</div>
+              <div class="score-value" id="accuracyScore">–</div>
+            </div>
+            <div class="score-chip">
+              <div class="score-label">Authority</div>
+              <div class="score-value" id="authorityScore">–</div>
+            </div>
+          </div>
+
+          <div id="packageBlock" class="strategy-block">
+            <div class="strategy-title" id="packageTitle">Recommended VizAI package</div>
+            <div class="strategy-text" id="packageText"></div>
+          </div>
+
+          <div class="strategy-block">
+            <div class="strategy-title">Key findings</div>
+            <ul class="findings-list" id="findingsList"></ul>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <custom-footer></custom-footer>
-
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
+
   <script>
-    // Replace with your actual backend URL if it changes
-    const VIZAI_BACKEND_URL = "https://lmo-backend.onrender.com/run_scan";
+    const API_BASE = "https://lmo-backend.onrender.com";
 
     const form = document.getElementById("scanForm");
-    const resultsSection = document.getElementById("results");
-    const scanError = document.getElementById("scanError");
+    const statusEl = document.getElementById("scanStatus");
+    const resultsCard = document.getElementById("results");
+    const submitBtn = document.getElementById("scanSubmitButton");
 
-    const discoveryEl = document.getElementById("discoveryScore");
-    const accuracyEl = document.getElementById("accuracyScore");
-    const authorityEl = document.getElementById("authorityScore");
-    const averageEl = document.getElementById("averageScore");
-    const packageEl = document.getElementById("recommendedPackage");
-    const strategyEl = document.getElementById("strategyText");
-    const findingsList = document.getElementById("findingsList");
-    const resultsOverview = document.getElementById("resultsOverview");
+    const overallScoreEl = document.getElementById("overallScore");
+    const discoveryScoreEl = document.getElementById("discoveryScore");
+    const accuracyScoreEl = document.getElementById("accuracyScore");
+    const authorityScoreEl = document.getElementById("authorityScore");
+    const findingsListEl = document.getElementById("findingsList");
+    const scoreBandTagEl = document.getElementById("scoreBandTag");
+    const packageTitleEl = document.getElementById("packageTitle");
+    const packageTextEl = document.getElementById("packageText");
 
-    const submitLabel = document.getElementById("submitLabel");
-    const submitIcon = document.getElementById("submitIcon");
+    function computePackage(overall) {
+      let bandLabel, packageName, strategy;
+
+      if (overall >= 80) {
+        bandLabel = "Strong visibility (80–100)";
+        packageName = "Basic";
+        strategy =
+          "AI likely recognizes and describes your business fairly well. " +
+          "We recommend the Basic package to monitor drift and keep your scores high. " +
+          "Periodic refreshes and light structural updates are usually enough here.";
+      } else if (overall >= 40) {
+        bandLabel = "Partial visibility (40–79)";
+        packageName = "Standard";
+        strategy =
+          "AI understands some of your story but is missing key details or authority signals. " +
+          "Standard lets us rebuild your LMO Truth File, improve structure (schema, profiles), " +
+          "and seed better sources so models rely on your data more often.";
+      } else {
+        bandLabel = "High-risk visibility (0–39)";
+        packageName = "Standard or Enterprise + Add-Ons";
+        strategy =
+          "AI may be confusing your brand, missing you entirely, or relying heavily on third parties. " +
+          "We typically pair Standard or Enterprise with targeted Add-Ons like Schema Deployment, " +
+          "Competitor Deep Dive, and Dataset Creation to rebuild how AI sees you.";
+      }
+
+      return { bandLabel, packageName, strategy };
+    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      scanError.classList.add("hidden");
-      resultsSection.classList.add("hidden");
 
       const businessName = document.getElementById("businessName").value.trim();
       const website = document.getElementById("website").value.trim();
+      const models = Array.from(
+        document.querySelectorAll('input[name="models"]:checked')
+      ).map((cb) => cb.value);
 
-      if (!businessName || !website) return;
-
-      // Loading state
-      submitLabel.textContent = "Scanning...";
-      submitIcon.classList.add("animate-pulse");
-      form.querySelector("button[type='submit']").disabled = true;
+      statusEl.textContent = "Running VizAI Scan…";
+      statusEl.classList.remove("hidden");
+      resultsCard.classList.add("hidden");
+      submitBtn.disabled = true;
 
       try {
-        const resp = await fetch(VIZAI_BACKEND_URL, {
+        const resp = await fetch(`${API_BASE}/run_scan`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -241,64 +434,66 @@
           body: JSON.stringify({
             businessName,
             website,
-            models: ["chatgpt"] // reserved for future use
+            models,
           }),
         });
 
         if (!resp.ok) {
-          throw new Error("Non-200 response from backend");
+          throw new Error(`API error ${resp.status}`);
         }
 
         const data = await resp.json();
 
-        const discovery = data.discovery_score ?? 0;
-        const accuracy = data.accuracy_score ?? 0;
-        const authority = data.authority_score ?? 0;
-        const avg = Math.round((discovery + accuracy + authority) / 3);
+        const d = Number(data.discovery_score ?? 0);
+        const a = Number(data.accuracy_score ?? 0);
+        const au = Number(data.authority_score ?? 0);
+        const overall = Math.round((d + a + au) / 3);
 
-        discoveryEl.textContent = discovery;
-        accuracyEl.textContent = accuracy;
-        authorityEl.textContent = authority;
-        averageEl.textContent = avg;
+        const { bandLabel, packageName, strategy } = computePackage(overall);
 
-        packageEl.textContent = data.recommended_package || "Standard";
-        strategyEl.textContent = data.strategy || "";
+        // Fill scores
+        overallScoreEl.textContent = `${overall}/100`;
+        discoveryScoreEl.textContent = d;
+        accuracyScoreEl.textContent = a;
+        authorityScoreEl.textContent = au;
 
-        // Overview text
-        resultsOverview.innerHTML = `
-          <p class="text-sm text-gray-700">
-            For <span class="font-semibold">${businessName}</span> (${website}),
-            VizAI estimates how modern AI systems are likely to see your business
-            across three dimensions: Discovery, Accuracy, and Authority.
-          </p>
-        `;
+        // Band + package
+        scoreBandTagEl.innerHTML = `<span>◎</span><span>${bandLabel}</span>`;
+        packageTitleEl.textContent = `Recommended: ${packageName}`;
+        packageTextEl.textContent = strategy;
 
         // Findings list
-        findingsList.innerHTML = "";
-        if (Array.isArray(data.findings)) {
-          data.findings.forEach((item) => {
+        findingsListEl.innerHTML = "";
+        const findings = Array.isArray(data.findings) ? data.findings : [];
+        if (findings.length) {
+          findings.forEach((f) => {
             const li = document.createElement("li");
-            li.textContent = item;
-            findingsList.appendChild(li);
+            li.textContent = f;
+            findingsListEl.appendChild(li);
           });
+        } else {
+          const li = document.createElement("li");
+          li.textContent = "No detailed findings were returned for this scan.";
+          findingsListEl.appendChild(li);
         }
 
-        resultsSection.classList.remove("hidden");
+        resultsCard.classList.remove("hidden");
+        statusEl.classList.add("hidden");
+
+        // Scroll to results on mobile
+        resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
       } catch (err) {
         console.error(err);
-        scanError.classList.remove("hidden");
+        statusEl.textContent =
+          "Something went wrong running the scan. Please try again in a moment.";
       } finally {
-        // Reset button
-        submitLabel.textContent = "Run Scan";
-        submitIcon.classList.remove("animate-pulse");
-        form.querySelector("button[type='submit']").disabled = false;
+        submitBtn.disabled = false;
       }
     });
-
-    feather.replace();
   </script>
 </body>
 </html>
+
 
 
 

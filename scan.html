@@ -264,60 +264,43 @@
           </p>
 
           <form id="scanForm">
-            <div class="scan-field">
-              <label for="businessName" class="scan-label">Business Name</label>
-              <input
-                id="businessName"
-                type="text"
-                required
-                class="scan-input"
-                placeholder="Your company name"
-              />
-            </div>
+  <div class="scan-field">
+    <label for="businessName" class="scan-label">Business Name</label>
+    <input
+      id="businessName"
+      type="text"
+      required
+      class="scan-input"
+      placeholder="Your company name"
+    />
+  </div>
 
-            <div class="scan-field">
-              <label for="website" class="scan-label">Website URL</label>
-              <input
-                id="website"
-                type="url"
-                required
-                class="scan-input"
-                placeholder="https://yourbusiness.com"
-              />
-            </div>
+  <div class="scan-field">
+    <label for="website" class="scan-label">Website URL</label>
+    <input
+      id="website"
+      type="url"
+      required
+      class="scan-input"
+      placeholder="https://yourbusiness.com"
+    />
+  </div>
 
-            <div class="scan-field">
-              <span class="scan-label">AI Models to simulate</span>
-              <div class="scan-models">
-                <label class="scan-model-row">
-                  <input type="checkbox" name="models" value="chatgpt" checked />
-                  <span>ChatGPT-style models</span>
-                </label>
-                <label class="scan-model-row">
-                  <input type="checkbox" name="models" value="claude" checked />
-                  <span>Claude-style models</span>
-                </label>
-                <label class="scan-model-row">
-                  <input type="checkbox" name="models" value="gemini" checked />
-                  <span>Gemini-style models</span>
-                </label>
-              </div>
-              <div class="scan-help">
-                We don’t query these APIs directly; we estimate how modern AI is
-                likely to see you from your name + domain.
-              </div>
-            </div>
+  <p class="scan-help" style="margin-top: -4px; margin-bottom: 10px;">
+    VizAI uses a modern AI model to generate estimated Discovery, Accuracy, and Authority scores.
+    No external APIs are queried.
+  </p>
 
-            <div class="scan-submit">
-              <button type="submit" class="btn-primary btn-primary-full" id="scanSubmitButton">
-                <span>Run VizAI Scan</span>
-                <span class="icon">⚡</span>
-              </button>
-            </div>
+  <div class="scan-submit">
+    <button type="submit" class="btn-primary btn-primary-full" id="scanSubmitButton">
+      <span>Run VizAI Scan</span>
+      <span class="icon">⚡</span>
+    </button>
+  </div>
 
-            <div id="scanStatus" class="scan-status hidden"></div>
-          </form>
-        </div>
+  <div id="scanStatus" class="scan-status hidden"></div>
+</form>
+
 
         <!-- Results card -->
         <div id="results" class="results-card hidden">

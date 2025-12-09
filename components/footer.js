@@ -49,39 +49,46 @@ class CustomFooter extends HTMLElement {
           }
         }
       </style>
+
       <div class="footer-container">
-        <div class="footer-column">
-          <h3>Resources</h3>
-          <div class="footer-links">
-            <a href="what-is-lmo.html">What is LMO?</a>
-            <a href="agencies.html">VizAI for Agencies</a>
-            <a href="faq.html">FAQ</a>
-          </div>
-        </div>
-        <div class="footer-column">
-          <h3>Company</h3>
-          <div class="footer-links">
-            <a href="contact.html">Contact</a>
-            <a href="privacy.html">Privacy</a>
-            <a href="terms.html">Terms</a>
-          </div>
-        </div>
         <div class="footer-column">
           <h3>VizAI</h3>
           <div class="footer-links">
             <a href="index.html">Home</a>
-            <a href="scan.html">VizAI Scan</a>
-            <a href="packages.html">Packages</a>
+            <a href="scan.html">Run VizAI Scan</a>
+            <a href="packages.html#packages">Packages</a>
+            <a href="packages.html#addons">Add-Ons</a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <div class="footer-links">
+            <a href="index.html#what-is-lmo">What is LMO?</a>
+            <a href="packages.html#how-scores-map">How the scoring works</a>
+            <a href="#">FAQ (coming soon)</a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3>Company</h3>
+          <div class="footer-links">
+            <a href="#contact">Contact</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
           </div>
         </div>
       </div>
+
       <div class="copyright">
         © ${new Date().getFullYear()} VizAI. AI visibility diagnostics for modern businesses.
       </div>
     `;
   }
 }
+
 customElements.define("custom-footer", CustomFooter);
+
 
 
 

@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const businessName = document.getElementById("businessName").value.trim();
       const website = document.getElementById("website").value.trim();
-      const models = Array.from(
-        form.querySelectorAll("input[name='models']:checked")
-      ).map((c) => c.value);
+      // Models optional — we send a default internally
+const models = ["chatgpt"];
+
 
       if (!businessName || !website) return;
 

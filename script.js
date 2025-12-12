@@ -1,24 +1,44 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Make any element with data-role="scan-button" go to scan page
+  // ------------------------------------------------------------
+  // Scan button routing
+  // ------------------------------------------------------------
   document.querySelectorAll("[data-role='scan-button']").forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      // allow plain <a href="scan.html"> links to work without double navigation
       const isAnchor = btn.tagName.toLowerCase() === "a";
       if (!isAnchor) e.preventDefault();
       window.location.href = "scan.html";
     });
   });
 
-  // Attach to placeholder links
+  // ------------------------------------------------------------
+  // Coming Soon modal
+  // ------------------------------------------------------------
   document.querySelectorAll("[data-coming-soon]").forEach((el) => {
     el.addEventListener("click", (e) => {
       e.preventDefault();
       showComingSoon();
     });
   });
+
+  // ------------------------------------------------------------
+  // Scroll reveal (adds "alive" feeling as you move down page)
+  // ------------------------------------------------------------
+  setupScrollReveal();
+
+  // ------------------------------------------------------------
+  // Subtle orb parallax on scroll (hero feels "breathing")
+  // ------------------------------------------------------------
+  setupOrbParallax();
+
+  // ------------------------------------------------------------
+  // Soft cursor glow (futuristic, subtle)
+  // ------------------------------------------------------------
+  setupCursorGlow();
 });
 
+// -------------------------
 // Simple Coming Soon modal
+// -------------------------
 function showComingSoon() {
   const box = document.createElement("div");
   box.innerHTML = `
@@ -49,4 +69,110 @@ function showComingSoon() {
   document.body.appendChild(box);
   box.querySelector("#cs-close").onclick = () => box.remove();
 }
+
+// -------------------------
+// Scroll reveal
+// -------------------------
+function setupScrollReveal() {
+  // Choose elements you already have in your layout
+  const targets = document.querySelectorAll(
+    ".section-title, .section-subtitle, .two-column > div, .panel, .pricing-card, .why-card, .pillar-card, .step-card, .delivery-card, .cta-band, .output-shell"
+  );
+
+  if (!targets.length) return;
+
+  targets.forEach((el) => el.classList.add("reveal"));
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal-in");
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  targets.forEach((el) => io.observe(el));
+}
+
+// -------------------------
+// Hero orb parallax
+// -------------------------
+function setupOrbParallax() {
+  const orb = document.querySelector(".hero-orb");
+  if (!orb) return;
+
+  let ticking = false;
+
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+
+    window.requestAnimationFrame(() => {
+      const y = window.scrollY || 0;
+      // small movement only
+      const translate = Math.min(18, y * 0.03);
+      orb.style.transform = `translateY(${translate}px)`;
+      ticking = false;
+    });
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+}
+
+// -------------------------
+// Cursor glow
+// -------------------------
+function setupCursorGlow() {
+  // Disable on touch devices to avoid weirdness
+  const isTouch =
+    "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  if (isTouch) return;
+
+  const glow = document.createElement("div");
+  glow.setAttribute("aria-hidden", "true");
+  glow.style.cssText = `
+    position: fixed;
+    left: 0; top: 0;
+    width: 280px; height: 280px;
+    border-radius: 999px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(123,92,255,0.18), rgba(123,92,255,0.06), transparent 70%);
+    filter: blur(2px);
+    transition: opacity 220ms ease;
+  `;
+  document.body.appendChild(glow);
+
+  let raf = null;
+  let mouseX = 0;
+  let mouseY = 0;
+
+  const move = (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    glow.style.opacity = "1";
+
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      glow.style.left = `${mouseX}px`;
+      glow.style.top = `${mouseY}px`;
+      raf = null;
+    });
+  };
+
+  const leave = () => {
+    glow.style.opacity = "0";
+  };
+
+  window.addEventListener("mousemove", move, { passive: true });
+  window.addEventListener("mouseleave", leave, { passive: true });
+}
+
 

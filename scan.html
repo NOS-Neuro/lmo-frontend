@@ -36,9 +36,7 @@
     }
 
     @media (max-width: 768px) {
-      .scan-layout {
-        grid-template-columns: 1fr;
-      }
+      .scan-layout { grid-template-columns: 1fr; }
     }
 
     /* Card + form */
@@ -49,10 +47,7 @@
       padding: 24px 20px;
     }
 
-    .scan-card h2 {
-      font-size: 1.2rem;
-      margin-bottom: 8px;
-    }
+    .scan-card h2 { font-size: 1.2rem; margin-bottom: 8px; }
 
     .scan-card p {
       color: var(--muted, #a0a3b1);
@@ -60,9 +55,7 @@
       margin-bottom: 18px;
     }
 
-    .scan-field {
-      margin-bottom: 16px;
-    }
+    .scan-field { margin-bottom: 16px; }
 
     .scan-label {
       display: block;
@@ -83,9 +76,7 @@
       outline: none;
     }
 
-    .scan-input::placeholder {
-      color: var(--muted, #7c7f96);
-    }
+    .scan-input::placeholder { color: var(--muted, #7c7f96); }
 
     .scan-input:focus {
       border-color: var(--accent-strong, #8b5cff);
@@ -96,28 +87,19 @@
       font-size: 0.8rem;
       color: var(--muted, #7e8195);
       margin-top: 2px;
-      line-height: 1.35;
     }
 
-    .scan-submit {
-      margin-top: 12px;
-    }
+    .scan-submit { margin-top: 12px; }
 
-    .btn-primary-full {
-      width: 100%;
-      justify-content: center;
-    }
+    .btn-primary-full { width: 100%; justify-content: center; }
 
-    /* Status + results */
     .scan-status {
       margin-top: 10px;
       font-size: 0.85rem;
       color: var(--muted, #a0a3b1);
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
     .results-card {
       background: var(--bg-elevated, #050611);
@@ -134,21 +116,9 @@
       margin-bottom: 16px;
     }
 
-    .results-header h2 {
-      font-size: 1.1rem;
-    }
+    .results-header h2 { font-size: 1.1rem; }
 
-    .overall-score {
-      font-size: 1.6rem;
-      font-weight: 600;
-    }
-
-    .overall-score span {
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--muted, #a0a3b1);
-      margin-left: 4px;
-    }
+    .overall-score { font-size: 1.6rem; font-weight: 600; }
 
     .score-grid {
       display: grid;
@@ -157,11 +127,7 @@
       margin-bottom: 16px;
     }
 
-    @media (max-width: 540px) {
-      .score-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    @media (max-width: 540px) { .score-grid { grid-template-columns: 1fr; } }
 
     .score-chip {
       background: var(--bg-soft, #070818);
@@ -170,15 +136,9 @@
       font-size: 0.85rem;
     }
 
-    .score-label {
-      color: var(--muted, #a0a3b1);
-      margin-bottom: 2px;
-    }
+    .score-label { color: var(--muted, #a0a3b1); margin-bottom: 2px; }
 
-    .score-value {
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
+    .score-value { font-size: 1.1rem; font-weight: 600; }
 
     .package-tag {
       display: inline-flex;
@@ -199,9 +159,7 @@
       padding-left: 18px;
     }
 
-    .findings-list li + li {
-      margin-top: 4px;
-    }
+    .findings-list li + li { margin-top: 4px; }
 
     .strategy-block {
       margin-top: 14px;
@@ -210,37 +168,40 @@
       font-size: 0.9rem;
     }
 
-    .strategy-title {
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
+    .strategy-title { font-weight: 500; margin-bottom: 4px; }
 
-    .strategy-text {
-      color: var(--muted, #c0c2d8);
-    }
+    .strategy-text { color: var(--muted, #c0c2d8); }
 
-    .checkbox-row {
+    /* Checkbox row */
+    .check-row {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: 0.9rem;
-      color: var(--muted, #c0c2d8);
-      margin-top: 6px;
-      line-height: 1.25;
-    }
-    .checkbox-row input {
-      margin-top: 2px;
-      width: 16px;
-      height: 16px;
-      accent-color: var(--accent-strong, #8b5cff);
-      flex-shrink: 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--bg-soft, #070818);
+      border: 1px solid var(--border-subtle, #303244);
+      margin-top: 8px;
     }
 
-    .consent {
-      margin-top: 10px;
+    .check-row input {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: var(--accent-strong, #8b5cff);
+    }
+
+    .check-row label {
+      font-size: 0.88rem;
+      color: var(--muted, #c0c2d8);
+      line-height: 1.25rem;
+      cursor: pointer;
+    }
+
+    .mini-note {
       font-size: 0.78rem;
       color: var(--muted, #7e8195);
-      line-height: 1.35;
+      margin-top: 8px;
     }
   </style>
 </head>
@@ -254,9 +215,8 @@
         <div class="pill">VizAI Scan</div>
         <h1>See how AI understands your business</h1>
         <p>
-          Enter your business name, website, and email. VizAI checks real visibility signals
-          (your website structure + trusted public sources) to estimate how discoverable, accurate,
-          and trustworthy your brand is for AI-driven discovery.
+          Enter your business name, website, and email. VizAI generates a visibility report
+          you can keep — and we store it so you can compare future scans as you improve.
         </p>
       </div>
 
@@ -265,7 +225,8 @@
         <div class="scan-card">
           <h2>Run a VizAI Scan</h2>
           <p>
-            You’ll get scores for Discovery, Accuracy, and Authority, plus key findings and a recommended next step.
+            You’ll get Discovery, Accuracy, and Authority scores, plus key findings and a recommended next step.
+            We’ll email you a copy of the report.
           </p>
 
           <form id="scanForm">
@@ -289,11 +250,10 @@
                 class="scan-input"
                 placeholder="https://yourbusiness.com"
               />
-              <div class="scan-help">Tip: include https:// and use your primary domain.</div>
             </div>
 
             <div class="scan-field">
-              <label for="contactEmail" class="scan-label">Email (required)</label>
+              <label for="contactEmail" class="scan-label">Email (send me the report)</label>
               <input
                 id="contactEmail"
                 type="email"
@@ -301,19 +261,18 @@
                 class="scan-input"
                 placeholder="you@company.com"
               />
-              <div class="scan-help">We’ll email you a copy of your scan report.</div>
             </div>
 
-            <div class="scan-field">
-              <label class="checkbox-row">
-                <input id="pleaseContactMe" type="checkbox" />
-                <span><strong>Please contact me</strong> to discuss improving our AI visibility.</span>
+            <div class="check-row">
+              <input id="requestContact" type="checkbox" />
+              <label for="requestContact">
+                Please contact me to discuss improving these results.
+                <div class="mini-note">If checked, the VizAI team will be notified.</div>
               </label>
             </div>
 
-            <p class="scan-help" style="margin-top: 8px; margin-bottom: 10px;">
-              This scan may take 10–30 seconds. It checks your site’s structure (schema/metadata/About)
-              and high-signal public sources that AI systems commonly reference.
+            <p class="scan-help" style="margin-top: 10px; margin-bottom: 10px;">
+              This scan may take ~10–30 seconds. The report is AI-assisted and intended as a directional baseline.
             </p>
 
             <div class="scan-submit">
@@ -323,11 +282,11 @@
               </button>
             </div>
 
-            <div class="consent">
-              By running this scan, you agree VizAI may email you the report and store the results for future comparison.
-            </div>
-
             <div id="scanStatus" class="scan-status hidden"></div>
+
+            <div class="mini-note">
+              By running a scan you agree we may store the result for comparison over time. We don’t sell scan data.
+            </div>
           </form>
         </div>
 
@@ -402,13 +361,13 @@
         nextStepTitle = "Recommended: Monitoring + drift checks";
         strategy =
           "You’re in a strong position. The next step is monitoring and small fixes as AI answers drift over time. " +
-          "We can help lock in a Truth File, deploy/verify schema, and run re-audits on a schedule.";
+          "We can help lock in a Truth File, verify schema, and run re-audits on a schedule.";
       } else if (overall >= 40) {
         bandLabel = "Partial visibility (40–79)";
         nextStepTitle = "Recommended: Fix gaps + add structured signals";
         strategy =
           "AI likely finds you but misses key details or relies on weak sources. " +
-          "Next step is improving structured data (Organization/LocalBusiness schema), strengthening your About/FAQ, " +
+          "Next step is improving structured data, strengthening your About/FAQ, " +
           "and seeding authoritative profiles so AI cites you correctly.";
       } else {
         bandLabel = "High-risk visibility (0–39)";
@@ -427,9 +386,11 @@
       const businessName = document.getElementById("businessName").value.trim();
       const website = document.getElementById("website").value.trim();
       const contactEmail = document.getElementById("contactEmail").value.trim();
-      const pleaseContactMe = document.getElementById("pleaseContactMe").checked;
+      const requestContact = !!document.getElementById("requestContact").checked;
 
-      statusEl.textContent = "Running real AI audit… (10–30s)";
+      if (!businessName || !website || !contactEmail) return;
+
+      statusEl.textContent = "Running VizAI Scan… (10–30s)";
       statusEl.classList.remove("hidden");
       resultsCard.classList.add("hidden");
       submitBtn.disabled = true;
@@ -442,7 +403,8 @@
             businessName,
             website,
             contactEmail,
-            pleaseContactMe
+            requestContact,
+            models: [] // kept for backward compatibility
           }),
         });
 
@@ -463,18 +425,15 @@
 
         const { bandLabel, nextStepTitle, strategy } = computePackage(overall);
 
-        // Fill scores
         overallScoreEl.textContent = `${overall}/100`;
         discoveryScoreEl.textContent = d;
         accuracyScoreEl.textContent = a;
         authorityScoreEl.textContent = au;
 
-        // Band + next step
         scoreBandTagEl.innerHTML = `<span>◎</span><span>${bandLabel}</span>`;
         packageTitleEl.textContent = nextStepTitle;
         packageTextEl.textContent = strategy;
 
-        // Findings list
         findingsListEl.innerHTML = "";
         const findings = Array.isArray(data.findings) ? data.findings : [];
         if (findings.length) {
@@ -503,6 +462,7 @@
   </script>
 </body>
 </html>
+
 
 
 

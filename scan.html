@@ -92,26 +92,6 @@
       box-shadow: 0 0 0 1px rgba(139, 92, 255, 0.5);
     }
 
-    .scan-models {
-      margin-top: 4px;
-      display: grid;
-      gap: 6px;
-    }
-
-    .scan-model-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.9rem;
-      color: var(--muted, #a0a3b1);
-    }
-
-    .scan-model-row input {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--accent-strong, #8b5cff);
-    }
-
     .scan-help {
       font-size: 0.8rem;
       color: var(--muted, #7e8195);
@@ -249,8 +229,8 @@
         <div class="pill">VizAI Scan</div>
         <h1>See how AI understands your business</h1>
         <p>
-          Enter your business name and website. VizAI uses an AI model to estimate
-          how clearly today’s assistants can discover, describe, and trust you.
+          Enter your business name and website. VizAI checks real visibility signals
+          (your website structure + public sources) to estimate how discoverable, accurate, and trustworthy your brand is in AI search.
         </p>
       </div>
 
@@ -260,47 +240,47 @@
           <h2>Run a VizAI Scan</h2>
           <p>
             You’ll get scores for Discovery, Accuracy, and Authority, plus a suggested
-            VizAI package and next steps.
+            next step.
           </p>
 
           <form id="scanForm">
-  <div class="scan-field">
-    <label for="businessName" class="scan-label">Business Name</label>
-    <input
-      id="businessName"
-      type="text"
-      required
-      class="scan-input"
-      placeholder="Your company name"
-    />
-  </div>
+            <div class="scan-field">
+              <label for="businessName" class="scan-label">Business Name</label>
+              <input
+                id="businessName"
+                type="text"
+                required
+                class="scan-input"
+                placeholder="Your company name"
+              />
+            </div>
 
-  <div class="scan-field">
-    <label for="website" class="scan-label">Website URL</label>
-    <input
-      id="website"
-      type="url"
-      required
-      class="scan-input"
-      placeholder="https://yourbusiness.com"
-    />
-  </div>
+            <div class="scan-field">
+              <label for="website" class="scan-label">Website URL</label>
+              <input
+                id="website"
+                type="url"
+                required
+                class="scan-input"
+                placeholder="https://yourbusiness.com"
+              />
+            </div>
 
-  <p class="scan-help" style="margin-top: -4px; margin-bottom: 10px;">
-    VizAI uses a modern AI model to generate estimated Discovery, Accuracy, and Authority scores.
-    No external APIs are queried.
-  </p>
+            <p class="scan-help" style="margin-top: -4px; margin-bottom: 10px;">
+              This scan may take 10–30 seconds. It checks your site’s structure (schema/metadata/About)
+              and public sources that AI systems commonly reference.
+            </p>
 
-  <div class="scan-submit">
-    <button type="submit" class="btn-primary btn-primary-full" id="scanSubmitButton">
-      <span>Run VizAI Scan</span>
-      <span class="icon">⚡</span>
-    </button>
-  </div>
+            <div class="scan-submit">
+              <button type="submit" class="btn-primary btn-primary-full" id="scanSubmitButton">
+                <span>Run VizAI Scan</span>
+                <span class="icon">⚡</span>
+              </button>
+            </div>
 
-  <div id="scanStatus" class="scan-status hidden"></div>
-</form>
-
+            <div id="scanStatus" class="scan-status hidden"></div>
+          </form>
+        </div>
 
         <!-- Results card -->
         <div id="results" class="results-card hidden">
@@ -331,7 +311,7 @@
           </div>
 
           <div id="packageBlock" class="strategy-block">
-            <div class="strategy-title" id="packageTitle">Recommended VizAI package</div>
+            <div class="strategy-title" id="packageTitle">Recommended next step</div>
             <div class="strategy-text" id="packageText"></div>
           </div>
 
@@ -366,32 +346,30 @@
     const packageTextEl = document.getElementById("packageText");
 
     function computePackage(overall) {
-      let bandLabel, packageName, strategy;
+      let bandLabel, nextStepTitle, strategy;
 
       if (overall >= 80) {
         bandLabel = "Strong visibility (80–100)";
-        packageName = "Basic";
+        nextStepTitle = "Recommended: Monitoring + drift checks";
         strategy =
-          "AI likely recognizes and describes your business fairly well. " +
-          "We recommend the Basic package to monitor drift and keep your scores high. " +
-          "Periodic refreshes and light structural updates are usually enough here.";
+          "You’re in a strong position. The next step is monitoring and small fixes as AI answers drift over time. " +
+          "We can help lock in a Truth File, deploy/verify schema, and run re-audits on a schedule.";
       } else if (overall >= 40) {
         bandLabel = "Partial visibility (40–79)";
-        packageName = "Standard";
+        nextStepTitle = "Recommended: Fix gaps + add structured signals";
         strategy =
-          "AI understands some of your story but is missing key details or authority signals. " +
-          "Standard lets us rebuild your LMO Truth File, improve structure (schema, profiles), " +
-          "and seed better sources so models rely on your data more often.";
+          "AI likely finds you but misses key details or relies on weak sources. " +
+          "Next step is improving structured data (Organization/LocalBusiness schema), strengthening your About/FAQ, " +
+          "and seeding authoritative profiles so AI cites you correctly.";
       } else {
         bandLabel = "High-risk visibility (0–39)";
-        packageName = "Standard or Enterprise + Add-Ons";
+        nextStepTitle = "Recommended: Rebuild your AI presence";
         strategy =
-          "AI may be confusing your brand, missing you entirely, or relying heavily on third parties. " +
-          "We typically pair Standard or Enterprise with targeted Add-Ons like Schema Deployment, " +
-          "Competitor Deep Dive, and Dataset Creation to rebuild how AI sees you.";
+          "AI may not recognize you, may confuse your services, or may cite competitors/directories instead. " +
+          "Next step is establishing a canonical Truth File, deploying schema, and building authority sources to correct the record.";
       }
 
-      return { bandLabel, packageName, strategy };
+      return { bandLabel, nextStepTitle, strategy };
     }
 
     form.addEventListener("submit", async (e) => {
@@ -399,11 +377,8 @@
 
       const businessName = document.getElementById("businessName").value.trim();
       const website = document.getElementById("website").value.trim();
-      const models = Array.from(
-        document.querySelectorAll('input[name="models"]:checked')
-      ).map((cb) => cb.value);
 
-      statusEl.textContent = "Running VizAI Scan…";
+      statusEl.textContent = "Running real AI audit… (10–30s)";
       statusEl.classList.remove("hidden");
       resultsCard.classList.add("hidden");
       submitBtn.disabled = true;
@@ -411,18 +386,17 @@
       try {
         const resp = await fetch(`${API_BASE}/run_scan`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             businessName,
             website,
-            models,
+            models: [] // kept for backward compatibility
           }),
         });
 
         if (!resp.ok) {
-          throw new Error(`API error ${resp.status}`);
+          const txt = await resp.text().catch(() => "");
+          throw new Error(`API error ${resp.status} ${txt}`);
         }
 
         const data = await resp.json();
@@ -430,9 +404,12 @@
         const d = Number(data.discovery_score ?? 0);
         const a = Number(data.accuracy_score ?? 0);
         const au = Number(data.authority_score ?? 0);
-        const overall = Math.round((d + a + au) / 3);
 
-        const { bandLabel, packageName, strategy } = computePackage(overall);
+        const overall = Number.isFinite(Number(data.overall_score))
+          ? Number(data.overall_score)
+          : Math.round((d + a + au) / 3);
+
+        const { bandLabel, nextStepTitle, strategy } = computePackage(overall);
 
         // Fill scores
         overallScoreEl.textContent = `${overall}/100`;
@@ -442,7 +419,7 @@
 
         // Band + package
         scoreBandTagEl.innerHTML = `<span>◎</span><span>${bandLabel}</span>`;
-        packageTitleEl.textContent = `Recommended: ${packageName}`;
+        packageTitleEl.textContent = nextStepTitle;
         packageTextEl.textContent = strategy;
 
         // Findings list
@@ -462,8 +439,6 @@
 
         resultsCard.classList.remove("hidden");
         statusEl.classList.add("hidden");
-
-        // Scroll to results on mobile
         resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
       } catch (err) {
         console.error(err);
@@ -476,6 +451,7 @@
   </script>
 </body>
 </html>
+
 
 
 

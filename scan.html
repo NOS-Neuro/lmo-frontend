@@ -96,6 +96,7 @@
       font-size: 0.8rem;
       color: var(--muted, #7e8195);
       margin-top: 2px;
+      line-height: 1.35;
     }
 
     .scan-submit {
@@ -217,6 +218,30 @@
     .strategy-text {
       color: var(--muted, #c0c2d8);
     }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--muted, #c0c2d8);
+      margin-top: 6px;
+      line-height: 1.25;
+    }
+    .checkbox-row input {
+      margin-top: 2px;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent-strong, #8b5cff);
+      flex-shrink: 0;
+    }
+
+    .consent {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--muted, #7e8195);
+      line-height: 1.35;
+    }
   </style>
 </head>
 
@@ -229,8 +254,9 @@
         <div class="pill">VizAI Scan</div>
         <h1>See how AI understands your business</h1>
         <p>
-          Enter your business name and website. VizAI checks real visibility signals
-          (your website structure + public sources) to estimate how discoverable, accurate, and trustworthy your brand is in AI search.
+          Enter your business name, website, and email. VizAI checks real visibility signals
+          (your website structure + trusted public sources) to estimate how discoverable, accurate,
+          and trustworthy your brand is for AI-driven discovery.
         </p>
       </div>
 
@@ -239,8 +265,7 @@
         <div class="scan-card">
           <h2>Run a VizAI Scan</h2>
           <p>
-            You’ll get scores for Discovery, Accuracy, and Authority, plus a suggested
-            next step.
+            You’ll get scores for Discovery, Accuracy, and Authority, plus key findings and a recommended next step.
           </p>
 
           <form id="scanForm">
@@ -264,11 +289,31 @@
                 class="scan-input"
                 placeholder="https://yourbusiness.com"
               />
+              <div class="scan-help">Tip: include https:// and use your primary domain.</div>
             </div>
 
-            <p class="scan-help" style="margin-top: -4px; margin-bottom: 10px;">
+            <div class="scan-field">
+              <label for="contactEmail" class="scan-label">Email (required)</label>
+              <input
+                id="contactEmail"
+                type="email"
+                required
+                class="scan-input"
+                placeholder="you@company.com"
+              />
+              <div class="scan-help">We’ll email you a copy of your scan report.</div>
+            </div>
+
+            <div class="scan-field">
+              <label class="checkbox-row">
+                <input id="pleaseContactMe" type="checkbox" />
+                <span><strong>Please contact me</strong> to discuss improving our AI visibility.</span>
+              </label>
+            </div>
+
+            <p class="scan-help" style="margin-top: 8px; margin-bottom: 10px;">
               This scan may take 10–30 seconds. It checks your site’s structure (schema/metadata/About)
-              and public sources that AI systems commonly reference.
+              and high-signal public sources that AI systems commonly reference.
             </p>
 
             <div class="scan-submit">
@@ -276,6 +321,10 @@
                 <span>Run VizAI Scan</span>
                 <span class="icon">⚡</span>
               </button>
+            </div>
+
+            <div class="consent">
+              By running this scan, you agree VizAI may email you the report and store the results for future comparison.
             </div>
 
             <div id="scanStatus" class="scan-status hidden"></div>
@@ -377,6 +426,8 @@
 
       const businessName = document.getElementById("businessName").value.trim();
       const website = document.getElementById("website").value.trim();
+      const contactEmail = document.getElementById("contactEmail").value.trim();
+      const pleaseContactMe = document.getElementById("pleaseContactMe").checked;
 
       statusEl.textContent = "Running real AI audit… (10–30s)";
       statusEl.classList.remove("hidden");
@@ -390,7 +441,8 @@
           body: JSON.stringify({
             businessName,
             website,
-            models: [] // kept for backward compatibility
+            contactEmail,
+            pleaseContactMe
           }),
         });
 
@@ -417,7 +469,7 @@
         accuracyScoreEl.textContent = a;
         authorityScoreEl.textContent = au;
 
-        // Band + package
+        // Band + next step
         scoreBandTagEl.innerHTML = `<span>◎</span><span>${bandLabel}</span>`;
         packageTitleEl.textContent = nextStepTitle;
         packageTextEl.textContent = strategy;
@@ -451,6 +503,7 @@
   </script>
 </body>
 </html>
+
 
 
 

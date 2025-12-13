@@ -172,6 +172,44 @@
 
     .strategy-text { color: var(--muted, #c0c2d8); }
 
+    /* Evidence */
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 8px;
+      margin-bottom: 14px;
+    }
+
+    .evidence-chip {
+      background: var(--bg-soft, #070818);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+    }
+
+    .evidence-label {
+      color: var(--muted, #a0a3b1);
+      margin-bottom: 1px;
+    }
+    .evidence-value {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .citation {
+      font-size: 0.85rem;
+      margin-top: 4px;
+      padding-left: 12px;
+      text-indent: -12px;
+    }
+    .citation a {
+      color: var(--muted, #c0c2d8);
+      text-decoration: none;
+    }
+    .citation a:hover {
+      text-decoration: underline;
+    }
+
     /* Checkbox row */
     .check-row {
       display: flex;
@@ -294,6 +332,10 @@
         <div id="results" class="results-card hidden">
           <div class="results-header">
             <div>
+              <div id="scanModeTag" class="package-tag hidden" style="background: #a56100; color: #fff;">
+                <span>◎</span>
+                <span>Estimate Mode</span>
+              </div>
               <div class="package-tag" id="scoreBandTag">
                 <span>◎</span>
                 <span>Score band</span>
@@ -319,13 +361,24 @@
           </div>
 
           <div id="packageBlock" class="strategy-block">
-            <div class="strategy-title" id="packageTitle">Recommended next step</div>
+            <div class="strategy-title" id="packageTitle">Recommended Next Step</div>
             <div class="strategy-text" id="packageText"></div>
           </div>
 
           <div class="strategy-block">
-            <div class="strategy-title">Key findings</div>
+            <div class="strategy-title">Key Findings</div>
             <ul class="findings-list" id="findingsList"></ul>
+          </div>
+
+          <!-- Evidence block -->
+          <div id="evidenceBlock" class="strategy-block hidden">
+            <div class="strategy-title">Evidence</div>
+            <div class="evidence-grid">
+              <!-- Populated by JS -->
+            </div>
+            <div id="citationsList">
+              <!-- Populated by JS -->
+            </div>
           </div>
         </div>
       </div>
@@ -357,24 +410,20 @@
       let bandLabel, nextStepTitle, strategy;
 
       if (overall >= 80) {
-        bandLabel = "Strong visibility (80–100)";
-        nextStepTitle = "Recommended: Monitoring + drift checks";
+        bandLabel = "Strong Visibility (80–100)";
+        nextStepTitle = "Next Step: Monitor & Maintain";
         strategy =
-          "You’re in a strong position. The next step is monitoring and small fixes as AI answers drift over time. " +
-          "We can help lock in a Truth File, verify schema, and run re-audits on a schedule.";
+          "The AI landscape is citing your business with high confidence. The priority is to maintain this visibility, monitor for changes in AI responses, and ensure your structured data remains current.";
       } else if (overall >= 40) {
-        bandLabel = "Partial visibility (40–79)";
-        nextStepTitle = "Recommended: Fix gaps + add structured signals";
+        bandLabel = "Partial Visibility (40–79)";
+        nextStepTitle = "Next Step: Address Gaps";
         strategy =
-          "AI likely finds you but misses key details or relies on weak sources. " +
-          "Next step is improving structured data, strengthening your About/FAQ, " +
-          "and seeding authoritative profiles so AI cites you correctly.";
+          "AI systems can find your business but may be missing key details or citing inconsistent sources. The priority is to strengthen structured data, fill content gaps, and build more authoritative citations.";
       } else {
-        bandLabel = "High-risk visibility (0–39)";
-        nextStepTitle = "Recommended: Rebuild your AI presence";
+        bandLabel = "High-Risk Visibility (0–39)";
+        nextStepTitle = "Next Step: Build Foundation";
         strategy =
-          "AI may not recognize you, may confuse your services, or may cite competitors/directories instead. " +
-          "Next step is establishing a canonical Truth File, deploying schema, and building authority sources to correct the record.";
+          "There is a high risk of AI systems misrepresenting your business, citing incorrect sources, or failing to find you at all. The priority is to establish a foundational 'source of truth' for AIs to cite.";
       }
 
       return { bandLabel, nextStepTitle, strategy };
@@ -451,6 +500,16 @@
         resultsCard.classList.remove("hidden");
         statusEl.classList.add("hidden");
         resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        // -- Reset and conditionally fetch evidence --
+        document.getElementById("evidenceBlock").classList.add("hidden");
+        document.getElementById("scanModeTag").classList.add("hidden");
+
+        if (data.scan_mode === "fallback") {
+          document.getElementById("scanModeTag").classList.remove("hidden");
+        } else if (data.scan_id) {
+          fetchAndDisplayEvidence(data.scan_id);
+        }
       } catch (err) {
         console.error(err);
         statusEl.textContent =
@@ -459,6 +518,65 @@
         submitBtn.disabled = false;
       }
     });
+
+    async function fetchAndDisplayEvidence(scanId) {
+      try {
+        const resp = await fetch(`${API_BASE}/scan/${scanId}/evidence`);
+        if (!resp.ok) {
+          throw new Error(`Evidence API error ${resp.status}`);
+        }
+        const evidenceData = await resp.json();
+        console.log("Fetched evidence:", evidenceData);
+
+        const evidenceBlock = document.getElementById("evidenceBlock");
+        const evidenceGrid = evidenceBlock.querySelector(".evidence-grid");
+        const citationsList = document.getElementById("citationsList");
+
+        evidenceGrid.innerHTML = ""; // Clear previous
+        citationsList.innerHTML = ""; // Clear previous
+
+        const metrics = evidenceData.metrics || {};
+
+        const chip1 = document.createElement("div");
+        chip1.className = "evidence-chip";
+        chip1.innerHTML = `
+          <div class="evidence-label">Official site cited</div>
+          <div class="evidence-value">${metrics.cites_official_domain ? "Yes" : "No"}</div>`;
+        evidenceGrid.appendChild(chip1);
+
+        const chip2 = document.createElement("div");
+        chip2.className = "evidence-chip";
+        chip2.innerHTML = `
+          <div class="evidence-label">Unique domains</div>
+          <div class="evidence-value">${metrics.unique_citation_domains || 0}</div>`;
+        evidenceGrid.appendChild(chip2);
+
+        const citations = evidenceData.top_citations || [];
+        if (citations.length > 0) {
+          const title = document.createElement("div");
+          title.className = "strategy-title";
+          title.textContent = "Top citations";
+          title.style.marginTop = "12px";
+          citationsList.appendChild(title);
+
+          citations.forEach(c => {
+            const p = document.createElement("p");
+            p.className = "citation";
+            const a = document.createElement("a");
+            a.href = c.url;
+            a.textContent = `[${new URL(c.url).hostname}] ${c.title}`;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            p.appendChild(a);
+            citationsList.appendChild(p);
+          });
+        }
+        evidenceBlock.classList.remove("hidden");
+      } catch (err) {
+        console.error("Could not fetch evidence:", err);
+        // Silently fail for now, don't show a broken evidence block.
+      }
+    }
   </script>
 </body>
 </html>

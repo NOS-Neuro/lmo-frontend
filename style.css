@@ -595,6 +595,18 @@ pre {
   text-align: center;
   backdrop-filter: blur(12px);
   transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.step-card h3 {
+  word-break: keep-all;
+  hyphens: none;
+}
+
+.step-card p {
+  font-size: 0.92rem;
+  line-height: 1.6;
 }
 
 .step-card:hover {
@@ -753,10 +765,20 @@ footer {
   .grid-2 { grid-template-columns: minmax(0, 1fr); }
   .pricing-grid { grid-template-columns: minmax(0, 1fr); }
   .footer-grid { grid-template-columns: minmax(0, 1fr); }
+  .steps-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .lmo-pillars-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .delivery-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
 
   .btn-primary {
-    width: 100%;
-    max-width: 420px;
+    width: auto;
+    max-width: 340px;
+    display: flex;
+  }
+
+  .btn-secondary {
+    width: auto;
+    max-width: 300px;
+    display: flex;
   }
 
   .hero-orb {
@@ -768,6 +790,48 @@ footer {
 
   .cta-band { margin-inline: 0; }
   .section-contrast { padding-inline: 18px; }
+
+  .step-card {
+    padding: 24px 18px;
+  }
+
+  .step-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .step-card p {
+    font-size: 0.9rem;
+  }
+
+  /* Center content properly */
+  .container.narrow {
+    padding-inline: 20px;
+  }
+
+  .two-column > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .two-column .btn-secondary {
+    align-self: center;
+  }
+
+  /* Ensure pillar cards and content don't overflow */
+  .pillar-card,
+  .step-card,
+  .delivery-card {
+    max-width: 100%;
+  }
+
+  /* Center all buttons in sections */
+  section .btn-primary,
+  section .btn-secondary {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media (max-width: 420px) {

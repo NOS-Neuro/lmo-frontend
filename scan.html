@@ -4,7 +4,26 @@
   <meta charset="UTF-8" />
   <title>Run VizAI Scan | VizAI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Run a free VizAI scan to see how AI understands your business. Get Discovery, Accuracy, and Authority scores in under 60 seconds." />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://lmo-backend.onrender.com">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Run VizAI Scan | VizAI" />
+  <meta property="og:description" content="Run a free VizAI scan to see how AI understands your business. Get Discovery, Accuracy, and Authority scores in under 60 seconds." />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Run VizAI Scan | VizAI" />
+  <meta name="twitter:description" content="Run a free VizAI scan to see how AI understands your business." />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://vizai.app/scan.html" />
 
   <style>
     /* Page layout */
@@ -203,13 +222,50 @@
       color: var(--muted, #7e8195);
       margin-top: 8px;
     }
+
+    /* Validation styles */
+    .scan-input.error {
+      border-color: var(--danger, #ff6b6b);
+      box-shadow: 0 0 0 1px rgba(255, 107, 107, 0.3);
+    }
+
+    .scan-input.success {
+      border-color: #4caf50;
+    }
+
+    .scan-help.error {
+      color: var(--danger, #ff6b6b);
+      font-size: 0.78rem;
+      margin-top: 4px;
+    }
+
+    /* Loading state */
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #0b0d13;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <custom-navbar></custom-navbar>
 
-  <main>
+  <main id="main-content">
     <section class="scan-page">
       <div class="scan-header">
         <div class="pill">VizAI Scan</div>
@@ -236,9 +292,14 @@
                 id="businessName"
                 type="text"
                 required
+                aria-required="true"
+                aria-describedby="businessName-help"
                 class="scan-input"
                 placeholder="Your company name"
+                minlength="2"
+                maxlength="100"
               />
+              <div id="businessName-help" class="scan-help hidden"></div>
             </div>
 
             <div class="scan-field">
@@ -247,9 +308,13 @@
                 id="website"
                 type="url"
                 required
+                aria-required="true"
+                aria-describedby="website-help"
                 class="scan-input"
                 placeholder="https://yourbusiness.com"
+                pattern="https?://.+"
               />
+              <div id="website-help" class="scan-help hidden"></div>
             </div>
 
             <div class="scan-field">
@@ -258,9 +323,12 @@
                 id="contactEmail"
                 type="email"
                 required
+                aria-required="true"
+                aria-describedby="contactEmail-help"
                 class="scan-input"
                 placeholder="you@company.com"
               />
+              <div id="contactEmail-help" class="scan-help hidden"></div>
             </div>
 
             <div class="check-row">
@@ -276,9 +344,10 @@
             </p>
 
             <div class="scan-submit">
-              <button type="submit" class="btn-primary btn-primary-full" id="scanSubmitButton">
-                <span>Run VizAI Scan</span>
-                <span class="icon">⚡</span>
+              <button type="submit" class="btn-primary btn-primary-full" id="scanSubmitButton" aria-busy="false">
+                <span id="btnText">Run VizAI Scan</span>
+                <span class="icon" id="btnIcon">⚡</span>
+                <span class="btn-spinner hidden" id="btnSpinner"></span>
               </button>
             </div>
 
@@ -343,6 +412,13 @@
     const statusEl = document.getElementById("scanStatus");
     const resultsCard = document.getElementById("results");
     const submitBtn = document.getElementById("scanSubmitButton");
+    const btnText = document.getElementById("btnText");
+    const btnIcon = document.getElementById("btnIcon");
+    const btnSpinner = document.getElementById("btnSpinner");
+
+    const businessNameInput = document.getElementById("businessName");
+    const websiteInput = document.getElementById("website");
+    const contactEmailInput = document.getElementById("contactEmail");
 
     const overallScoreEl = document.getElementById("overallScore");
     const discoveryScoreEl = document.getElementById("discoveryScore");
@@ -353,6 +429,103 @@
     const packageTitleEl = document.getElementById("packageTitle");
     const packageTextEl = document.getElementById("packageText");
 
+    // Rate limiting
+    let lastSubmitTime = 0;
+    const MIN_SUBMIT_INTERVAL = 5000; // 5 seconds between submissions
+
+    // Input sanitization
+    function sanitizeInput(input) {
+      return input.trim().replace(/[<>]/g, '');
+    }
+
+    // Validation functions
+    function validateBusinessName(name) {
+      const sanitized = sanitizeInput(name);
+      if (!sanitized || sanitized.length < 2) {
+        return { valid: false, message: "Business name must be at least 2 characters" };
+      }
+      if (sanitized.length > 100) {
+        return { valid: false, message: "Business name must be less than 100 characters" };
+      }
+      return { valid: true, value: sanitized };
+    }
+
+    function validateWebsite(url) {
+      const sanitized = sanitizeInput(url);
+      try {
+        const urlObj = new URL(sanitized);
+        if (!['http:', 'https:'].includes(urlObj.protocol)) {
+          return { valid: false, message: "URL must start with http:// or https://" };
+        }
+        return { valid: true, value: sanitized };
+      } catch {
+        return { valid: false, message: "Please enter a valid URL (e.g., https://example.com)" };
+      }
+    }
+
+    function validateEmail(email) {
+      const sanitized = sanitizeInput(email);
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(sanitized)) {
+        return { valid: false, message: "Please enter a valid email address" };
+      }
+      return { valid: true, value: sanitized };
+    }
+
+    // Show validation error
+    function showError(input, message) {
+      input.classList.add("error");
+      input.classList.remove("success");
+      const helpId = input.getAttribute("aria-describedby");
+      const helpEl = document.getElementById(helpId);
+      if (helpEl) {
+        helpEl.textContent = message;
+        helpEl.classList.remove("hidden");
+        helpEl.classList.add("error");
+      }
+    }
+
+    // Clear validation error
+    function clearError(input) {
+      input.classList.remove("error");
+      input.classList.add("success");
+      const helpId = input.getAttribute("aria-describedby");
+      const helpEl = document.getElementById(helpId);
+      if (helpEl) {
+        helpEl.textContent = "";
+        helpEl.classList.add("hidden");
+        helpEl.classList.remove("error");
+      }
+    }
+
+    // Real-time validation
+    businessNameInput.addEventListener("blur", () => {
+      const result = validateBusinessName(businessNameInput.value);
+      if (!result.valid) {
+        showError(businessNameInput, result.message);
+      } else {
+        clearError(businessNameInput);
+      }
+    });
+
+    websiteInput.addEventListener("blur", () => {
+      const result = validateWebsite(websiteInput.value);
+      if (!result.valid) {
+        showError(websiteInput, result.message);
+      } else {
+        clearError(websiteInput);
+      }
+    });
+
+    contactEmailInput.addEventListener("blur", () => {
+      const result = validateEmail(contactEmailInput.value);
+      if (!result.valid) {
+        showError(contactEmailInput, result.message);
+      } else {
+        clearError(contactEmailInput);
+      }
+    });
+
     function computePackage(overall) {
       let bandLabel, nextStepTitle, strategy;
 
@@ -360,7 +533,7 @@
         bandLabel = "Strong visibility (80–100)";
         nextStepTitle = "Recommended: Monitoring + drift checks";
         strategy =
-          "You’re in a strong position. The next step is monitoring and small fixes as AI answers drift over time. " +
+          "You're in a strong position. The next step is monitoring and small fixes as AI answers drift over time. " +
           "We can help lock in a Truth File, verify schema, and run re-audits on a schedule.";
       } else if (overall >= 40) {
         bandLabel = "Partial visibility (40–79)";
@@ -380,20 +553,90 @@
       return { bandLabel, nextStepTitle, strategy };
     }
 
+    // Set loading state
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      submitBtn.setAttribute("aria-busy", loading ? "true" : "false");
+
+      if (loading) {
+        btnText.textContent = "Scanning...";
+        btnIcon.classList.add("hidden");
+        btnSpinner.classList.remove("hidden");
+      } else {
+        btnText.textContent = "Run VizAI Scan";
+        btnIcon.classList.remove("hidden");
+        btnSpinner.classList.add("hidden");
+      }
+    }
+
+    // Show user-friendly error
+    function showUserError(error, statusElement) {
+      let message = "An error occurred. Please try again.";
+
+      if (!navigator.onLine) {
+        message = "No internet connection. Please check your network and try again.";
+      } else if (error.message.includes("429")) {
+        message = "Too many requests. Please wait a moment and try again.";
+      } else if (error.message.includes("400")) {
+        message = "Invalid input. Please check your information and try again.";
+      } else if (error.message.includes("500") || error.message.includes("503")) {
+        message = "Our servers are temporarily unavailable. Please try again in a few minutes.";
+      } else if (error.message.includes("timeout") || error.name === "AbortError") {
+        message = "Request timed out. Please try again.";
+      }
+
+      statusElement.textContent = message;
+      statusElement.classList.remove("hidden");
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const businessName = document.getElementById("businessName").value.trim();
-      const website = document.getElementById("website").value.trim();
-      const contactEmail = document.getElementById("contactEmail").value.trim();
+      // Check rate limiting
+      const now = Date.now();
+      if (now - lastSubmitTime < MIN_SUBMIT_INTERVAL) {
+        const waitTime = Math.ceil((MIN_SUBMIT_INTERVAL - (now - lastSubmitTime)) / 1000);
+        statusEl.textContent = `Please wait ${waitTime} seconds before submitting again.`;
+        statusEl.classList.remove("hidden");
+        return;
+      }
+
+      // Validate all fields
+      const nameValidation = validateBusinessName(businessNameInput.value);
+      const websiteValidation = validateWebsite(websiteInput.value);
+      const emailValidation = validateEmail(contactEmailInput.value);
+
+      let hasErrors = false;
+
+      if (!nameValidation.valid) {
+        showError(businessNameInput, nameValidation.message);
+        hasErrors = true;
+      }
+      if (!websiteValidation.valid) {
+        showError(websiteInput, websiteValidation.message);
+        hasErrors = true;
+      }
+      if (!emailValidation.valid) {
+        showError(contactEmailInput, emailValidation.message);
+        hasErrors = true;
+      }
+
+      if (hasErrors) return;
+
+      const businessName = nameValidation.value;
+      const website = websiteValidation.value;
+      const contactEmail = emailValidation.value;
       const requestContact = !!document.getElementById("requestContact").checked;
 
-      if (!businessName || !website || !contactEmail) return;
-
+      lastSubmitTime = now;
       statusEl.textContent = "Running VizAI Scan… (10–30s)";
       statusEl.classList.remove("hidden");
       resultsCard.classList.add("hidden");
-      submitBtn.disabled = true;
+      setLoading(true);
+
+      // Set timeout for long-running requests
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 45000); // 45 second timeout
 
       try {
         const resp = await fetch(`${API_BASE}/run_scan`, {
@@ -404,9 +647,12 @@
             website,
             contactEmail,
             requestContact,
-            models: [] // kept for backward compatibility
+            models: []
           }),
+          signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
 
         if (!resp.ok) {
           const txt = await resp.text().catch(() => "");
@@ -452,11 +698,10 @@
         statusEl.classList.add("hidden");
         resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
       } catch (err) {
-        console.error(err);
-        statusEl.textContent =
-          "Something went wrong running the scan. Please try again in a moment.";
+        showUserError(err, statusEl);
       } finally {
-        submitBtn.disabled = false;
+        clearTimeout(timeoutId);
+        setLoading(false);
       }
     });
   </script>

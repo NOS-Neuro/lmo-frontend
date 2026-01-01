@@ -10,12 +10,48 @@
   />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="VizAI – See What AI Says About Your Business" />
+  <meta property="og:description" content="VizAI shows how AI describes your business today — and helps you make sure it gets it right." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vizai.app" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="VizAI – See What AI Says About Your Business" />
+  <meta name="twitter:description" content="VizAI shows how AI describes your business today — and helps you make sure it gets it right." />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://vizai.app" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "VizAI",
+    "description": "AI visibility diagnostics for modern businesses. See how AI describes your business and strengthen the signals that shape tomorrow's answers.",
+    "url": "https://vizai.app",
+    "applicationCategory": "BusinessApplication",
+    "offers": {
+      "@type": "AggregateOffer",
+      "lowPrice": "250",
+      "highPrice": "1500",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <custom-navbar></custom-navbar>
 
-  <main>
+  <main id="main-content">
     <div class="container">
 
       <!-- HERO -->
@@ -318,7 +354,6 @@
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
   <script src="script.js"></script>
-  <script>feather.replace();</script>
 </body>
 </html>
 

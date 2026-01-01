@@ -10,7 +10,7 @@
   --accent-strong: #b39cff;
 
   --text: #f8f9ff;
-  --muted: rgba(210, 214, 230, 0.72);
+  --muted: rgba(210, 214, 230, 0.85);
   --border-subtle: rgba(255, 255, 255, 0.08);
   --danger: #ff6b6b;
 
@@ -28,6 +28,28 @@
 ---------------------------------------- */
 html {
   scroll-behavior: smooth;
+}
+
+/* ---------------------------------------
+   Skip Link (Accessibility)
+---------------------------------------- */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent);
+  color: #0b0d13;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 10000;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
 }
 
 body {

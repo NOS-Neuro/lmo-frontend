@@ -771,7 +771,12 @@ footer {
 
   .btn-primary {
     width: 100%;
-    max-width: 420px;
+    max-width: 100%;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    max-width: 100%;
   }
 
   .hero-orb {
@@ -794,6 +799,36 @@ footer {
 
   .step-card p {
     font-size: 0.9rem;
+  }
+
+  /* Center content properly */
+  .container.narrow {
+    padding-inline: 20px;
+  }
+
+  .two-column > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .two-column .btn-secondary {
+    align-self: center;
+  }
+
+  /* Ensure pillar cards and content don't overflow */
+  .pillar-card,
+  .step-card,
+  .delivery-card {
+    max-width: 100%;
+  }
+
+  /* Center all buttons in sections */
+  section .btn-primary,
+  section .btn-secondary {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 

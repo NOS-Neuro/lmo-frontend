@@ -26,7 +26,6 @@
   <link rel="canonical" href="https://vizai.app/scan.html" />
 
   <!-- Cloudflare Turnstile (CAPTCHA) -->
-  <!-- TODO: Replace 'YOUR_SITE_KEY' with your actual Turnstile site key from https://dash.cloudflare.com/?to=/:account/turnstile -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <!-- Sentry Error Tracking (Uncomment after configuring) -->
@@ -377,10 +376,9 @@
 
             <!-- Cloudflare Turnstile CAPTCHA Widget -->
             <div class="captcha-container">
-              <!-- Replace 'YOUR_SITE_KEY' with your actual Turnstile site key -->
               <div class="cf-turnstile"
                    id="captcha-widget"
-                   data-sitekey="1x00000000000000000000AA"
+                   data-sitekey="0x4AAAAAACKFgDePvecVK5kQ"
                    data-callback="onCaptchaSuccess"
                    data-error-callback="onCaptchaError"
                    data-theme="dark"></div>

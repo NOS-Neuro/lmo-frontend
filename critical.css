@@ -1,0 +1,173 @@
+/**
+ * Critical CSS - Above-the-fold styles
+ * This file contains only the CSS needed for initial page render
+ * Inline this CSS in <head> for optimal First Contentful Paint
+ *
+ * Usage: <style><!-- inline critical.css here --></style>
+ */
+
+/* CSS Variables */
+:root {
+  --bg: #05060a;
+  --bg-elevated: rgba(10, 12, 24, 0.72);
+  --bg-soft: rgba(12, 14, 28, 0.62);
+  --accent: #7b5cff;
+  --accent-soft: rgba(123, 92, 255, 0.16);
+  --accent-strong: #b39cff;
+  --text: #f8f9ff;
+  --muted: rgba(210, 214, 230, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+  --max-width: 1080px;
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 10% 5%, rgba(123, 92, 255, 0.16), transparent 45%),
+    radial-gradient(circle at 90% 15%, rgba(140, 255, 234, 0.08), transparent 42%),
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05), transparent 38%),
+    linear-gradient(180deg, #05060a 0%, #04040b 50%, #02030a 100%);
+}
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent);
+  color: #0b0d13;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 10000;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-size: clamp(2.6rem, 5vw, 3.4rem);
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+  margin-bottom: 10px;
+}
+
+p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Container */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Hero Section (Above the fold) */
+.section-dark {
+  background:
+    radial-gradient(circle at top, rgba(123, 92, 255, 0.10) 0, rgba(5, 6, 10, 0) 55%),
+    transparent;
+  padding: 56px 0;
+}
+
+.stack-hero {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+  padding-top: 52px;
+}
+
+.stack-hero p {
+  margin-top: 18px;
+  font-size: 1.05rem;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(123, 92, 255, 0.20);
+  color: rgba(220, 224, 245, 0.9);
+  font-size: 0.8rem;
+  margin-bottom: 16px;
+  backdrop-filter: blur(10px);
+}
+
+/* Primary Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 32px;
+  margin-top: 26px;
+  min-height: 48px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(120deg, rgba(123, 92, 255, 1), rgba(179, 156, 255, 1));
+  box-shadow: 0 16px 50px rgba(123, 92, 255, 0.52);
+  color: #0b0d13;
+  font-weight: 800;
+  font-size: 1.06rem;
+  cursor: pointer;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 64px rgba(123, 92, 255, 0.62);
+}
+
+.micro {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: rgba(210, 214, 230, 0.62);
+}
+
+/* Hidden utility */
+.hidden {
+  display: none;
+}
+
+/* Basic responsive */
+@media (max-width: 900px) {
+  main { padding-inline: 14px; }
+  .btn-primary {
+    width: 100%;
+    max-width: 420px;
+  }
+}

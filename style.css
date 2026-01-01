@@ -770,13 +770,15 @@ footer {
   .delivery-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
 
   .btn-primary {
-    width: 100%;
-    max-width: 100%;
+    width: auto;
+    max-width: 340px;
+    display: flex;
   }
 
   .btn-secondary {
-    width: 100%;
-    max-width: 100%;
+    width: auto;
+    max-width: 300px;
+    display: flex;
   }
 
   .hero-orb {

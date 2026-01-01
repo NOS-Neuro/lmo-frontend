@@ -8,7 +8,14 @@
     name="description"
     content="VizAI shows how AI describes your business today — and helps you make sure it gets it right."
   />
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- Critical CSS (above-the-fold) - Consider inlining for production -->
+  <link rel="stylesheet" href="critical.css" />
+
+  <!-- Main CSS - Load with lower priority -->
+  <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'; this.onload=null;" />
+  <noscript><link rel="stylesheet" href="style.css" /></noscript>
+
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
   <!-- Preconnect to external domains -->
@@ -46,8 +53,18 @@
     }
   }
   </script>
+
+  <!-- Sentry Error Tracking (Uncomment after configuring) -->
+  <!-- <script src="https://browser.sentry-cdn.com/7.x.x/bundle.min.js" crossorigin="anonymous"></script> -->
+  <script src="error-tracking.js"></script>
 </head>
 <body>
+  <noscript>
+    <div class="noscript-warning">
+      ⚠️ VizAI requires JavaScript to function properly. Please <a href="https://www.enable-javascript.com/" target="_blank" rel="noopener">enable JavaScript</a> in your browser settings.
+    </div>
+  </noscript>
+
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <custom-navbar></custom-navbar>
 

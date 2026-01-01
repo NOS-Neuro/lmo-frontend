@@ -25,6 +25,14 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://vizai.app/scan.html" />
 
+  <!-- Cloudflare Turnstile (CAPTCHA) -->
+  <!-- TODO: Replace 'YOUR_SITE_KEY' with your actual Turnstile site key from https://dash.cloudflare.com/?to=/:account/turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+  <!-- Sentry Error Tracking (Uncomment after configuring) -->
+  <!-- <script src="https://browser.sentry-cdn.com/7.x.x/bundle.min.js" crossorigin="anonymous"></script> -->
+  <script src="error-tracking.js"></script>
+
   <style>
     /* Page layout */
     .scan-page {
@@ -258,10 +266,30 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    /* CAPTCHA styling */
+    .captcha-container {
+      margin: 16px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .captcha-error {
+      color: var(--danger, #ff6b6b);
+      font-size: 0.8rem;
+      margin-top: 4px;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
+  <noscript>
+    <div class="noscript-warning">
+      ⚠️ The VizAI Scan requires JavaScript to run. Please <a href="https://www.enable-javascript.com/" target="_blank" rel="noopener">enable JavaScript</a> in your browser settings to use this tool.
+    </div>
+  </noscript>
+
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <custom-navbar></custom-navbar>
 
@@ -338,6 +366,18 @@
                 <div class="mini-note">If checked, the VizAI team will be notified.</div>
               </label>
             </div>
+
+            <!-- Cloudflare Turnstile CAPTCHA Widget -->
+            <div class="captcha-container">
+              <!-- Replace 'YOUR_SITE_KEY' with your actual Turnstile site key -->
+              <div class="cf-turnstile"
+                   id="captcha-widget"
+                   data-sitekey="1x00000000000000000000AA"
+                   data-callback="onCaptchaSuccess"
+                   data-error-callback="onCaptchaError"
+                   data-theme="dark"></div>
+            </div>
+            <div id="captchaError" class="captcha-error hidden"></div>
 
             <p class="scan-help" style="margin-top: 10px; margin-bottom: 10px;">
               This scan may take ~10–30 seconds. The report is AI-assisted and intended as a directional baseline.
@@ -419,6 +459,7 @@
     const businessNameInput = document.getElementById("businessName");
     const websiteInput = document.getElementById("website");
     const contactEmailInput = document.getElementById("contactEmail");
+    const captchaErrorEl = document.getElementById("captchaError");
 
     const overallScoreEl = document.getElementById("overallScore");
     const discoveryScoreEl = document.getElementById("discoveryScore");
@@ -428,6 +469,21 @@
     const scoreBandTagEl = document.getElementById("scoreBandTag");
     const packageTitleEl = document.getElementById("packageTitle");
     const packageTextEl = document.getElementById("packageText");
+
+    // CAPTCHA token
+    let captchaToken = null;
+
+    // CAPTCHA callbacks (must be global for Turnstile)
+    window.onCaptchaSuccess = function(token) {
+      captchaToken = token;
+      captchaErrorEl.classList.add("hidden");
+    };
+
+    window.onCaptchaError = function() {
+      captchaToken = null;
+      captchaErrorEl.textContent = "CAPTCHA verification failed. Please try again.";
+      captchaErrorEl.classList.remove("hidden");
+    };
 
     // Rate limiting
     let lastSubmitTime = 0;
@@ -623,6 +679,13 @@
 
       if (hasErrors) return;
 
+      // Validate CAPTCHA
+      if (!captchaToken) {
+        captchaErrorEl.textContent = "Please complete the CAPTCHA verification.";
+        captchaErrorEl.classList.remove("hidden");
+        return;
+      }
+
       const businessName = nameValidation.value;
       const website = websiteValidation.value;
       const contactEmail = emailValidation.value;
@@ -647,6 +710,7 @@
             website,
             contactEmail,
             requestContact,
+            captchaToken,
             models: []
           }),
           signal: controller.signal
@@ -698,6 +762,15 @@
         statusEl.classList.add("hidden");
         resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
       } catch (err) {
+        // Track error
+        if (window.trackError) {
+          window.trackError(err, {
+            context: 'scan_form_submission',
+            businessName,
+            website
+          });
+        }
+
         showUserError(err, statusEl);
       } finally {
         clearTimeout(timeoutId);

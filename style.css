@@ -52,6 +52,34 @@ html {
   outline-offset: 2px;
 }
 
+/* ---------------------------------------
+   Noscript Warning
+---------------------------------------- */
+.noscript-warning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  color: #fff;
+  padding: 16px 20px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  z-index: 99999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.noscript-warning a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.noscript-warning a:hover {
+  opacity: 0.9;
+}
+
 body {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
   line-height: 1.6;

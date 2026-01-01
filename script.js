@@ -1,5 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
   // ------------------------------------------------------------
+  // Register Service Worker for offline support and caching
+  // ------------------------------------------------------------
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then((registration) => {
+          console.log('[SW] Service Worker registered:', registration.scope);
+        })
+        .catch((error) => {
+          console.log('[SW] Service Worker registration failed:', error);
+        });
+    });
+  }
+
+  // ------------------------------------------------------------
   // Scan button routing
   // ------------------------------------------------------------
   document.querySelectorAll("[data-role='scan-button']").forEach((btn) => {

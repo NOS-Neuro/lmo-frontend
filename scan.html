@@ -287,6 +287,85 @@
       margin-top: 4px;
       text-align: center;
     }
+
+    /* Q&A collapsible section */
+    .qa-details {
+      margin-top: 12px;
+    }
+
+    .qa-summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 12px 16px;
+      background: var(--bg-soft, #070818);
+      border: 1px solid var(--border-subtle, #303244);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      color: var(--accent-strong, #b39cff);
+      transition: all 0.2s;
+    }
+
+    .qa-summary:hover {
+      background: rgba(123, 92, 255, 0.05);
+      border-color: var(--accent, #7b5cff);
+    }
+
+    .qa-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .qa-toggle {
+      transition: transform 0.2s;
+      font-size: 0.8rem;
+    }
+
+    .qa-details[open] .qa-toggle {
+      transform: rotate(180deg);
+    }
+
+    .qa-content {
+      margin-top: 12px;
+      padding: 16px;
+      background: var(--bg-soft, #070818);
+      border: 1px solid var(--border-subtle, #303244);
+      border-radius: 12px;
+    }
+
+    .qa-item {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle, #303244);
+    }
+
+    .qa-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .qa-question {
+      font-weight: 600;
+      color: var(--text, #f8f9ff);
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .qa-answer {
+      color: var(--muted, #c0c2d8);
+      line-height: 1.6;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+    }
+
+    .request-id-display {
+      font-size: 0.75rem;
+      color: var(--muted, #7e8195);
+      margin-top: 8px;
+      font-family: monospace;
+    }
   </style>
 </head>
 
@@ -335,6 +414,19 @@
                 maxlength="100"
               />
               <div id="businessName-help" class="scan-help hidden"></div>
+            </div>
+
+            <div class="scan-field">
+              <label for="industry" class="scan-label">Industry (optional)</label>
+              <input
+                id="industry"
+                type="text"
+                aria-describedby="industry-help"
+                class="scan-input"
+                placeholder="e.g., Healthcare, SaaS, Legal Services"
+                maxlength="100"
+              />
+              <div id="industry-help" class="scan-help">Helps us find the right company if your name is common</div>
             </div>
 
             <div class="scan-field">
@@ -436,11 +528,22 @@
           <div id="packageBlock" class="strategy-block">
             <div class="strategy-title" id="packageTitle">Recommended next step</div>
             <div class="strategy-text" id="packageText"></div>
+            <div class="request-id-display" id="requestIdDisplay" style="display: none;"></div>
           </div>
 
           <div class="strategy-block">
             <div class="strategy-title">Key findings</div>
             <ul class="findings-list" id="findingsList"></ul>
+          </div>
+
+          <div class="strategy-block" id="qaBlock" style="display: none;">
+            <details class="qa-details">
+              <summary class="qa-summary">
+                <span>View raw AI responses</span>
+                <span class="qa-toggle">▼</span>
+              </summary>
+              <div class="qa-content" id="qaContent"></div>
+            </details>
           </div>
         </div>
       </div>
@@ -475,6 +578,9 @@
     const scoreBandTagEl = document.getElementById("scoreBandTag");
     const packageTitleEl = document.getElementById("packageTitle");
     const packageTextEl = document.getElementById("packageText");
+    const requestIdDisplayEl = document.getElementById("requestIdDisplay");
+    const qaBlockEl = document.getElementById("qaBlock");
+    const qaContentEl = document.getElementById("qaContent");
 
     // CAPTCHA token
     let captchaToken = null;
@@ -696,6 +802,7 @@
       const website = websiteValidation.value;
       const contactEmail = emailValidation.value;
       const requestContact = !!document.getElementById("requestContact").checked;
+      const industry = sanitizeInput(document.getElementById("industry").value) || null;
 
       lastSubmitTime = now;
       statusEl.textContent = "Running VizAI Scan… (30–60s)";
@@ -713,6 +820,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             businessName,
+            industry,
             website,
             contactEmail,
             requestContact,
@@ -762,6 +870,36 @@
           const li = document.createElement("li");
           li.textContent = "No detailed findings were returned for this scan.";
           findingsListEl.appendChild(li);
+        }
+
+        // Display request ID
+        const requestId = resp.headers.get("X-Request-ID");
+        if (requestId) {
+          requestIdDisplayEl.textContent = `Request ID: ${requestId}`;
+          requestIdDisplayEl.style.display = "block";
+        }
+
+        // Display Q&A pairs
+        const qaPairs = Array.isArray(data.qa_pairs) ? data.qa_pairs : [];
+        if (qaPairs.length > 0) {
+          qaContentEl.innerHTML = "";
+          qaPairs.forEach((qa) => {
+            const qaItem = document.createElement("div");
+            qaItem.className = "qa-item";
+
+            const question = document.createElement("div");
+            question.className = "qa-question";
+            question.textContent = qa.question;
+
+            const answer = document.createElement("div");
+            answer.className = "qa-answer";
+            answer.textContent = qa.answer;
+
+            qaItem.appendChild(question);
+            qaItem.appendChild(answer);
+            qaContentEl.appendChild(qaItem);
+          });
+          qaBlockEl.style.display = "block";
         }
 
         resultsCard.classList.remove("hidden");

@@ -2,288 +2,837 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>VizAI Packages & Add-Ons | VizAI</title>
+  <title>Pricing & Packages – VizAI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+  <meta
+    name="description"
+    content="Transparent pricing for AI visibility governance. From free scans to comprehensive managed services. All pricing in CAD."
+  />
+
+  <!-- Critical CSS -->
+  <link rel="stylesheet" href="critical.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'; this.onload=null;" />
+  <noscript><link rel="stylesheet" href="style.css" /></noscript>
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Pricing & Packages – VizAI" />
+  <meta property="og:description" content="Transparent pricing for AI visibility governance. From free scans to comprehensive managed services." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vizai.app/packages.html" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://vizai.app/packages.html" />
+
+  <style>
+    /* Pricing-specific styles */
+    .pricing-hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .pricing-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--text, #f8f9ff), var(--accent-strong, #b39cff));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .pricing-hero p {
+      font-size: 1.1rem;
+      color: var(--muted, #c0c2d8);
+      margin-bottom: 8px;
+    }
+
+    .pricing-note {
+      font-size: 0.85rem;
+      color: var(--muted, #7e8195);
+      margin-top: 8px;
+    }
+
+    .tier-progression {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 40px auto;
+      flex-wrap: wrap;
+      max-width: 900px;
+    }
+
+    .tier-step {
+      padding: 8px 16px;
+      background: var(--bg-soft, #070818);
+      border: 1px solid var(--border-subtle, #303244);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: var(--muted, #c0c2d8);
+    }
+
+    .tier-step.active {
+      background: rgba(123, 92, 255, 0.15);
+      border-color: var(--accent, #7b5cff);
+      color: var(--accent-strong, #b39cff);
+    }
+
+    .tier-arrow {
+      color: var(--accent, #7b5cff);
+      font-size: 1.2rem;
+    }
+
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin: 40px auto;
+      max-width: 1200px;
+    }
+
+    .package-card {
+      background: var(--bg-soft, #070818);
+      border: 1px solid var(--border-subtle, #303244);
+      border-radius: 16px;
+      padding: 32px 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .package-card:hover {
+      border-color: var(--accent, #7b5cff);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(123, 92, 255, 0.2);
+    }
+
+    .package-card.featured {
+      border-color: var(--accent, #7b5cff);
+      background: rgba(123, 92, 255, 0.05);
+    }
+
+    .package-card.featured::before {
+      content: "Most Popular";
+      position: absolute;
+      top: 12px;
+      right: -32px;
+      background: var(--accent, #7b5cff);
+      color: #0b0d13;
+      padding: 4px 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transform: rotate(45deg);
+    }
+
+    .package-tier {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-strong, #b39cff);
+      margin-bottom: 8px;
+    }
+
+    .package-name {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text, #f8f9ff);
+    }
+
+    .package-tagline {
+      font-size: 0.95rem;
+      color: var(--muted, #c0c2d8);
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .package-price {
+      margin: 20px 0;
+    }
+
+    .price-setup {
+      font-size: 1.1rem;
+      color: var(--muted, #c0c2d8);
+      margin-bottom: 4px;
+    }
+
+    .price-monthly {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-strong, #b39cff);
+    }
+
+    .price-monthly .currency {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--muted, #c0c2d8);
+    }
+
+    .price-onetime {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent-strong, #b39cff);
+    }
+
+    .price-onetime .currency {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--muted, #c0c2d8);
+    }
+
+    .price-note {
+      font-size: 0.8rem;
+      color: var(--muted, #7e8195);
+      margin-top: 4px;
+    }
+
+    .package-includes {
+      margin: 24px 0;
+    }
+
+    .package-section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted, #c0c2d8);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .package-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .package-list li {
+      padding: 8px 0;
+      font-size: 0.9rem;
+      color: var(--muted, #c0c2d8);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .package-list li::before {
+      content: "✓";
+      color: var(--accent, #7b5cff);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .package-list.excludes li::before {
+      content: "✗";
+      color: var(--muted, #7e8195);
+    }
+
+    .package-list.excludes li {
+      color: var(--muted, #7e8195);
+      opacity: 0.7;
+    }
+
+    .package-cta {
+      margin-top: 24px;
+    }
+
+    .package-best-for {
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(123, 92, 255, 0.1);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--muted, #c0c2d8);
+    }
+
+    .package-best-for strong {
+      color: var(--accent-strong, #b39cff);
+    }
+
+    .comparison-section {
+      margin: 60px auto;
+      max-width: 1200px;
+    }
+
+    .comparison-table {
+      overflow-x: auto;
+      margin: 30px 0;
+    }
+
+    .comparison-table table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-soft, #070818);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .comparison-table th {
+      background: rgba(123, 92, 255, 0.1);
+      padding: 16px 12px;
+      text-align: left;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-strong, #b39cff);
+      border-bottom: 1px solid var(--border-subtle, #303244);
+    }
+
+    .comparison-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-subtle, #303244);
+      font-size: 0.9rem;
+      color: var(--muted, #c0c2d8);
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .check-yes {
+      color: var(--accent, #7b5cff);
+      font-weight: bold;
+    }
+
+    .check-no {
+      color: var(--muted, #7e8195);
+      opacity: 0.5;
+    }
+
+    .faq-packages {
+      margin: 60px auto;
+      max-width: 800px;
+    }
+
+    .faq-item {
+      margin-bottom: 24px;
+      padding: 20px;
+      background: var(--bg-soft, #070818);
+      border: 1px solid var(--border-subtle, #303244);
+      border-radius: 12px;
+    }
+
+    .faq-question {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text, #f8f9ff);
+      margin-bottom: 12px;
+    }
+
+    .faq-answer {
+      font-size: 0.95rem;
+      color: var(--muted, #c0c2d8);
+      line-height: 1.6;
+    }
+
+    .faq-answer p {
+      margin-bottom: 12px;
+    }
+
+    .faq-answer p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      .pricing-hero h1 {
+        font-size: 2rem;
+      }
+
+      .packages-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tier-progression {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .tier-arrow {
+        transform: rotate(90deg);
+      }
+
+      .comparison-table {
+        font-size: 0.8rem;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 8px 6px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <noscript>
+    <div class="noscript-warning">
+      ⚠️ VizAI requires JavaScript to function properly. Please <a href="https://www.enable-javascript.com/" target="_blank" rel="noopener">enable JavaScript</a> in your browser settings.
+    </div>
+  </noscript>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <custom-navbar></custom-navbar>
 
-  <main>
-    <!-- HERO -->
-    <section class="section-dark">
-      <div class="container narrow center">
-        <div class="pill">VizAI Packages & Add-Ons</div>
-        <h1 class="section-title" style="margin-top: 12px;">
-          Start with the right package, then add firepower where it matters.
-        </h1>
-        <p class="section-subtitle">
-          Your VizAI Scan points to a core package (Basic, Standard, or Enterprise).
-          Add-ons layer on specialized work like API publishing, dataset creation,
-          and deep competitive analysis.
-        </p>
-      </div>
-    </section>
+  <main id="main-content">
+    <div class="container">
 
-    <!-- PACKAGES GRID -->
-    <section class="section">
-      <div class="section-header center">
-        <h2 id="packages" class="section-title">Core VizAI Packages</h2>
-        <p class="section-subtitle">
-          Packages handle the ongoing work of keeping AI models accurate, aligned,
-          and up-to-date on your business. Add-ons are project-style boosts you can
-          stack on top when you’re ready.
-        </p>
-      </div>
+      <!-- HERO -->
+      <section class="pricing-hero">
+        <h1>Choose Your Level of AI Visibility Control</h1>
+        <p>From free awareness to comprehensive governance. Transparent pricing, no hidden fees.</p>
+        <p class="pricing-note">All pricing in CAD. USD equivalents available on request.</p>
+      </section>
 
-      <div class="pricing-grid">
-        <!-- BASIC -->
-        <div class="pricing-card">
-          <div class="pricing-label">For strong scores (80–100)</div>
-          <div class="pricing-title">Basic</div>
-          <div class="pricing-amount">
-            $250<span>/month</span>
-          </div>
-          <ul class="pricing-list">
-            <li>Initial VizAI Scan & baseline report</li>
-            <li>LMO Truth File creation or review</li>
-            <li>Monthly VizAI score refresh</li>
-            <li>Light content / metadata adjustments</li>
-            <li>Email summary with changes & actions</li>
-          </ul>
-          <div class="pricing-note">
-            Best when your scores are already high and you want to
-            <strong>maintain</strong> AI visibility and catch drift early.
-          </div>
-        </div>
+      <!-- TIER PROGRESSION -->
+      <section class="tier-progression">
+        <div class="tier-step">Free Scan</div>
+        <div class="tier-arrow">→</div>
+        <div class="tier-step">Tier 0: Snapshot</div>
+        <div class="tier-arrow">→</div>
+        <div class="tier-step active">Tier 1: Foundation</div>
+        <div class="tier-arrow">→</div>
+        <div class="tier-step">Tier 2: Reinforcement</div>
+        <div class="tier-arrow">→</div>
+        <div class="tier-step">Tier 3: Governance</div>
+      </section>
 
-        <!-- STANDARD -->
-        <div class="pricing-card">
-          <div class="pricing-label">For growing scores (40–79)</div>
-          <div class="pricing-title">Standard</div>
-          <div class="pricing-amount">
-            $500<span>/month</span>
-          </div>
-          <ul class="pricing-list">
-            <li>Everything in Basic</li>
-            <li>Full LMO Truth File build or overhaul</li>
-            <li>Structured schema / profile improvements</li>
-            <li>Authority seeding to AI-trusted sources</li>
-            <li>Quarterly AI visibility review & plan</li>
-          </ul>
-          <div class="pricing-note">
-            Ideal when AI understands you partially, but gaps and
-            inconsistencies are clearly holding you back.
-          </div>
-        </div>
+      <!-- PACKAGES GRID -->
+      <section class="packages-grid">
+        <!-- FREE SCAN -->
+        <div class="package-card">
+          <div class="package-tier">Free</div>
+          <h2 class="package-name">Free Visibility Scan</h2>
+          <p class="package-tagline">See that a problem exists</p>
 
-        <!-- ENTERPRISE -->
-        <div class="pricing-card">
-          <div class="pricing-label">For critical or complex cases (0–39 or multi-region)</div>
-          <div class="pricing-title">Enterprise</div>
-          <div class="pricing-amount">
-            $1,500<span>/month</span>
-          </div>
-          <ul class="pricing-list">
-            <li>Everything in Standard</li>
-            <li>Multi-site / multi-brand coverage</li>
-            <li>Custom reporting for leadership</li>
-            <li>Priority implementation queue</li>
-            <li>Strategic roadmap for AI visibility</li>
-          </ul>
-          <div class="pricing-note">
-            For organizations treating AI visibility as critical infrastructure.
-            Often paired with one or more add-ons below.
-          </div>
-        </div>
-      </div>
-
-      <div class="center" style="margin-top: 18px;">
-        <div class="pill-note">
-          <span>ⓘ</span>
-          <span>Setup fee: typically $500–$1,000 depending on complexity and data sources.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW SCORES MAP TO PACKAGES -->
-    <section class="section-contrast">
-      <div class="container narrow">
-        <h2 id="how-scores-map" class="section-title center">
-  How your VizAI Scan maps to a package
-</h2>
-        <p class="section-subtitle center">
-          Your Discovery, Accuracy, and Authority scores are averaged into a single
-          visibility score from 0–100. That score drives the recommended package.
-        </p>
-
-        <div class="why-grid" style="margin-top: 32px;">
-          <div class="why-card">
-            <h3>80–100 · Strong visibility</h3>
-            <p>
-              AI likely recognizes and describes your business well. The risk is
-              <em>drift</em> over time as models update and competitors invest.
-              <strong>Basic</strong> gives you proactive monitoring and light monthly
-              adjustments so your score stays high.
-            </p>
+          <div class="package-price">
+            <div class="price-onetime">$0</div>
+            <p class="price-note">Automated lead magnet</p>
           </div>
 
-          <div class="why-card">
-            <h3>40–79 · Partial understanding</h3>
-            <p>
-              AI gets some parts right but misses key details or differentiators.
-              <strong>Standard</strong> focuses on tightening your story, improving
-              structure, and strengthening authority signals where it matters most.
-            </p>
+          <div class="package-includes">
+            <h3 class="package-section-title">What You Get</h3>
+            <ul class="package-list">
+              <li>Automated AI visibility check</li>
+              <li>Discovery/Accuracy/Authority scores</li>
+              <li>High-level findings</li>
+              <li>Immediate results</li>
+            </ul>
           </div>
 
-          <div class="why-card">
-            <h3>0–39 · Critical risk</h3>
-            <p>
-              AI may not identify your business correctly, or may confuse you with
-              others entirely. We typically recommend <strong>Standard or Enterprise
-              plus one or more add-ons</strong> to rebuild how AI sees your brand.
-            </p>
+          <div class="package-includes">
+            <h3 class="package-section-title">What's Not Included</h3>
+            <ul class="package-list excludes">
+              <li>No comprehensive testing</li>
+              <li>No human review</li>
+              <li>No actionable guidance</li>
+              <li>Just directional scores</li>
+            </ul>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ADD-ONS SECTION -->
-    <section class="section">
-      <div class="container">
-        <h2 id="addons" class="section-title">Add-Ons</h2>
-        <p class="section-subtitle">
-          Enhance your VizAI package with specialized services. These are typically
-          scoped as focused projects that plug into your existing LMO Truth File and
-          AI visibility strategy.
-        </p>
+          <div class="package-cta">
+            <a href="scan.html" class="btn-primary btn-primary-full">
+              <span>Run Free Scan</span>
+              <span class="icon">→</span>
+            </a>
+          </div>
 
-        <div class="panel" style="margin-top: 24px;">
-          <div class="panel-inner">
-            <div class="table-wrapper">
-              <table class="addons-table">
-                <thead>
-                  <tr>
-                    <th>Add-On</th>
-                    <th>Price</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>API Documentation Publishing</td>
-                    <td>$299/setup + $99/mo</td>
-                    <td>OpenAPI spec creation and multi-platform deployment.</td>
-                  </tr>
-                  <tr>
-                    <td>Q&amp;A Pack (50 entries)</td>
-                    <td>$499</td>
-                    <td>Bulk Q&amp;A generation for specialized topics.</td>
-                  </tr>
-                  <tr>
-                    <td>Competitor Deep Dive</td>
-                    <td>$599</td>
-                    <td>Comprehensive analysis of 5 competitors.</td>
-                  </tr>
-                  <tr>
-                    <td>Schema Deployment</td>
-                    <td>$399</td>
-                    <td>Advanced Schema.org markup across your site.</td>
-                  </tr>
-                  <tr>
-                    <td>Dataset Creation</td>
-                    <td>$799</td>
-                    <td>Public dataset creation and submission for AI training.</td>
-                  </tr>
-                  <tr>
-                    <td>Registry Premium Listing</td>
-                    <td>$199/mo</td>
-                    <td>Featured placement in an LMO / AI visibility registry.</td>
-                  </tr>
-                  <tr>
-                    <td>Custom Integration</td>
-                    <td>$1,499</td>
-                    <td>Connect VizAI outputs to your CMS, CRM, or internal tools.</td>
-                  </tr>
-                  <tr>
-                    <td>Additional Platform Seeding</td>
-                    <td>$299/platform</td>
-                    <td>Deploy key facts to additional high-authority sources.</td>
-                  </tr>
-                  <tr>
-                    <td>Hallucination Audit (standalone)</td>
-                    <td>$899</td>
-                    <td>One-time comprehensive audit for incorrect AI answers.</td>
-                  </tr>
-                  <tr>
-                    <td>GPT Fine-tuning Package</td>
-                    <td>$1,999</td>
-                    <td>Custom GPT trained on your data for internal or client use.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="package-best-for">
+            <strong>Best for:</strong> Initial awareness and lead generation
           </div>
         </div>
 
-        <p class="section-subtitle" style="margin-top: 18px;">
-          Add-ons can be included in your initial proposal, or layered on later once
-          your baseline VizAI scores are stabilized.
-        </p>
-      </div>
-    </section>
+        <!-- TIER 0 -->
+        <div class="package-card" id="tier-0">
+          <div class="package-tier">Tier 0</div>
+          <h2 class="package-name">AI Understanding Snapshot</h2>
+          <p class="package-tagline">See how AI currently understands your business</p>
 
-    <!-- CTA -->
-    <section class="section-tight">
-      <div class="section-header center">
-        <h2>Not sure where to start?</h2>
-        <p class="section-subtitle">
-          Run a free VizAI Scan first. Your scores will come with a recommended
-          package and a short strategy, including any add-ons we’d suggest for your
-          situation.
-        </p>
-        <div style="margin-top: 18px;">
-          <a href="scan.html" class="btn-primary">
-            <span>Run a VizAI Scan</span>
-            <span class="icon">⚡</span>
-          </a>
+          <div class="package-price">
+            <div class="price-onetime">$495 <span class="currency">CAD</span></div>
+            <p class="price-note">One-time, human-reviewed analysis</p>
+          </div>
+
+          <div class="package-includes">
+            <h3 class="package-section-title">What's Included</h3>
+            <ul class="package-list">
+              <li>Lightweight canonical business profile</li>
+              <li>Human-reviewed AI snapshot across ChatGPT, Claude, Perplexity</li>
+              <li>Confusion flags (if AI merges you with others)</li>
+              <li>Source visibility analysis</li>
+              <li>Written interpretation & recommendations</li>
+              <li>Clear guidance on next steps</li>
+            </ul>
+          </div>
+
+          <div class="package-includes">
+            <h3 class="package-section-title">What's Not Included</h3>
+            <ul class="package-list excludes">
+              <li>No structured repository</li>
+              <li>No schema builds</li>
+              <li>No ongoing monitoring</li>
+              <li>No corrections or fixes</li>
+            </ul>
+          </div>
+
+          <div class="package-cta">
+            <a href="contact.html" class="btn-primary btn-primary-full">
+              <span>Get Your Snapshot</span>
+              <span class="icon">→</span>
+            </a>
+          </div>
+
+          <div class="package-best-for">
+            <strong>Best for:</strong> Teams that need to understand WHAT the problem is before committing to fixes
+          </div>
+
+          <p class="pricing-note" style="margin-top: 12px; font-style: italic;">
+            Optional: Refresh snapshot for $195 CAD
+          </p>
         </div>
-      </div>
-    </section>
+
+        <!-- TIER 1 -->
+        <div class="package-card featured" id="tier-1">
+          <div class="package-tier">Tier 1 — Most Popular</div>
+          <h2 class="package-name">Canonical AI Foundation</h2>
+          <p class="package-tagline">Define what your business is for AI systems</p>
+
+          <div class="package-price">
+            <div class="price-setup">$1,950 CAD setup +</div>
+            <div class="price-monthly">$650<span class="currency"> CAD/month</span></div>
+            <p class="price-note">Minimum 3 months</p>
+          </div>
+
+          <div class="package-includes">
+            <h3 class="package-section-title">What's Included</h3>
+            <ul class="package-list">
+              <li>Canonical AI Business Model (GitHub repo)</li>
+              <li>Core business definition & disambiguation</li>
+              <li>Baseline AI audit (30 queries)</li>
+              <li>Versioned Truth File (v1.0)</li>
+              <li>Schema.org JSON-LD for your website</li>
+              <li>Monthly AI monitoring</li>
+              <li>Drift detection alerts</li>
+              <li>Monthly governance reports</li>
+            </ul>
+          </div>
+
+          <div class="package-includes">
+            <h3 class="package-section-title">What's Not Included</h3>
+            <ul class="package-list excludes">
+              <li>No Wikipedia editing</li>
+              <li>No extended structured surfaces</li>
+              <li>No citation cleanup</li>
+              <li>No heavy execution work</li>
+            </ul>
+          </div>
+
+          <div class="package-cta">
+            <a href="contact.html" class="btn-primary btn-primary-full">
+              <span>Build Your Foundation</span>
+              <span class="icon">→</span>
+            </a>
+          </div>
+
+          <div class="package-best-for">
+            <strong>Best for:</strong> Businesses that want to own their AI narrative and prevent drift
+          </div>
+        </div>
+
+        <!-- TIER 2 -->
+        <div class="package-card" id="tier-2">
+          <div class="package-tier">Tier 2</div>
+          <h2 class="package-name">AI Signal Reinforcement</h2>
+          <p class="package-tagline">Strengthen where and how AI learns about you</p>
+
+          <div class="package-price">
+            <div class="price-setup">$3,750 CAD setup +</div>
+            <div class="price-monthly">$2,250<span class="currency"> CAD/month</span></div>
+            <p class="price-note">Minimum 3-6 months</p>
+          </div>
+
+          <div class="package-includes">
+            <h3 class="package-section-title">What's Included</h3>
+            <ul class="package-list">
+              <li>Everything in Tier 1</li>
+              <li>Extended schema (FAQ, Service, Product)</li>
+              <li>2-3 additional AI surfaces (Wikidata, Q&A library)</li>
+              <li>Bi-weekly monitoring</li>
+              <li>Drift & regression alerts</li>
+              <li>Before/after verification snapshots</li>
+              <li>Structured correction playbooks</li>
+            </ul>
+          </div>
+
+          <div class="package-includes">
+            <h3 class="package-section-title">What's Not Included</h3>
+            <ul class="package-list excludes">
+              <li>No guaranteed Wikipedia entries</li>
+              <li>No manual industry authority work</li>
+              <li>No manual citation cleanup</li>
+            </ul>
+          </div>
+
+          <div class="package-cta">
+            <a href="contact.html" class="btn-primary btn-primary-full">
+              <span>Reinforce Your Presence</span>
+              <span class="icon">→</span>
+            </a>
+          </div>
+
+          <div class="package-best-for">
+            <strong>Best for:</strong> Growing companies that rely on inbound discovery and need stronger signals
+          </div>
+        </div>
+
+        <!-- TIER 3 -->
+        <div class="package-card" id="tier-3">
+          <div class="package-tier">Tier 3 — Enterprise</div>
+          <h2 class="package-name">Managed AI Accuracy Governance</h2>
+          <p class="package-tagline">We actively manage how AI represents you</p>
+
+          <div class="package-price">
+            <div class="price-setup">Starting at $5,950 CAD setup +</div>
+            <div class="price-monthly">$4,950<span class="currency"> CAD/month</span></div>
+            <p class="price-note">Minimum 6 months · Custom pricing</p>
+          </div>
+
+          <div class="package-includes">
+            <h3 class="package-section-title">What's Included</h3>
+            <ul class="package-list">
+              <li>Everything in Tiers 1 & 2</li>
+              <li>4-5 authority-grade structured placements</li>
+              <li>Wikipedia strategy (if eligible — not guaranteed)</li>
+              <li>Industry association listings</li>
+              <li>Weekly monitoring</li>
+              <li>Managed execution of corrections</li>
+              <li>Full correction logs & provenance</li>
+              <li>Executive reporting</li>
+              <li>Priority support</li>
+            </ul>
+          </div>
+
+          <div class="package-cta">
+            <a href="https://calendly.com/your-calendly-link" target="_blank" rel="noopener" class="btn-primary btn-primary-full">
+              <span>Request Consultation</span>
+              <span class="icon">📅</span>
+            </a>
+          </div>
+
+          <div class="package-best-for">
+            <strong>Best for:</strong> Organizations treating AI visibility as critical infrastructure
+          </div>
+
+          <p class="pricing-note" style="margin-top: 16px; padding: 12px; background: rgba(255, 107, 107, 0.1); border-radius: 8px; font-size: 0.85rem;">
+            <strong>Important:</strong> Wikipedia inclusion depends on meeting their independent notability requirements and is not guaranteed.
+          </p>
+        </div>
+      </section>
+
+      <!-- COMPARISON TABLE -->
+      <section class="comparison-section">
+        <div class="section-header center">
+          <h2 class="section-title">Feature Comparison</h2>
+          <p class="section-subtitle">See what's included at each tier</p>
+        </div>
+
+        <div class="comparison-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Free</th>
+                <th>Tier 0</th>
+                <th>Tier 1</th>
+                <th>Tier 2</th>
+                <th>Tier 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>AI visibility scores</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+              </tr>
+              <tr>
+                <td>Human-reviewed analysis</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+              </tr>
+              <tr>
+                <td>Multi-platform testing</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+              </tr>
+              <tr>
+                <td>Canonical Truth File</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+              </tr>
+              <tr>
+                <td>Schema.org implementation</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+              </tr>
+              <tr>
+                <td>Monthly monitoring</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓ Bi-weekly</td>
+                <td class="check-yes">✓ Weekly</td>
+              </tr>
+              <tr>
+                <td>Drift detection alerts</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+                <td class="check-yes">✓</td>
+              </tr>
+              <tr>
+                <td>Extended structured surfaces</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓ 2-3</td>
+                <td class="check-yes">✓ 4-5</td>
+              </tr>
+              <tr>
+                <td>Managed corrections</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓</td>
+              </tr>
+              <tr>
+                <td>Wikipedia strategy</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓ If eligible</td>
+              </tr>
+              <tr>
+                <td>Executive reporting</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-no">✗</td>
+                <td class="check-yes">✓</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="faq-packages">
+        <div class="section-header center">
+          <h2 class="section-title">Pricing FAQ</h2>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">How is Tier 0 different from the free scan?</h3>
+          <div class="faq-answer">
+            <p>The <strong>free scan</strong> is an automated, AI-assisted estimate that gives you directional scores (Discovery, Accuracy, Authority). It's designed to show you THAT a problem might exist.</p>
+            <p><strong>Tier 0 ($495)</strong> is a human-reviewed snapshot where we actually query ChatGPT, Claude, and Perplexity about your business, analyze the responses against your actual truth, identify specific errors and confusion points, and give you written recommendations. It shows you WHAT the problem is.</p>
+            <p>Think of it like: Free scan = smoke detector. Tier 0 = Fire inspection report.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Can I upgrade later?</h3>
+          <div class="faq-answer">
+            <p>Yes. Many clients start with Tier 0 to understand the scope, then move to Tier 1 for ongoing management. We'll credit your Tier 0 payment toward Tier 1 setup if you upgrade within 30 days.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">What if I only need monitoring, not setup?</h3>
+          <div class="faq-answer">
+            <p>If your AI signals are already strong, we can offer monitoring-only packages starting at $650 CAD/month (similar to Tier 1 without the setup work). Contact us to discuss.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Do you offer monthly payment plans?</h3>
+          <div class="faq-answer">
+            <p>Setup fees are due upfront. Monthly service fees are billed at the beginning of each month. For Tier 3 enterprise clients, we can discuss custom payment terms.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">What's included in the setup fee?</h3>
+          <div class="faq-answer">
+            <p>Setup includes: initial business profile creation, baseline AI audit, Truth File v1.0, schema implementation, repository setup, and initial recommendations. This is one-time work that establishes your canonical foundation.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Can I cancel anytime?</h3>
+          <div class="faq-answer">
+            <p>After your minimum commitment period (3 months for Tier 1, 3-6 months for Tier 2, 6 months for Tier 3), you can cancel with 30 days' notice. Setup fees are non-refundable.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Do you guarantee Wikipedia inclusion?</h3>
+          <div class="faq-answer">
+            <p>No. Wikipedia has strict independent notability requirements that we cannot control. For Tier 3 clients, we develop a Wikipedia strategy IF you meet their criteria, but inclusion is never guaranteed. Most businesses don't qualify — and that's okay. We focus on what you CAN control.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FINAL CTA -->
+      <section class="section final-cta contrast">
+        <div class="container center narrow">
+          <h2 class="section-title">Ready to take control of your AI narrative?</h2>
+          <p class="section-subtitle">
+            Start with a free scan to see where you stand, or jump straight to comprehensive analysis.
+          </p>
+          <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
+            <a href="scan.html" class="btn-primary">
+              <span>Run Free Scan</span>
+              <span class="icon">→</span>
+            </a>
+            <a href="contact.html" class="btn-secondary">
+              <span>Schedule Consultation</span>
+              <span class="icon">📅</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </main>
 
   <custom-footer></custom-footer>
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
-
-  <style>
-    .table-wrapper {
-      overflow-x: auto;
-    }
-    .addons-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-    }
-    .addons-table th,
-    .addons-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border-subtle);
-      text-align: left;
-    }
-    .addons-table th {
-      font-weight: 600;
-      color: var(--text);
-    }
-    .addons-table td {
-      color: var(--muted);
-    }
-    .addons-table tr:last-child td {
-      border-bottom: none;
-    }
-  </style>
+  <script src="script.js"></script>
 </body>
 </html>
-
-

@@ -382,21 +382,35 @@
   <main id="main-content">
     <section class="scan-page">
       <div class="scan-header">
-        <div class="pill">VizAI Scan</div>
+        <div class="pill">Free AI Visibility Scan</div>
         <h1>See how AI understands your business</h1>
         <p>
-          Enter your business name, website, and email. VizAI generates a visibility report
-          you can keep — and we store it so you can compare future scans as you improve.
+          Get directional scores to understand IF visibility issues exist — then decide if you need deeper analysis.
+        </p>
+      </div>
+
+      <!-- What You'll Get Section -->
+      <div style="max-width: 620px; margin: 0 auto 32px; padding: 20px 24px; background: rgba(123, 92, 255, 0.06); border: 1px solid rgba(123, 92, 255, 0.15); border-radius: 16px;">
+        <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text, #f9fafb);">What This Free Scan Provides</h3>
+        <ul style="margin: 0; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">
+          <li>AI-assisted scores (Discovery, Accuracy, Authority)</li>
+          <li>Automated directional assessment</li>
+          <li>High-level visibility flags</li>
+          <li>Recommended next step based on your scores</li>
+        </ul>
+        <p style="margin: 12px 0 0; font-size: 0.85rem; color: var(--muted, #a0a3b1); border-top: 1px solid rgba(123, 92, 255, 0.12); padding-top: 12px;">
+          <strong>Important:</strong> This is a lightweight, automated baseline — not a comprehensive audit.
+          For human-reviewed analysis across ChatGPT, Claude, and Perplexity with detailed interpretation,
+          see our <a href="packages.html" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Tier 0 AI Understanding Snapshot ($495 CAD)</a>.
         </p>
       </div>
 
       <div class="scan-layout">
         <!-- Form card -->
         <div class="scan-card">
-          <h2>Run a VizAI Scan</h2>
+          <h2>Run Your Free Scan</h2>
           <p>
-            You’ll get Discovery, Accuracy, and Authority scores, plus key findings and a recommended next step.
-            We’ll email you a copy of the report.
+            Enter your details below. We'll email you a copy of the report and store it so you can track improvements over time.
           </p>
 
           <form id="scanForm">
@@ -546,6 +560,22 @@
             </details>
           </div>
         </div>
+
+        <!-- Next Steps Card (shown after results) -->
+        <div id="nextStepsCard" class="scan-card hidden" style="margin-top: 24px; border: 1px solid rgba(123, 92, 255, 0.2);">
+          <h2>What to Do Next</h2>
+          <div id="nextStepsContent"></div>
+          <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="packages.html" class="btn-primary" style="text-decoration: none;">
+              <span>View All Packages</span>
+              <span class="icon">→</span>
+            </a>
+            <a href="https://calendly.com/vizai/consultation" class="btn-secondary" style="text-decoration: none;">
+              <span>Schedule Consultation</span>
+              <span class="icon">📅</span>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -581,6 +611,8 @@
     const requestIdDisplayEl = document.getElementById("requestIdDisplay");
     const qaBlockEl = document.getElementById("qaBlock");
     const qaContentEl = document.getElementById("qaContent");
+    const nextStepsCardEl = document.getElementById("nextStepsCard");
+    const nextStepsContentEl = document.getElementById("nextStepsContent");
 
     // CAPTCHA token
     let captchaToken = null;
@@ -695,7 +727,7 @@
     });
 
     function computePackage(overall) {
-      let bandLabel, nextStepTitle, strategy;
+      let bandLabel, nextStepTitle, strategy, nextStepsHTML;
 
       if (overall >= 80) {
         bandLabel = "Strong visibility (80–100)";
@@ -703,6 +735,19 @@
         strategy =
           "You're in a strong position. The next step is monitoring and small fixes as AI answers drift over time. " +
           "We can help lock in a Truth File, verify schema, and run re-audits on a schedule.";
+        nextStepsHTML = `
+          <p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">
+            Your scores show <strong>strong AI visibility</strong>. You're being found and described accurately by AI systems.
+          </p>
+          <p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">
+            <strong>Recommended:</strong> Tier 1 (Foundation) to lock in your canonical truth and monitor for drift over time.
+            AI responses change as training data evolves — proactive monitoring prevents issues before they cost you deals.
+          </p>
+          <ul style="margin: 0; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">
+            <li><strong>Tier 1 - Foundation ($1,950 setup + $650/mo):</strong> Canonical Truth File, schema deployment, monthly monitoring</li>
+            <li><strong>Or schedule a consultation</strong> to discuss monitoring-only options</li>
+          </ul>
+        `;
       } else if (overall >= 40) {
         bandLabel = "Partial visibility (40–79)";
         nextStepTitle = "Recommended: Fix gaps + add structured signals";
@@ -710,15 +755,46 @@
           "AI likely finds you but misses key details or relies on weak sources. " +
           "Next step is improving structured data, strengthening your About/FAQ, " +
           "and seeding authoritative profiles so AI cites you correctly.";
+        nextStepsHTML = `
+          <p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">
+            Your scores show <strong>partial visibility</strong>. AI can find you, but it's missing key details or citing weak sources.
+          </p>
+          <p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">
+            <strong>Recommended path:</strong>
+          </p>
+          <ul style="margin: 0 0 16px; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">
+            <li><strong>Start with Tier 0 ($495 CAD):</strong> Get a human-reviewed snapshot showing exactly WHAT the problem is</li>
+            <li><strong>Then move to Tier 1 ($1,950 + $650/mo):</strong> Build your canonical profile, deploy schema, and start monitoring</li>
+          </ul>
+          <p style="color: var(--muted, #c0c2d8); font-size: 0.9rem;">
+            Without fixes, AI will continue giving prospects incomplete or inaccurate information about your business.
+          </p>
+        `;
       } else {
         bandLabel = "High-risk visibility (0–39)";
         nextStepTitle = "Recommended: Rebuild your AI presence";
         strategy =
           "AI may not recognize you, may confuse your services, or may cite competitors/directories instead. " +
           "Next step is establishing a canonical Truth File, deploying schema, and building authority sources to correct the record.";
+        nextStepsHTML = `
+          <p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">
+            Your scores indicate <strong>high-risk AI visibility</strong>. AI may not be finding you at all, or it's confusing you with competitors.
+          </p>
+          <p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">
+            <strong>Recommended path:</strong>
+          </p>
+          <ul style="margin: 0 0 16px; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">
+            <li><strong>Start with Tier 0 ($495 CAD):</strong> Human-reviewed analysis across ChatGPT, Claude, and Perplexity to identify confusion patterns</li>
+            <li><strong>Then move to Tier 1 ($1,950 + $650/mo):</strong> Build canonical profile from scratch, deploy structured data, establish authority sources</li>
+            <li><strong>Consider Tier 2 ($3,750 + $2,250/mo):</strong> If you need ongoing corrections and active management</li>
+          </ul>
+          <p style="color: var(--muted, #c0c2d8); font-size: 0.9rem;">
+            <strong>Why this matters:</strong> Every prospect asking AI about your business is getting the wrong story. This directly impacts pipeline.
+          </p>
+        `;
       }
 
-      return { bandLabel, nextStepTitle, strategy };
+      return { bandLabel, nextStepTitle, strategy, nextStepsHTML };
     }
 
     // Set loading state
@@ -847,7 +923,7 @@
           ? Number(data.overall_score)
           : Math.round((d + a + au) / 3);
 
-        const { bandLabel, nextStepTitle, strategy } = computePackage(overall);
+        const { bandLabel, nextStepTitle, strategy, nextStepsHTML } = computePackage(overall);
 
         overallScoreEl.textContent = `${overall}/100`;
         discoveryScoreEl.textContent = d;
@@ -857,6 +933,10 @@
         scoreBandTagEl.innerHTML = `<span>◎</span><span>${bandLabel}</span>`;
         packageTitleEl.textContent = nextStepTitle;
         packageTextEl.textContent = strategy;
+
+        // Populate next steps card
+        nextStepsContentEl.innerHTML = nextStepsHTML;
+        nextStepsCardEl.classList.remove("hidden");
 
         findingsListEl.innerHTML = "";
         const findings = Array.isArray(data.findings) ? data.findings : [];

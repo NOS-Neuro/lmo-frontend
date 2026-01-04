@@ -307,6 +307,84 @@
       opacity: 0.5;
     }
 
+    /* Add-ons Section */
+    .addons-section {
+      max-width: 1100px;
+      margin: 64px auto;
+      padding: 0 16px;
+    }
+
+    .addon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .addon-card {
+      background: var(--bg-elevated, #050611);
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle, #262738);
+      padding: 24px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .addon-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent, #7b5cff);
+    }
+
+    .addon-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    .addon-card p {
+      color: var(--muted, #c0c2d8);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .addon-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+
+    .addon-card ul li {
+      padding: 6px 0;
+      color: var(--muted, #c0c2d8);
+      font-size: 0.9rem;
+    }
+
+    .addon-card ul li:before {
+      content: "✓ ";
+      color: var(--accent-strong, #b89cff);
+      margin-right: 8px;
+    }
+
+    .addon-price {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--accent-strong, #b89cff);
+      margin-top: 16px;
+    }
+
+    .addon-cta {
+      text-align: center;
+      margin-top: 48px;
+      padding: 32px;
+      background: rgba(123, 92, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(123, 92, 255, 0.15);
+    }
+
+    .addon-cta p {
+      margin-bottom: 20px;
+      color: var(--muted, #c0c2d8);
+      font-size: 1.1rem;
+    }
+
     .faq-packages {
       margin: 60px auto;
       max-width: 800px;
@@ -513,7 +591,7 @@
           <div class="package-includes">
             <h3 class="package-section-title">What's Included</h3>
             <ul class="package-list">
-              <li>Canonical AI Business Model (GitHub repo)</li>
+              <li>Canonical AI Business Model (version-controlled repository)</li>
               <li>Core business definition & disambiguation</li>
               <li>Baseline AI audit (30 queries)</li>
               <li>Versioned Truth File (v1.0)</li>
@@ -620,8 +698,8 @@
           </div>
 
           <div class="package-cta">
-            <a href="https://calendly.com/your-calendly-link" target="_blank" rel="noopener" class="btn-primary btn-primary-full">
-              <span>Request Consultation</span>
+            <a href="https://calendly.com/vizai-governance" target="_blank" rel="noopener noreferrer" class="btn-primary btn-primary-full">
+              <span>Request Governance Consultation</span>
               <span class="icon">📅</span>
             </a>
           </div>
@@ -746,6 +824,90 @@
               </tr>
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <!-- ADD-ONS -->
+      <section id="addons" class="addons-section">
+        <div class="section-header center">
+          <h2 class="section-title">Service Add-Ons</h2>
+          <p class="section-subtitle">Enhance any tier with these specialized services</p>
+        </div>
+
+        <div class="addon-grid">
+          <div class="addon-card">
+            <h3>🎯 Competitor Comparison Report</h3>
+            <p>See how AI describes you vs. your top 3 competitors</p>
+            <ul>
+              <li>Side-by-side analysis</li>
+              <li>Gap identification</li>
+              <li>Positioning recommendations</li>
+            </ul>
+            <p class="addon-price">$750 CAD one-time</p>
+          </div>
+
+          <div class="addon-card">
+            <h3>📊 Extended Query Pack</h3>
+            <p>50 additional custom queries beyond standard baseline</p>
+            <ul>
+              <li>Industry-specific questions</li>
+              <li>Product/service deep-dive</li>
+              <li>Geographic variations</li>
+            </ul>
+            <p class="addon-price">$500 CAD one-time</p>
+          </div>
+
+          <div class="addon-card">
+            <h3>🔄 Quarterly Deep Audit</h3>
+            <p>Comprehensive re-audit every 3 months</p>
+            <ul>
+              <li>Full baseline re-run</li>
+              <li>Trend analysis</li>
+              <li>Strategy recommendations</li>
+            </ul>
+            <p class="addon-price">$950 CAD per quarter</p>
+          </div>
+
+          <div class="addon-card">
+            <h3>📝 Content Optimization</h3>
+            <p>Rewrite key website pages for AI optimization</p>
+            <ul>
+              <li>About page restructure</li>
+              <li>Service descriptions</li>
+              <li>FAQ creation</li>
+            </ul>
+            <p class="addon-price">$1,200 CAD per page</p>
+          </div>
+
+          <div class="addon-card">
+            <h3>🌐 Multi-Language Testing</h3>
+            <p>Test AI visibility in additional languages</p>
+            <ul>
+              <li>French, Spanish, German, etc.</li>
+              <li>Localized recommendations</li>
+              <li>Cross-language consistency check</li>
+            </ul>
+            <p class="addon-price">$600 CAD per language</p>
+          </div>
+
+          <div class="addon-card">
+            <h3>⚡ Priority Support</h3>
+            <p>Faster response times and direct access</p>
+            <ul>
+              <li>4-hour response guarantee</li>
+              <li>Direct phone/video support</li>
+              <li>Emergency drift alerts</li>
+            </ul>
+            <p class="addon-price">$250 CAD/month</p>
+          </div>
+        </div>
+
+        <div class="addon-cta">
+          <p>Want to discuss custom add-ons for your specific needs?</p>
+          <a href="contact.html" class="btn-primary">
+            <span>Contact Us</span>
+            <span class="icon">→</span>
+          </a>
         </div>
       </section>
 

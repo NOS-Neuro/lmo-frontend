@@ -55,27 +55,30 @@ class CustomFooter extends HTMLElement {
           <h3>VizAI</h3>
           <div class="footer-links">
             <a href="index.html">Home</a>
-            <a href="scan.html">Run VizAI Scan</a>
-            <a href="packages.html#packages">Packages</a>
-            <a href="packages.html#addons">Add-Ons</a>
+            <a href="scan.html">Run Free Scan</a>
+            <a href="packages.html">Pricing</a>
+            <a href="about.html">About</a>
           </div>
         </div>
 
         <div class="footer-column">
           <h3>Resources</h3>
           <div class="footer-links">
-            <a href="index.html#what-is-lmo">What is LMO?</a>
-            <a href="packages.html#how-scores-map">How the scoring works</a>
-            <a href="#">FAQ (coming soon)</a>
+            <a href="what-is-lmo.html">What is LMO?</a>
+            <a href="faq.html">FAQ</a>
+            <a href="agencies.html">For Agencies</a>
           </div>
         </div>
 
         <div class="footer-column">
           <h3>Company</h3>
           <div class="footer-links">
-            <a href="#contact">Contact</a>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <p style="margin-top: 12px; font-size: 0.85rem; color: var(--muted);">
+              Email: <a href="mailto:hello@vizai.io" style="color: var(--accent-strong);">hello@vizai.io</a>
+            </p>
           </div>
         </div>
       </div>

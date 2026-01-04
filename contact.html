@@ -2,65 +2,319 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Contact | VizAI</title>
+  <title>Contact Us | VizAI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Get in touch with VizAI. Questions about AI visibility? Let's talk." />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Contact VizAI" />
+  <meta property="og:description" content="Have questions about AI visibility? We're here to help." />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact VizAI" />
+  <meta name="twitter:description" content="Get in touch about AI visibility management" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://vizai.app/contact.html" />
+
+  <style>
+    .contact-page {
+      max-width: var(--max-width, 960px);
+      margin: 0 auto;
+      padding: 96px 16px 72px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 48px;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-info {
+      background: var(--bg-elevated, #050611);
+      border-radius: 20px;
+      border: 1px solid var(--border-subtle, #262738);
+      padding: 32px;
+    }
+
+    .contact-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    .contact-info p {
+      color: var(--muted, #c0c2d8);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .contact-info a {
+      color: var(--accent-strong, #b89cff);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-info a:hover {
+      color: var(--accent, #7b5cff);
+      text-decoration: underline;
+    }
+
+    .contact-form {
+      background: var(--bg-elevated, #050611);
+      border-radius: 20px;
+      border: 1px solid var(--border-subtle, #262738);
+      padding: 32px;
+    }
+
+    .form-field {
+      margin-bottom: 20px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--muted, #c4c5d4);
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle, #303244);
+      background: var(--bg-soft, #070818);
+      color: var(--text, #f9fafb);
+      font-size: 0.96rem;
+      outline: none;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: var(--muted, #7c7f96);
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--accent-strong, #8b5cff);
+      box-shadow: 0 0 0 1px rgba(139, 92, 255, 0.5);
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .form-status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .form-status.success {
+      display: block;
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      color: #4caf50;
+    }
+
+    .form-status.error {
+      display: block;
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+      color: #ff6b6b;
+    }
+
+    .contact-methods {
+      display: grid;
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .contact-method {
+      padding: 20px;
+      background: rgba(123, 92, 255, 0.05);
+      border: 1px solid rgba(123, 92, 255, 0.15);
+      border-radius: 12px;
+    }
+
+    .contact-method h4 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .contact-method p {
+      margin: 0;
+      color: var(--muted, #c0c2d8);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .contact-method a {
+      color: var(--accent-strong, #b89cff);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-method a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
+
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <custom-navbar></custom-navbar>
 
-  <main>
-    <section class="section-dark">
-      <div class="container narrow center">
-        <div class="pill">Contact</div>
-        <h1 class="section-title" style="margin-top: 12px;">
-          Talk to VizAI about your AI visibility.
-        </h1>
-        <p class="section-subtitle">
-          Whether you’re exploring your first VizAI Scan or considering an ongoing
-          LMO program, we’d love to hear from you.
+  <main id="main-content">
+    <section class="contact-page">
+      <div class="center">
+        <div class="pill">Contact Us</div>
+        <h1 class="section-title" style="margin-top: 12px;">Get in Touch</h1>
+        <p class="section-subtitle" style="max-width: 600px; margin: 16px auto 0;">
+          Have questions about AI visibility? Want to discuss your specific needs? We're here to help.
         </p>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="container two-column">
-        <div>
-          <h2 class="section-title">How to reach us</h2>
-          <p>
-            The simplest way to get in touch is by email. Share a bit about your
-            business, your current AI questions, and what you’re hoping to
-            understand or improve.
-          </p>
-          <p style="margin-top: 16px;">
-            <strong>Email:</strong>
-            <a href="mailto:hello@vizai.io"> hello@vizai.io</a>
-          </p>
-          <p class="muted" style="margin-top: 10px; font-size: 0.9rem;">
-            You can change this address at any time in the site code if you prefer
-            a different contact inbox.
-          </p>
-        </div>
+      <div class="contact-grid">
+        <!-- Contact Information -->
+        <div class="contact-info">
+          <h3>How to Reach Us</h3>
 
-        <div>
-          <div class="panel">
-            <div class="panel-inner">
-              <h3 style="margin-bottom: 8px;">Share a little context</h3>
-              <p class="muted" style="font-size: 0.9rem;">
-                When you email us, it helps if you include:
+          <div class="contact-methods">
+            <div class="contact-method">
+              <h4>For General Inquiries</h4>
+              <p>
+                Email: <a href="mailto:hello@vizai.io">hello@vizai.io</a><br>
+                We typically respond within 1 business day.
               </p>
-              <ul class="pricing-list" style="margin-top: 8px;">
-                <li>Your business name and website</li>
-                <li>Whether you’re a direct brand or an agency</li>
-                <li>Your main AI-related questions or pains</li>
-                <li>Any timelines or initiatives you’re working against</li>
-              </ul>
-              <p class="muted" style="margin-top: 10px; font-size: 0.85rem;">
-                We read every message carefully and respond as soon as we’re able.
+            </div>
+
+            <div class="contact-method">
+              <h4>For Tier 3 Enterprise Governance</h4>
+              <p>
+                Schedule a consultation to discuss custom AI governance needs:
+              </p>
+              <p style="margin-top: 12px;">
+                <a href="https://calendly.com/vizai-governance"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="btn-secondary"
+                   style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 10px 16px; border-radius: 8px; background: rgba(123, 92, 255, 0.1); border: 1px solid rgba(123, 92, 255, 0.3);">
+                  <span>Schedule Consultation</span>
+                  <span>📅</span>
+                </a>
+              </p>
+            </div>
+
+            <div class="contact-method">
+              <h4>For Current Clients</h4>
+              <p>
+                Email: <a href="mailto:support@vizai.io">support@vizai.io</a><br>
+                Support hours: Monday-Friday, 9am-5pm EST
+              </p>
+            </div>
+
+            <div class="contact-method">
+              <h4>Scan Results</h4>
+              <p>
+                Automated scan results are delivered instantly to your email.<br>
+                Questions about your results: <a href="mailto:scans@vizai.io">scans@vizai.io</a>
               </p>
             </div>
           </div>
+
+          <p style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-subtle, #262738); font-size: 0.85rem;">
+            <strong>Location:</strong> Canada<br>
+            <strong>Business Hours:</strong> Monday-Friday, 9am-5pm EST
+          </p>
         </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+          <h3 style="margin-bottom: 24px;">Send Us a Message</h3>
+
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-field">
+              <label for="name">Name *</label>
+              <input type="text" id="name" name="name" required placeholder="Your name">
+            </div>
+
+            <div class="form-field">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required placeholder="your@email.com">
+            </div>
+
+            <div class="form-field">
+              <label for="company">Company</label>
+              <input type="text" id="company" name="company" placeholder="Your company (optional)">
+            </div>
+
+            <div class="form-field">
+              <label for="interest">I'm interested in: *</label>
+              <select id="interest" name="interest" required>
+                <option value="">Select...</option>
+                <option value="tier0">Tier 0 - AI Understanding Snapshot ($495 CAD)</option>
+                <option value="tier1">Tier 1 - Canonical AI Foundation</option>
+                <option value="tier2">Tier 2 - AI Signal Reinforcement</option>
+                <option value="tier3">Tier 3 - Managed Governance</option>
+                <option value="question">General Question</option>
+                <option value="support">Technical Support</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="message">Message *</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Tell us about your needs or questions..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary submit-btn">
+              <span>Send Message</span>
+              <span class="icon">→</span>
+            </button>
+
+            <div id="formStatus" class="form-status"></div>
+          </form>
+
+          <p style="margin-top: 20px; font-size: 0.8rem; color: var(--muted, #7e8195);">
+            Note: You'll need to set up a Formspree account and replace YOUR_FORM_ID in the form action above.
+            Sign up at <a href="https://formspree.io" target="_blank" rel="noopener" style="color: var(--accent-strong);">formspree.io</a> using hello@vizai.io.
+          </p>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="center" style="margin-top: 64px; padding: 40px 24px; background: rgba(123, 92, 255, 0.05); border-radius: 20px; border: 1px solid rgba(123, 92, 255, 0.15);">
+        <h2 style="margin-bottom: 16px;">Not sure where to start?</h2>
+        <p style="color: var(--muted, #c0c2d8); margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto;">
+          Run a free visibility scan to see if AI is describing your business correctly. Takes less than 60 seconds.
+        </p>
+        <a href="scan.html" class="btn-primary">
+          <span>Run Free Scan</span>
+          <span class="icon">⚡</span>
+        </a>
       </div>
     </section>
   </main>
@@ -68,5 +322,22 @@
   <custom-footer></custom-footer>
   <script src="components/navbar.js"></script>
   <script src="components/footer.js"></script>
+
+  <script>
+    // Simple form handling
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('formStatus');
+
+    form.addEventListener('submit', function(e) {
+      // Form will submit to Formspree
+      // Show loading state
+      statusEl.textContent = 'Sending message...';
+      statusEl.className = 'form-status';
+      statusEl.style.display = 'block';
+    });
+
+    // Note: Formspree will handle the actual submission and redirect
+    // You can customize the success/error handling based on Formspree's response
+  </script>
 </body>
 </html>

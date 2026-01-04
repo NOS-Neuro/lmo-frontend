@@ -616,17 +616,20 @@ pre {
 }
 
 .step-number {
-  width: 48px;
+  min-width: 48px;
+  width: fit-content;
   height: 48px;
+  padding: 0 16px;
   background: linear-gradient(120deg, rgba(123,92,255,1), rgba(179,156,255,1));
   color: #0b0d13;
-  border-radius: 50%;
-  display: flex;
+  border-radius: 24px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   margin: 0 auto 16px;
+  white-space: nowrap;
 }
 
 /* ---------------------------------------

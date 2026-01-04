@@ -82,12 +82,12 @@ class CustomNavbar extends HTMLElement {
         </a>
         <div class="nav-links">
           <a href="index.html">Home</a>
-          <a href="scan.html">Run VizAI Scan</a>
-          <a href="index.html#pricing">Pricing</a>
-          <a href="index.html#contact">Contact</a>
+          <a href="packages.html">Pricing</a>
+          <a href="about.html">About</a>
+          <a href="faq.html">FAQ</a>
           <a href="scan.html" class="cta">
-            <span>Run Scan</span>
-            <span class="icon">↗</span>
+            <span>Run Free Scan</span>
+            <span class="icon">⚡</span>
           </a>
         </div>
       </nav>

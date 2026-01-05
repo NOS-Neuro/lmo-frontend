@@ -256,7 +256,9 @@
         <div class="contact-form">
           <h3 style="margin-bottom: 24px;">Send Us a Message</h3>
 
-          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <form id="contactForm" action="https://formspree.io/f/mvzgdedo" method="POST">
+            <input type="hidden" name="_subject" value="New VizAI Contact Form Submission">
+
             <div class="form-field">
               <label for="name">Name *</label>
               <input type="text" id="name" name="name" required placeholder="Your name">
@@ -264,7 +266,7 @@
 
             <div class="form-field">
               <label for="email">Email *</label>
-              <input type="email" id="email" name="email" required placeholder="your@email.com">
+              <input type="email" id="email" name="_replyto" required placeholder="your@email.com">
             </div>
 
             <div class="form-field">
@@ -290,6 +292,9 @@
               <textarea id="message" name="message" rows="5" required placeholder="Tell us about your needs or questions..."></textarea>
             </div>
 
+            <!-- Formspree honey pot (spam protection) -->
+            <input type="text" name="_gotcha" style="display:none">
+
             <button type="submit" class="btn-primary submit-btn">
               <span>Send Message</span>
               <span class="icon">→</span>
@@ -297,11 +302,6 @@
 
             <div id="formStatus" class="form-status"></div>
           </form>
-
-          <p style="margin-top: 20px; font-size: 0.8rem; color: var(--muted, #7e8195);">
-            Note: You'll need to set up a Formspree account and replace YOUR_FORM_ID in the form action above.
-            Sign up at <a href="https://formspree.io" target="_blank" rel="noopener" style="color: var(--accent-strong);">formspree.io</a> using hello@vizai.io.
-          </p>
         </div>
       </div>
 
@@ -324,20 +324,47 @@
   <script src="components/footer.js"></script>
 
   <script>
-    // Simple form handling
+    // Enhanced form handling with Formspree
     const form = document.getElementById('contactForm');
     const statusEl = document.getElementById('formStatus');
 
-    form.addEventListener('submit', function(e) {
-      // Form will submit to Formspree
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
       // Show loading state
       statusEl.textContent = 'Sending message...';
       statusEl.className = 'form-status';
       statusEl.style.display = 'block';
-    });
 
-    // Note: Formspree will handle the actual submission and redirect
-    // You can customize the success/error handling based on Formspree's response
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          statusEl.textContent = 'Thanks for reaching out! We\'ll get back to you within 1 business day at ' + form.querySelector('[name="_replyto"]').value;
+          statusEl.className = 'form-status success';
+          form.reset();
+        } else {
+          const data = await response.json();
+          if (data.errors) {
+            statusEl.textContent = 'Oops! There was a problem: ' + data.errors.map(error => error.message).join(', ');
+          } else {
+            statusEl.textContent = 'Oops! There was a problem. Please email us directly at hello@vizai.io';
+          }
+          statusEl.className = 'form-status error';
+        }
+      } catch (error) {
+        statusEl.textContent = 'Oops! There was a problem. Please email us directly at hello@vizai.io';
+        statusEl.className = 'form-status error';
+      }
+    });
   </script>
 </body>
 </html>

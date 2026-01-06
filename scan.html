@@ -819,14 +819,29 @@
 
       if (!navigator.onLine) {
         message = "No internet connection. Please check your network and try again.";
+      } else if (error.message.includes("CAPTCHA") || error.message.includes("Captcha")) {
+        // Use backend error message if available, otherwise use default
+        message = error.message.startsWith("API error")
+          ? "CAPTCHA verification failed. Please refresh the page and try again."
+          : error.message;
+        // Reset captcha widget
+        if (window.turnstile) {
+          window.turnstile.reset();
+        }
       } else if (error.message.includes("429")) {
         message = "Too many requests. Please wait a moment and try again.";
-      } else if (error.message.includes("400")) {
-        message = "Invalid input. Please check your information and try again.";
-      } else if (error.message.includes("500") || error.message.includes("503")) {
-        message = "Our servers are temporarily unavailable. Please try again in a few minutes.";
+      } else if (error.message.startsWith("API error")) {
+        // Generic API error fallback
+        if (error.message.includes("500") || error.message.includes("503")) {
+          message = "Our servers are temporarily unavailable. Please try again in a few minutes.";
+        } else {
+          message = "Invalid request. Please check your information and try again.";
+        }
       } else if (error.message.includes("timeout") || error.name === "AbortError") {
         message = "Request timed out. Please try again.";
+      } else if (error.message.length > 10 && !error.message.startsWith("API error")) {
+        // Use the backend's detailed error message directly
+        message = error.message;
       }
 
       statusElement.textContent = message;
@@ -909,8 +924,19 @@
         clearTimeout(timeoutId);
 
         if (!resp.ok) {
-          const txt = await resp.text().catch(() => "");
-          throw new Error(`API error ${resp.status} ${txt}`);
+          let errorMessage = `API error ${resp.status}`;
+          try {
+            const errorData = await resp.json();
+            if (errorData.detail) {
+              errorMessage = errorData.detail;
+            }
+          } catch {
+            const txt = await resp.text().catch(() => "");
+            if (txt) {
+              errorMessage = `${errorMessage} ${txt}`;
+            }
+          }
+          throw new Error(errorMessage);
         }
 
         const data = await resp.json();

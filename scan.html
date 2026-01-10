@@ -32,6 +32,12 @@
   <!-- <script src="https://browser.sentry-cdn.com/7.x.x/bundle.min.js" crossorigin="anonymous"></script> -->
   <script src="error-tracking.js"></script>
 
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+
   <style>
     /* Page layout */
     .scan-page {
@@ -1030,10 +1036,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-

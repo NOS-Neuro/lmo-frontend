@@ -85,6 +85,7 @@ class CustomNavbar extends HTMLElement {
           <a href="packages.html">Pricing</a>
           <a href="about.html">About</a>
           <a href="faq.html">FAQ</a>
+          <a href="onboarding-form.html">Onboarding</a>
           <a href="contact.html">Contact</a>
           <a href="scan.html" class="cta">
             <span>Run Free Scan</span>

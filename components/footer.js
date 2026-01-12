@@ -67,7 +67,8 @@ class CustomFooter extends HTMLElement {
             <a href="what-is-lmo.html">What is LMO?</a>
             <a href="faq.html">FAQ</a>
             <a href="agencies.html">For Agencies</a>
-            <a href="https://github.com/vizai/business-registry" target="_blank" rel="noopener noreferrer">VizAI Business Registry</a>
+            <a href="onboarding-form.html">Onboarding</a>
+            <a href="https://vizai-io.github.io/business-registry/" target="_blank" rel="noopener noreferrer">VizAI Business Registry</a>
           </div>
         </div>
 

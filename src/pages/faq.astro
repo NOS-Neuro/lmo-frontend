@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="FAQ | VizAI" description="Common questions about AI visibility — transparent answers about what we do, what we don't do, and how our services work.">
+  <Fragment slot="head">
+    <style>
+      .faq-item {
+        margin-bottom: 24px;
+        padding: 20px;
+        background: var(--bg-soft, #070818);
+        border: 1px solid var(--border-subtle, #303244);
+        border-radius: 12px;
+      }
+      .faq-item h3 {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+      }
+      .faq-item p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+    </style>
+  </Fragment>
+
+  <section class="section-dark">
+    <div class="container narrow center">
+      <div class="pill">FAQ</div>
+      <h1 class="section-title" style="margin-top: 12px;">Common questions about AI visibility</h1>
+      <p class="section-subtitle">Transparent answers about what we do, what we don't do, and how our services work.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow">
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>What's the difference between the free scan and the $495 Tier 0 snapshot?</h3>
+          <p>The <strong>free scan</strong> is an automated, AI-assisted assessment that gives you directional scores (Discovery, Accuracy, Authority). It helps you understand IF issues exist, but it's not a comprehensive audit.</p>
+          <p style="margin-top: 8px;"><strong>Tier 0 ($495 CAD)</strong> is a human-reviewed analysis where we manually test your business across ChatGPT, Claude, and Perplexity, identify confusion patterns, flag accuracy issues, and provide written interpretation and recommendations. It shows you WHAT the problem is, not just that a problem exists.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Does the free scan actually query real AI models?</h3>
+          <p>Yes. The free scan uses real AI APIs to test how models respond to questions about your business. However, it's automated and uses AI-assisted scoring — not comprehensive human review like our paid tiers.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can you guarantee Wikipedia placement or editing?</h3>
+          <p><strong>No.</strong> Wikipedia has strict editorial policies and we cannot guarantee placement, editing success, or that pages will remain live. We can help you understand Wikipedia's requirements and prepare accurate information, but we don't promise outcomes we can't control.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What is a "Canonical Truth File"?</h3>
+          <p>It's a structured, authoritative profile of your business containing all the facts AI systems should know: what you do, where you operate, your specialties, key differentiators, and more. Think of it as the single source of truth that AI can reference instead of guessing or relying on outdated directories.</p>
+          <p style="margin-top: 8px;">We build this in Tier 1 and higher. It's stored in a machine-readable format (JSON, schema markup, etc.) that AI systems can reliably access and cite.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How long does it take to see results?</h3>
+          <p><strong>Free scan:</strong> Immediate (30-60 seconds)<br><strong>Tier 0 snapshot:</strong> 3-5 business days for human review and written analysis<br><strong>Tier 1 implementation:</strong> 2-4 weeks to build and deploy your canonical profile and schema<br><strong>Monitoring results:</strong> AI training data evolves slowly. Expect meaningful visibility changes over 2-6 months, not overnight.</p>
+          <p style="margin-top: 8px;">We track progress monthly and show you how AI responses are changing over time.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is this the same as SEO?</h3>
+          <p><strong>No.</strong> SEO focuses on search engine rankings (Google, Bing). AI visibility focuses on how ChatGPT, Claude, Perplexity, and similar systems describe and recommend you when people ask questions conversationally.</p>
+          <p style="margin-top: 8px;">They're complementary. SEO helps people find you via search. AI visibility ensures they get accurate information when they ask AI about you. 40% of prospects now ask AI before visiting websites — that's a different discovery layer than traditional search.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Which AI systems do you test?</h3>
+          <p>Our <strong>paid tiers</strong> (Tier 0 and higher) include human-reviewed testing across <strong>ChatGPT, Claude, and Perplexity</strong>.</p>
+          <p style="margin-top: 8px;">The <strong>free scan</strong> uses AI-assisted estimation and may test a subset of models. It's directional, not comprehensive.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can you force AI to change what it says about us?</h3>
+          <p><strong>No.</strong> We can't "control" AI systems. What we <em>can</em> do:</p>
+          <ul style="margin-top: 8px; padding-left: 20px; line-height: 1.7;">
+            <li>Give AI better, more authoritative data to reference</li>
+            <li>Deploy structured schema so AI has clear facts to cite</li>
+            <li>Submit corrections when AI gets facts demonstrably wrong</li>
+            <li>Monitor how AI descriptions evolve over time</li>
+          </ul>
+          <p style="margin-top: 8px;">AI systems make their own decisions about what to say. We improve the inputs they use to make those decisions.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What if I already have good SEO? Do I still need this?</h3>
+          <p>Probably yes. SEO helps people find your website in search results. AI visibility ensures that when people <em>ask AI about you directly</em>, they get accurate information.</p>
+          <p style="margin-top: 8px;">AI doesn't just link to your site — it <strong>describes you in its own words</strong>. If that description is wrong, outdated, or confusing, good SEO won't fix it. You need structured, authoritative data that AI can reliably cite.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How often should we monitor AI visibility?</h3>
+          <p><strong>Monthly</strong> is standard for active monitoring (included in Tier 1 and above). AI training data evolves gradually, so quarterly checks may be sufficient if your business is stable.</p>
+          <p style="margin-top: 8px;">If you're launching new services, rebranding, or have had recent press coverage, more frequent monitoring helps ensure AI picks up the changes correctly.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can we white-label VizAI for our clients?</h3>
+          <p>Yes. Agencies can bundle VizAI services under their own brand. See <a href="/agencies" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">VizAI for Agencies</a> for details.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Do you offer refunds?</h3>
+          <p><strong>Tier 0 snapshots:</strong> Full refund if we don't deliver the analysis within 7 business days.<br><strong>Tier 1+:</strong> Setup fees are non-refundable once work begins. Monthly retainers can be cancelled with 30 days notice.</p>
+          <p style="margin-top: 8px;">We're transparent about what we can and can't deliver. If you're unsure, start with the free scan or Tier 0 snapshot before committing to ongoing services.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How does your scoring work?</h3>
+          <p>Our AI visibility scores measure three key dimensions:</p>
+
+          <h4 style="margin-top: 16px; font-size: 1rem;">Discovery Score (0-100)</h4>
+          <p>Measures how easily AI systems can find and recognize your business.</p>
+          <ul style="margin-top: 8px; padding-left: 20px; line-height: 1.7;">
+            <li>Can AI find you when asked directly about your company?</li>
+            <li>Does AI recognize you in industry or category searches?</li>
+            <li>How often does AI provide "no information available" responses?</li>
+          </ul>
+
+          <h4 style="margin-top: 16px; font-size: 1rem;">Accuracy Score (0-100)</h4>
+          <p>Measures how correctly AI describes what you do, who you serve, and key facts.</p>
+          <ul style="margin-top: 8px; padding-left: 20px; line-height: 1.7;">
+            <li>Does AI describe your services accurately?</li>
+            <li>Are key details (location, founding, offerings) correct?</li>
+            <li>Does AI confuse you with competitors or similar companies?</li>
+          </ul>
+
+          <h4 style="margin-top: 16px; font-size: 1rem;">Authority Score (0-100)</h4>
+          <p>Measures whether AI trusts your authoritative sources or relies on outdated/third-party information.</p>
+          <ul style="margin-top: 8px; padding-left: 20px; line-height: 1.7;">
+            <li>Does AI cite your website vs. directories?</li>
+            <li>Are citations from recent, authoritative sources?</li>
+            <li>How often does AI use qualified language ("I think," "possibly")?</li>
+          </ul>
+
+          <h4 style="margin-top: 16px; font-size: 1rem;">Overall Score</h4>
+          <p>Weighted average of Discovery, Accuracy, and Authority scores, providing a single metric for your AI visibility health.</p>
+
+          <p style="margin-top: 12px; padding: 12px; background: rgba(123, 92, 255, 0.08); border-radius: 8px; font-size: 0.85rem;">
+            <strong>Note:</strong> Free scan uses AI-assisted estimation. Tier 1+ services use comprehensive multi-platform testing for precise scores.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How do I get started?</h3>
+          <p><strong>1. Run the free scan</strong> to see if you have visibility issues<br><strong>2. Review your scores</strong> and recommended next steps<br><strong>3. Upgrade to Tier 0</strong> for human-reviewed analysis, or jump to Tier 1 if you're ready to fix issues<br><strong>4. Schedule a consultation</strong> if you have questions or need custom solutions</p>
+          <div style="margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="/scan" class="btn-primary" style="text-decoration: none;">
+              <span>Run Free Scan</span>
+              <span class="icon">⚡</span>
+            </a>
+            <a href="/packages" class="btn-secondary" style="text-decoration: none;">
+              <span>View Pricing</span>
+              <span class="icon">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

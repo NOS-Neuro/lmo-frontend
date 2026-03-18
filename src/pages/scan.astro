@@ -1,0 +1,995 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Run VizAI Scan | VizAI"
+  description="Run a free VizAI scan to see how AI understands your business. Get Discovery, Accuracy, and Authority scores in under 60 seconds."
+  canonicalPath="/scan"
+  ogTitle="Run VizAI Scan | VizAI"
+  ogDescription="Run a free VizAI scan to see how AI understands your business. Get Discovery, Accuracy, and Authority scores in under 60 seconds."
+  twitterTitle="Run VizAI Scan | VizAI"
+  twitterDescription="Run a free VizAI scan to see how AI understands your business."
+>
+  <Fragment slot="head">
+    <link rel="dns-prefetch" href="https://lmo-backend.onrender.com">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <style>
+      /* Page layout */
+      .scan-page {
+        max-width: var(--max-width, 960px);
+        margin: 0 auto;
+        padding: 96px 16px 72px;
+      }
+
+      .scan-header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .scan-header h1 {
+        font-size: clamp(1.9rem, 4vw, 2.4rem);
+        margin-bottom: 8px;
+      }
+
+      .scan-header p {
+        color: var(--muted, #a0a3b1);
+        font-size: 0.98rem;
+      }
+
+      .scan-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+        max-width: 580px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 768px) {
+        .scan-layout { grid-template-columns: 1fr; }
+      }
+
+      /* Card + form */
+      .scan-card {
+        background: var(--bg-elevated, #050611);
+        border-radius: 20px;
+        border: 1px solid var(--border-subtle, #262738);
+        padding: 24px 20px;
+      }
+
+      .scan-card h2 { font-size: 1.2rem; margin-bottom: 8px; }
+
+      .scan-card p {
+        color: var(--muted, #a0a3b1);
+        font-size: 0.92rem;
+        margin-bottom: 18px;
+      }
+
+      .scan-field { margin-bottom: 16px; }
+
+      .scan-label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 6px;
+        color: var(--muted, #c4c5d4);
+      }
+
+      .scan-input {
+        width: 100%;
+        max-width: 100%;
+        padding: 0.75rem 0.9rem;
+        border-radius: 10px;
+        border: 1px solid var(--border-subtle, #303244);
+        background: var(--bg-soft, #070818);
+        color: var(--text, #f9fafb);
+        font-size: 0.96rem;
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      .scan-input::placeholder { color: var(--muted, #7c7f96); }
+
+      .scan-input:focus {
+        border-color: var(--accent-strong, #8b5cff);
+        box-shadow: 0 0 0 1px rgba(139, 92, 255, 0.5);
+      }
+
+      .scan-help {
+        font-size: 0.8rem;
+        color: var(--muted, #7e8195);
+        margin-top: 2px;
+      }
+
+      .scan-submit { margin-top: 12px; }
+
+      .btn-primary-full { width: 100%; justify-content: center; }
+
+      .scan-status {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: var(--muted, #a0a3b1);
+      }
+
+      .hidden { display: none; }
+
+      .results-card {
+        background: var(--bg-elevated, #050611);
+        border-radius: 20px;
+        border: 1px solid var(--border-subtle, #262738);
+        padding: 24px 20px;
+      }
+
+      .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .results-header h2 { font-size: 1.1rem; }
+
+      .overall-score { font-size: 1.6rem; font-weight: 600; }
+
+      .score-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      @media (max-width: 540px) { .score-grid { grid-template-columns: 1fr; } }
+
+      .score-chip {
+        background: var(--bg-soft, #070818);
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-size: 0.85rem;
+      }
+
+      .score-label { color: var(--muted, #a0a3b1); margin-bottom: 2px; }
+
+      .score-value { font-size: 1.1rem; font-weight: 600; }
+
+      .package-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(139, 92, 255, 0.12);
+        color: var(--accent-strong, #b89cff);
+        margin-bottom: 8px;
+      }
+
+      .findings-list {
+        font-size: 0.9rem;
+        color: var(--muted, #c0c2d8);
+        margin-top: 6px;
+        padding-left: 18px;
+      }
+
+      .findings-list li + li { margin-top: 4px; }
+
+      .strategy-block {
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border-subtle, #262738);
+        font-size: 0.9rem;
+      }
+
+      .strategy-title { font-weight: 500; margin-bottom: 4px; }
+
+      .strategy-text { color: var(--muted, #c0c2d8); }
+
+      /* Checkbox row */
+      .check-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: var(--bg-soft, #070818);
+        border: 1px solid var(--border-subtle, #303244);
+        margin-top: 8px;
+      }
+
+      .check-row input {
+        width: 16px;
+        height: 16px;
+        margin-top: 2px;
+        accent-color: var(--accent-strong, #8b5cff);
+      }
+
+      .check-row label {
+        font-size: 0.88rem;
+        color: var(--muted, #c0c2d8);
+        line-height: 1.25rem;
+        cursor: pointer;
+      }
+
+      .mini-note {
+        font-size: 0.78rem;
+        color: var(--muted, #7e8195);
+        margin-top: 8px;
+      }
+
+      /* Validation styles */
+      .scan-input.error {
+        border-color: var(--danger, #ff6b6b);
+        box-shadow: 0 0 0 1px rgba(255, 107, 107, 0.3);
+      }
+
+      .scan-input.success {
+        border-color: #4caf50;
+      }
+
+      .scan-help.error {
+        color: var(--danger, #ff6b6b);
+        font-size: 0.78rem;
+        margin-top: 4px;
+      }
+
+      /* Loading state */
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .btn-spinner {
+        display: none;
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #0b0d13;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+      }
+
+      .btn-spinner:not(.hidden) {
+        display: inline-block;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* CAPTCHA styling */
+      .captcha-container {
+        margin: 16px 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      .captcha-error {
+        color: var(--danger, #ff6b6b);
+        font-size: 0.8rem;
+        margin-top: 4px;
+        text-align: center;
+      }
+
+      /* Q&A collapsible section */
+      .qa-details {
+        margin-top: 12px;
+      }
+
+      .qa-summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 12px 16px;
+        background: var(--bg-soft, #070818);
+        border: 1px solid var(--border-subtle, #303244);
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        color: var(--accent-strong, #b39cff);
+        transition: all 0.2s;
+      }
+
+      .qa-summary:hover {
+        background: rgba(123, 92, 255, 0.05);
+        border-color: var(--accent, #7b5cff);
+      }
+
+      .qa-summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .qa-toggle {
+        transition: transform 0.2s;
+        font-size: 0.8rem;
+      }
+
+      .qa-details[open] .qa-toggle {
+        transform: rotate(180deg);
+      }
+
+      .qa-content {
+        margin-top: 12px;
+        padding: 16px;
+        background: var(--bg-soft, #070818);
+        border: 1px solid var(--border-subtle, #303244);
+        border-radius: 12px;
+      }
+
+      .qa-item {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border-subtle, #303244);
+      }
+
+      .qa-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .qa-question {
+        font-weight: 600;
+        color: var(--text, #f8f9ff);
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+      }
+
+      .qa-answer {
+        color: var(--muted, #c0c2d8);
+        line-height: 1.6;
+        font-size: 0.9rem;
+        white-space: pre-wrap;
+      }
+
+      .request-id-display {
+        font-size: 0.75rem;
+        color: var(--muted, #7e8195);
+        margin-top: 8px;
+        font-family: monospace;
+      }
+    </style>
+  </Fragment>
+
+  <section class="scan-page">
+    <div class="scan-header">
+      <div class="pill">Free AI Visibility Scan</div>
+      <h1>See how AI understands your business</h1>
+      <p>
+        Get directional scores to understand IF visibility issues exist — then decide if you need deeper analysis.
+      </p>
+    </div>
+
+    <!-- What You'll Get Section -->
+    <div style="max-width: 620px; margin: 0 auto 32px; padding: 20px 24px; background: rgba(123, 92, 255, 0.06); border: 1px solid rgba(123, 92, 255, 0.15); border-radius: 16px;">
+      <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text, #f9fafb);">What This Free Scan Provides</h3>
+      <ul style="margin: 0; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">
+        <li>AI-assisted scores (Discovery, Accuracy, Authority)</li>
+        <li>Automated directional assessment</li>
+        <li>High-level visibility flags</li>
+        <li>Recommended next step based on your scores</li>
+      </ul>
+      <p style="margin: 12px 0 0; font-size: 0.85rem; color: var(--muted, #a0a3b1); border-top: 1px solid rgba(123, 92, 255, 0.12); padding-top: 12px;">
+        <strong>Important:</strong> This is a lightweight, automated baseline — not a comprehensive audit.
+        For human-reviewed analysis across ChatGPT, Claude, and Perplexity with detailed interpretation,
+        see our <a href="/packages" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Tier 0 AI Understanding Snapshot ($495 CAD)</a>.
+      </p>
+    </div>
+
+    <div class="scan-layout">
+      <!-- Form card -->
+      <div class="scan-card">
+        <h2>Run Your Free Scan</h2>
+        <p>
+          Enter your details below. We'll email you a copy of the report and store it so you can track improvements over time.
+        </p>
+
+        <form id="scanForm">
+          <div class="scan-field">
+            <label for="businessName" class="scan-label">Business Name</label>
+            <input
+              id="businessName"
+              type="text"
+              required
+              aria-required="true"
+              aria-describedby="businessName-help"
+              class="scan-input"
+              placeholder="Your company name"
+              minlength="2"
+              maxlength="100"
+            />
+            <div id="businessName-help" class="scan-help hidden"></div>
+          </div>
+
+          <div class="scan-field">
+            <label for="industry" class="scan-label">Industry (optional)</label>
+            <input
+              id="industry"
+              type="text"
+              aria-describedby="industry-help"
+              class="scan-input"
+              placeholder="e.g., SaaS, Manufacturing, Professional Services"
+              maxlength="100"
+            />
+            <div id="industry-help" class="scan-help"></div>
+          </div>
+
+          <div class="scan-field">
+            <label for="website" class="scan-label">Website URL</label>
+            <input
+              id="website"
+              type="url"
+              required
+              aria-required="true"
+              aria-describedby="website-help"
+              class="scan-input"
+              placeholder="https://yourbusiness.com"
+              pattern="https?://.+"
+            />
+            <div id="website-help" class="scan-help hidden"></div>
+          </div>
+
+          <div class="scan-field">
+            <label for="contactEmail" class="scan-label">Email (send me the report)</label>
+            <input
+              id="contactEmail"
+              type="email"
+              required
+              aria-required="true"
+              aria-describedby="contactEmail-help"
+              class="scan-input"
+              placeholder="you@company.com"
+            />
+            <div id="contactEmail-help" class="scan-help hidden"></div>
+          </div>
+
+          <div class="check-row">
+            <input id="requestContact" type="checkbox" />
+            <label for="requestContact">
+              Please contact me to discuss improving these results.
+              <div class="mini-note">If checked, the VizAI team will be notified.</div>
+            </label>
+          </div>
+
+          <!-- Cloudflare Turnstile CAPTCHA Widget -->
+          <div class="captcha-container">
+            <div class="cf-turnstile"
+                 id="captcha-widget"
+                 data-sitekey="0x4AAAAAACKFgDePvecVK5kQ"
+                 data-callback="onCaptchaSuccess"
+                 data-error-callback="onCaptchaError"
+                 data-theme="dark"></div>
+          </div>
+          <div id="captchaError" class="captcha-error hidden"></div>
+
+          <p class="scan-help" style="margin-top: 10px; margin-bottom: 10px;">
+            This scan typically takes 30–60 seconds. The report is AI-assisted and intended as a directional baseline.
+          </p>
+
+          <div class="scan-submit">
+            <button type="submit" class="btn-primary btn-primary-full" id="scanSubmitButton" aria-busy="false">
+              <span id="btnText">Run VizAI Scan</span>
+              <span class="icon" id="btnIcon">&#x26A1;</span>
+              <span class="btn-spinner hidden" id="btnSpinner"></span>
+            </button>
+          </div>
+
+          <div id="scanStatus" class="scan-status hidden"></div>
+
+          <div class="mini-note">
+            By running a scan you agree we may store the result for comparison over time. We don't sell scan data.
+          </div>
+        </form>
+      </div>
+
+      <!-- Results card -->
+      <div id="results" class="results-card hidden">
+        <div class="results-header">
+          <div>
+            <div class="package-tag" id="scoreBandTag">
+              <span>&#x25CE;</span>
+              <span>Score band</span>
+            </div>
+            <h2 id="resultsTitle">Your VizAI results</h2>
+          </div>
+          <div class="overall-score" id="overallScore"></div>
+        </div>
+
+        <div class="score-grid">
+          <div class="score-chip">
+            <div class="score-label">Discovery</div>
+            <div class="score-value" id="discoveryScore">&ndash;</div>
+          </div>
+          <div class="score-chip">
+            <div class="score-label">Accuracy</div>
+            <div class="score-value" id="accuracyScore">&ndash;</div>
+          </div>
+          <div class="score-chip">
+            <div class="score-label">Authority</div>
+            <div class="score-value" id="authorityScore">&ndash;</div>
+          </div>
+        </div>
+
+        <div id="packageBlock" class="strategy-block">
+          <div class="strategy-title" id="packageTitle">Recommended next step</div>
+          <div class="strategy-text" id="packageText"></div>
+          <div class="request-id-display" id="requestIdDisplay" style="display: none;"></div>
+        </div>
+
+        <div class="strategy-block">
+          <div class="strategy-title">Key findings</div>
+          <ul class="findings-list" id="findingsList"></ul>
+        </div>
+
+        <div class="strategy-block" id="qaBlock" style="display: none;">
+          <details class="qa-details">
+            <summary class="qa-summary">
+              <span>View raw AI responses</span>
+              <span class="qa-toggle">&#x25BC;</span>
+            </summary>
+            <div class="qa-content" id="qaContent"></div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Next Steps Card (shown after results) -->
+      <div id="nextStepsCard" class="scan-card hidden" style="margin-top: 24px; border: 1px solid rgba(123, 92, 255, 0.2);">
+        <h2>What to Do Next</h2>
+        <div id="nextStepsContent"></div>
+        <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="/packages" class="btn-primary" style="text-decoration: none;">
+            <span>View All Packages</span>
+            <span class="icon">&rarr;</span>
+          </a>
+          <a href="https://calendly.com/vizai/consultation" class="btn-secondary" style="text-decoration: none;">
+            <span>Schedule Consultation</span>
+            <span class="icon">&#x1F4C5;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    const API_BASE = "https://lmo-backend.onrender.com";
+
+    const form = document.getElementById("scanForm");
+    const statusEl = document.getElementById("scanStatus");
+    const resultsCard = document.getElementById("results");
+    const submitBtn = document.getElementById("scanSubmitButton");
+    const btnText = document.getElementById("btnText");
+    const btnIcon = document.getElementById("btnIcon");
+    const btnSpinner = document.getElementById("btnSpinner");
+
+    const businessNameInput = document.getElementById("businessName");
+    const websiteInput = document.getElementById("website");
+    const contactEmailInput = document.getElementById("contactEmail");
+    const captchaErrorEl = document.getElementById("captchaError");
+
+    const overallScoreEl = document.getElementById("overallScore");
+    const discoveryScoreEl = document.getElementById("discoveryScore");
+    const accuracyScoreEl = document.getElementById("accuracyScore");
+    const authorityScoreEl = document.getElementById("authorityScore");
+    const findingsListEl = document.getElementById("findingsList");
+    const scoreBandTagEl = document.getElementById("scoreBandTag");
+    const packageTitleEl = document.getElementById("packageTitle");
+    const packageTextEl = document.getElementById("packageText");
+    const requestIdDisplayEl = document.getElementById("requestIdDisplay");
+    const qaBlockEl = document.getElementById("qaBlock");
+    const qaContentEl = document.getElementById("qaContent");
+    const nextStepsCardEl = document.getElementById("nextStepsCard");
+    const nextStepsContentEl = document.getElementById("nextStepsContent");
+
+    // CAPTCHA token
+    var captchaToken = null;
+
+    // CAPTCHA callbacks (must be global for Turnstile)
+    window.onCaptchaSuccess = function(token) {
+      captchaToken = token;
+      captchaErrorEl.classList.add("hidden");
+    };
+
+    window.onCaptchaError = function() {
+      captchaToken = null;
+      captchaErrorEl.textContent = "CAPTCHA verification failed. Please try again.";
+      captchaErrorEl.classList.remove("hidden");
+    };
+
+    // Rate limiting
+    var lastSubmitTime = 0;
+    var MIN_SUBMIT_INTERVAL = 5000; // 5 seconds between submissions
+
+    // Input sanitization
+    function sanitizeInput(input) {
+      return input.trim().replace(/[<>]/g, '');
+    }
+
+    // Validation functions
+    function validateBusinessName(name) {
+      var sanitized = sanitizeInput(name);
+      if (!sanitized || sanitized.length < 2) {
+        return { valid: false, message: "Business name must be at least 2 characters" };
+      }
+      if (sanitized.length > 100) {
+        return { valid: false, message: "Business name must be less than 100 characters" };
+      }
+      return { valid: true, value: sanitized };
+    }
+
+    function validateWebsite(url) {
+      var sanitized = sanitizeInput(url);
+      try {
+        var urlObj = new URL(sanitized);
+        if (!['http:', 'https:'].includes(urlObj.protocol)) {
+          return { valid: false, message: "URL must start with http:// or https://" };
+        }
+        return { valid: true, value: sanitized };
+      } catch (e) {
+        return { valid: false, message: "Please enter a valid URL (e.g., https://example.com)" };
+      }
+    }
+
+    function validateEmail(email) {
+      var sanitized = sanitizeInput(email);
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(sanitized)) {
+        return { valid: false, message: "Please enter a valid email address" };
+      }
+      return { valid: true, value: sanitized };
+    }
+
+    // Show validation error
+    function showError(input, message) {
+      input.classList.add("error");
+      input.classList.remove("success");
+      var helpId = input.getAttribute("aria-describedby");
+      var helpEl = document.getElementById(helpId);
+      if (helpEl) {
+        helpEl.textContent = message;
+        helpEl.classList.remove("hidden");
+        helpEl.classList.add("error");
+      }
+    }
+
+    // Clear validation error
+    function clearError(input) {
+      input.classList.remove("error");
+      input.classList.add("success");
+      var helpId = input.getAttribute("aria-describedby");
+      var helpEl = document.getElementById(helpId);
+      if (helpEl) {
+        helpEl.textContent = "";
+        helpEl.classList.add("hidden");
+        helpEl.classList.remove("error");
+      }
+    }
+
+    // Real-time validation
+    businessNameInput.addEventListener("blur", function() {
+      var result = validateBusinessName(businessNameInput.value);
+      if (!result.valid) {
+        showError(businessNameInput, result.message);
+      } else {
+        clearError(businessNameInput);
+      }
+    });
+
+    websiteInput.addEventListener("blur", function() {
+      var result = validateWebsite(websiteInput.value);
+      if (!result.valid) {
+        showError(websiteInput, result.message);
+      } else {
+        clearError(websiteInput);
+      }
+    });
+
+    contactEmailInput.addEventListener("blur", function() {
+      var result = validateEmail(contactEmailInput.value);
+      if (!result.valid) {
+        showError(contactEmailInput, result.message);
+      } else {
+        clearError(contactEmailInput);
+      }
+    });
+
+    function computePackage(overall) {
+      var bandLabel, nextStepTitle, strategy, nextStepsHTML;
+
+      if (overall >= 80) {
+        bandLabel = "Strong visibility (80\u2013100)";
+        nextStepTitle = "Recommended: Monitoring + drift checks";
+        strategy =
+          "You're in a strong position. The next step is monitoring and small fixes as AI answers drift over time. " +
+          "We can help lock in a Truth File, verify schema, and run re-audits on a schedule.";
+        nextStepsHTML =
+          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
+            'Your scores show <strong>strong AI visibility</strong>. You\'re being found and described accurately by AI systems.' +
+          '</p>' +
+          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
+            '<strong>Recommended:</strong> Tier 1 (Foundation) to lock in your canonical truth and monitor for drift over time. ' +
+            'AI responses change as training data evolves \u2014 proactive monitoring prevents issues before they cost you deals.' +
+          '</p>' +
+          '<ul style="margin: 0; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">' +
+            '<li><strong>Tier 1 - Foundation ($1,950 setup + $650/mo):</strong> Canonical Truth File, schema deployment, monthly monitoring \u2014 <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Get started</a></li>' +
+            '<li><strong>Or schedule a consultation</strong> to discuss monitoring-only options</li>' +
+          '</ul>';
+      } else if (overall >= 40) {
+        bandLabel = "Partial visibility (40\u201379)";
+        nextStepTitle = "Recommended: Fix gaps + add structured signals";
+        strategy =
+          "AI likely finds you but misses key details or relies on weak sources. " +
+          "Next step is improving structured data, strengthening your About/FAQ, " +
+          "and seeding authoritative profiles so AI cites you correctly.";
+        nextStepsHTML =
+          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
+            'Your scores show <strong>partial visibility</strong>. AI can find you, but it\'s missing key details or citing weak sources.' +
+          '</p>' +
+          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
+            '<strong>Recommended path:</strong>' +
+          '</p>' +
+          '<ul style="margin: 0 0 16px; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">' +
+            '<li><strong>Start with Tier 0 ($495 CAD):</strong> Get a human-reviewed snapshot showing exactly WHAT the problem is \u2014 <a href="https://buy.stripe.com/eVqfZad4zc3SapnfhgcMM00" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Purchase snapshot</a></li>' +
+            '<li><strong>Then move to Tier 1 ($1,950 + $650/mo):</strong> Build your canonical profile, deploy schema, and start monitoring \u2014 <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Get started</a></li>' +
+          '</ul>' +
+          '<p style="color: var(--muted, #c0c2d8); font-size: 0.9rem;">' +
+            'Without fixes, AI will continue giving prospects incomplete or inaccurate information about your business.' +
+          '</p>';
+      } else {
+        bandLabel = "High-risk visibility (0\u201339)";
+        nextStepTitle = "Recommended: Rebuild your AI presence";
+        strategy =
+          "AI may not recognize you, may confuse your services, or may cite competitors/directories instead. " +
+          "Next step is establishing a canonical Truth File, deploying schema, and building authority sources to correct the record.";
+        nextStepsHTML =
+          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
+            'Your scores indicate <strong>high-risk AI visibility</strong>. AI may not be finding you at all, or it\'s confusing you with competitors.' +
+          '</p>' +
+          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
+            '<strong>Recommended path:</strong>' +
+          '</p>' +
+          '<ul style="margin: 0 0 16px; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">' +
+            '<li><strong>Start with Tier 0 ($495 CAD):</strong> Human-reviewed analysis across ChatGPT, Claude, and Perplexity to identify confusion patterns \u2014 <a href="https://buy.stripe.com/eVqfZad4zc3SapnfhgcMM00" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Purchase snapshot</a></li>' +
+            '<li><strong>Then move to Tier 1 ($1,950 + $650/mo):</strong> Build canonical profile from scratch, deploy structured data, establish authority sources \u2014 <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Get started</a></li>' +
+            '<li><strong>Consider Tier 2 ($3,750 + $2,250/mo):</strong> If you need ongoing corrections and active management \u2014 <a href="https://buy.stripe.com/bJeaEQ9Sn4BqeFDd98cMM02" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Get started</a></li>' +
+          '</ul>' +
+          '<p style="color: var(--muted, #c0c2d8); font-size: 0.9rem;">' +
+            '<strong>Why this matters:</strong> Every prospect asking AI about your business is getting the wrong story. This directly impacts pipeline.' +
+          '</p>';
+      }
+
+      return { bandLabel: bandLabel, nextStepTitle: nextStepTitle, strategy: strategy, nextStepsHTML: nextStepsHTML };
+    }
+
+    // Set loading state
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      submitBtn.setAttribute("aria-busy", loading ? "true" : "false");
+
+      if (loading) {
+        btnText.textContent = "Scanning...";
+        btnIcon.classList.add("hidden");
+        btnSpinner.classList.remove("hidden");
+      } else {
+        btnText.textContent = "Run VizAI Scan";
+        btnIcon.classList.remove("hidden");
+        btnSpinner.classList.add("hidden");
+      }
+    }
+
+    // Show user-friendly error
+    function showUserError(error, statusElement) {
+      var message = "An error occurred. Please try again.";
+
+      if (!navigator.onLine) {
+        message = "No internet connection. Please check your network and try again.";
+      } else if (error.message.includes("CAPTCHA") || error.message.includes("Captcha")) {
+        // Use backend error message if available, otherwise use default
+        message = error.message.startsWith("API error")
+          ? "CAPTCHA verification failed. Please refresh the page and try again."
+          : error.message;
+        // Reset captcha widget
+        if (window.turnstile) {
+          window.turnstile.reset();
+        }
+      } else if (error.message.includes("429")) {
+        message = "Too many requests. Please wait a moment and try again.";
+      } else if (error.message.startsWith("API error")) {
+        // Generic API error fallback
+        if (error.message.includes("500") || error.message.includes("503")) {
+          message = "Our servers are temporarily unavailable. Please try again in a few minutes.";
+        } else {
+          message = "Invalid request. Please check your information and try again.";
+        }
+      } else if (error.message.includes("timeout") || error.name === "AbortError") {
+        message = "Request timed out. Please try again.";
+      } else if (error.message.length > 10 && !error.message.startsWith("API error")) {
+        // Use the backend's detailed error message directly
+        message = error.message;
+      }
+
+      statusElement.textContent = message;
+      statusElement.classList.remove("hidden");
+    }
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      // Check rate limiting
+      var now = Date.now();
+      if (now - lastSubmitTime < MIN_SUBMIT_INTERVAL) {
+        var waitTime = Math.ceil((MIN_SUBMIT_INTERVAL - (now - lastSubmitTime)) / 1000);
+        statusEl.textContent = "Please wait " + waitTime + " seconds before submitting again.";
+        statusEl.classList.remove("hidden");
+        return;
+      }
+
+      // Validate all fields
+      var nameValidation = validateBusinessName(businessNameInput.value);
+      var websiteValidation = validateWebsite(websiteInput.value);
+      var emailValidation = validateEmail(contactEmailInput.value);
+
+      var hasErrors = false;
+
+      if (!nameValidation.valid) {
+        showError(businessNameInput, nameValidation.message);
+        hasErrors = true;
+      }
+      if (!websiteValidation.valid) {
+        showError(websiteInput, websiteValidation.message);
+        hasErrors = true;
+      }
+      if (!emailValidation.valid) {
+        showError(contactEmailInput, emailValidation.message);
+        hasErrors = true;
+      }
+
+      if (hasErrors) return;
+
+      // Validate CAPTCHA
+      if (!captchaToken) {
+        captchaErrorEl.textContent = "Please complete the CAPTCHA verification.";
+        captchaErrorEl.classList.remove("hidden");
+        return;
+      }
+
+      var businessName = nameValidation.value;
+      var website = websiteValidation.value;
+      var contactEmail = emailValidation.value;
+      var requestContact = !!document.getElementById("requestContact").checked;
+      var industry = sanitizeInput(document.getElementById("industry").value) || null;
+
+      lastSubmitTime = now;
+      statusEl.textContent = "Running VizAI Scan\u2026 (30\u201360s)";
+      statusEl.classList.remove("hidden");
+      resultsCard.classList.add("hidden");
+      setLoading(true);
+
+      // Set timeout for long-running requests
+      var controller = new AbortController();
+      var timeoutId = setTimeout(function() { controller.abort(); }, 90000); // 90 second timeout
+
+      try {
+        var resp = await fetch(API_BASE + "/run_scan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            businessName: businessName,
+            industry: industry,
+            website: website,
+            contactEmail: contactEmail,
+            requestContact: requestContact,
+            captchaToken: captchaToken,
+            models: []
+          }),
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!resp.ok) {
+          var errorMessage = "API error " + resp.status;
+          try {
+            var errorData = await resp.json();
+            if (errorData.detail) {
+              errorMessage = errorData.detail;
+            }
+          } catch (jsonErr) {
+            var txt = "";
+            try { txt = await resp.text(); } catch (txtErr) {}
+            if (txt) {
+              errorMessage = errorMessage + " " + txt;
+            }
+          }
+          throw new Error(errorMessage);
+        }
+
+        var data = await resp.json();
+
+        var d = Number(data.discovery_score || 0);
+        var a = Number(data.accuracy_score || 0);
+        var au = Number(data.authority_score || 0);
+
+        var overall = Number.isFinite(Number(data.overall_score))
+          ? Number(data.overall_score)
+          : Math.round((d + a + au) / 3);
+
+        var pkg = computePackage(overall);
+
+        overallScoreEl.textContent = overall + "/100";
+        discoveryScoreEl.textContent = d;
+        accuracyScoreEl.textContent = a;
+        authorityScoreEl.textContent = au;
+
+        scoreBandTagEl.innerHTML = "<span>\u25CE</span><span>" + pkg.bandLabel + "</span>";
+        packageTitleEl.textContent = pkg.nextStepTitle;
+        packageTextEl.textContent = pkg.strategy;
+
+        // Populate next steps card
+        nextStepsContentEl.innerHTML = pkg.nextStepsHTML;
+        nextStepsCardEl.classList.remove("hidden");
+
+        findingsListEl.innerHTML = "";
+        var findings = Array.isArray(data.findings) ? data.findings : [];
+        if (findings.length) {
+          findings.forEach(function(f) {
+            var li = document.createElement("li");
+            li.textContent = f;
+            findingsListEl.appendChild(li);
+          });
+        } else {
+          var li = document.createElement("li");
+          li.textContent = "No detailed findings were returned for this scan.";
+          findingsListEl.appendChild(li);
+        }
+
+        // Display request ID
+        var requestId = resp.headers.get("X-Request-ID");
+        if (requestId) {
+          requestIdDisplayEl.textContent = "Request ID: " + requestId;
+          requestIdDisplayEl.style.display = "block";
+        }
+
+        // Display Q&A pairs
+        var qaPairs = Array.isArray(data.qa_pairs) ? data.qa_pairs : [];
+        if (qaPairs.length > 0) {
+          qaContentEl.innerHTML = "";
+          qaPairs.forEach(function(qa) {
+            var qaItem = document.createElement("div");
+            qaItem.className = "qa-item";
+
+            var question = document.createElement("div");
+            question.className = "qa-question";
+            question.textContent = qa.question;
+
+            var answer = document.createElement("div");
+            answer.className = "qa-answer";
+            answer.textContent = qa.answer;
+
+            qaItem.appendChild(question);
+            qaItem.appendChild(answer);
+            qaContentEl.appendChild(qaItem);
+          });
+          qaBlockEl.style.display = "block";
+        }
+
+        resultsCard.classList.remove("hidden");
+        statusEl.classList.add("hidden");
+        resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch (err) {
+        // Track error
+        if (window.trackError) {
+          window.trackError(err, {
+            context: 'scan_form_submission',
+            businessName: businessName,
+            website: website
+          });
+        }
+
+        showUserError(err, statusEl);
+      } finally {
+        clearTimeout(timeoutId);
+        setLoading(false);
+      }
+    });
+  </script>
+</BaseLayout>

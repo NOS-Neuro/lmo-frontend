@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -lh /c/Projects/lmo-frontend/*.html)",
+      "Bash(wc -l /c/Projects/lmo-frontend/style.css /c/Projects/lmo-frontend/script.js /c/Projects/lmo-frontend/*.html)",
+      "Bash(find /c/Projects/lmo-frontend -name .gitignore -o -name vercel.json -o -name *.config.*)",
+      "Bash(npm install:*)",
+      "Bash(npx astro:*)",
+      "Bash(find /c/Projects/lmo-frontend/dist -name *.html)"
+    ]
+  }
+}

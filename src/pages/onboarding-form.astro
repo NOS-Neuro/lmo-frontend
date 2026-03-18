@@ -1,0 +1,838 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Business Profile Data Collection | VizAI"
+  description="Help us create your canonical business profile and VizAI Registry entry by providing accurate information about your business."
+  canonicalPath="/onboarding-form"
+  ogTitle="Business Profile Data Collection | VizAI"
+  ogDescription="Help us create your canonical business profile and VizAI Registry entry."
+>
+  <Fragment slot="head">
+    <style>
+      /* Page layout */
+      .onboarding-page {
+        max-width: var(--max-width, 800px);
+        margin: 0 auto;
+        padding: 96px 16px 72px;
+      }
+
+      .onboarding-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .onboarding-header h1 {
+        font-size: clamp(1.9rem, 4vw, 2.4rem);
+        margin-bottom: 12px;
+      }
+
+      .onboarding-header p {
+        color: var(--muted, #a0a3b1);
+        font-size: 1rem;
+        line-height: 1.6;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      .progress-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 32px 0;
+        flex-wrap: wrap;
+      }
+
+      .progress-step {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        background: var(--bg-soft, #070818);
+        border: 1px solid var(--border-subtle, #303244);
+        border-radius: 999px;
+        color: var(--muted, #7e8195);
+      }
+
+      .progress-step.active {
+        background: rgba(123, 92, 255, 0.15);
+        border-color: var(--accent, #7b5cff);
+        color: var(--accent-strong, #b39cff);
+      }
+
+      .progress-step.completed {
+        background: rgba(76, 175, 80, 0.15);
+        border-color: #4caf50;
+        color: #4caf50;
+      }
+
+      /* Form sections */
+      .form-section {
+        background: var(--bg-elevated, #050611);
+        border-radius: 20px;
+        border: 1px solid var(--border-subtle, #262738);
+        padding: 32px 28px;
+        margin-bottom: 24px;
+      }
+
+      .form-section h2 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+        color: var(--accent-light, #b39cff);
+      }
+
+      .form-section-subtitle {
+        color: var(--muted, #a0a3b1);
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+      }
+
+      /* Form fields */
+      .form-field {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 6px;
+        color: var(--text, #f8f9ff);
+      }
+
+      .form-label .required {
+        color: var(--accent-strong, #b39cff);
+        margin-left: 2px;
+      }
+
+      .form-input,
+      .form-textarea,
+      .form-select {
+        width: 100%;
+        max-width: 100%;
+        padding: 0.75rem 0.9rem;
+        border-radius: 10px;
+        border: 1px solid var(--border-subtle, #303244);
+        background: var(--bg-soft, #070818);
+        color: var(--text, #f9fafb);
+        font-size: 0.96rem;
+        outline: none;
+        box-sizing: border-box;
+        font-family: inherit;
+      }
+
+      .form-textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .form-input::placeholder,
+      .form-textarea::placeholder {
+        color: var(--muted, #7c7f96);
+      }
+
+      .form-input:focus,
+      .form-textarea:focus,
+      .form-select:focus {
+        border-color: var(--accent-strong, #8b5cff);
+        box-shadow: 0 0 0 1px rgba(139, 92, 255, 0.5);
+      }
+
+      .form-help {
+        font-size: 0.8rem;
+        color: var(--muted, #7e8195);
+        margin-top: 4px;
+        font-style: italic;
+      }
+
+      .char-counter {
+        font-size: 0.75rem;
+        color: var(--muted, #7e8195);
+        text-align: right;
+        margin-top: 4px;
+      }
+
+      /* Validation */
+      .form-input.error,
+      .form-textarea.error,
+      .form-select.error {
+        border-color: var(--danger, #ff6b6b);
+        box-shadow: 0 0 0 1px rgba(255, 107, 107, 0.3);
+      }
+
+      .error-message {
+        color: var(--danger, #ff6b6b);
+        font-size: 0.8rem;
+        margin-top: 4px;
+      }
+
+      /* Submit section */
+      .submit-section {
+        margin-top: 40px;
+        text-align: center;
+        padding: 32px 28px;
+        background: var(--bg-elevated, #050611);
+        border-radius: 20px;
+        border: 1px solid var(--border-subtle, #262738);
+      }
+
+      .submit-section p {
+        color: var(--muted, #a0a3b1);
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+      }
+
+      .btn-primary-full {
+        width: 100%;
+        max-width: 400px;
+        justify-content: center;
+      }
+
+      /* Confirmation message */
+      .confirmation-message {
+        display: none;
+        text-align: center;
+        padding: 60px 32px;
+        background: var(--bg-elevated, #050611);
+        border-radius: 20px;
+        border: 1px solid var(--accent, #7b5cff);
+      }
+
+      .confirmation-message.show {
+        display: block;
+      }
+
+      .confirmation-message h2 {
+        font-size: 2rem;
+        margin-bottom: 16px;
+        color: var(--accent-strong, #b39cff);
+      }
+
+      .confirmation-message p {
+        color: var(--muted, #c0c2d8);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 12px;
+      }
+
+      @media (max-width: 768px) {
+        .onboarding-page {
+          padding: 80px 12px 48px;
+        }
+
+        .form-section {
+          padding: 24px 20px;
+        }
+
+        .progress-indicator {
+          gap: 6px;
+        }
+
+        .progress-step {
+          font-size: 0.7rem;
+          padding: 4px 8px;
+        }
+      }
+    </style>
+  </Fragment>
+
+  <div class="onboarding-page">
+
+    <!-- Header -->
+    <div class="onboarding-header">
+      <h1>Business Profile Data Collection</h1>
+      <p>
+        To create your canonical business profile and VizAI Registry entry, we need accurate information directly from you.
+        This form should take 10-15 minutes to complete. All information will be used to create your VizAI Business Profile.
+      </p>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator">
+      <div class="progress-step active" data-section="1">Identity</div>
+      <div class="progress-step" data-section="2">Description</div>
+      <div class="progress-step" data-section="3">Products</div>
+      <div class="progress-step" data-section="4">Location</div>
+      <div class="progress-step" data-section="5">Leadership</div>
+      <div class="progress-step" data-section="6">Online</div>
+      <div class="progress-step" data-section="7">Verification</div>
+      <div class="progress-step" data-section="8">Context</div>
+    </div>
+
+    <!-- Form -->
+    <form id="onboarding-form" action="https://formspree.io/f/mvzgdedo" method="POST">
+
+      <!-- Section 1: Business Identity -->
+      <div class="form-section" data-section="1">
+        <h2>1. Business Identity</h2>
+        <p class="form-section-subtitle">Basic information about your business structure and identity.</p>
+
+        <div class="form-field">
+          <label class="form-label" for="legal-name">
+            Legal Business Name <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="legal-name"
+            name="legal-name"
+            class="form-input"
+            required
+            maxlength="200"
+            placeholder="e.g., Acme Corporation Inc."
+          />
+          <p class="form-help">The official registered name of your business.</p>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="trading-name">
+            Common/Trading Name (if different)
+          </label>
+          <input
+            type="text"
+            id="trading-name"
+            name="trading-name"
+            class="form-input"
+            maxlength="200"
+            placeholder="e.g., Acme"
+          />
+          <p class="form-help">The name you commonly use in business, if different from legal name.</p>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="website">
+            Business Domain/Website <span class="required">*</span>
+          </label>
+          <input
+            type="url"
+            id="website"
+            name="website"
+            class="form-input"
+            required
+            placeholder="https://example.com"
+          />
+          <p class="form-help">Your primary business website (must be verifiable).</p>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="year-founded">
+            Year Founded
+          </label>
+          <input
+            type="number"
+            id="year-founded"
+            name="year-founded"
+            class="form-input"
+            min="1800"
+            max="2026"
+            placeholder="e.g., 2015"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="business-type">
+            Business Type <span class="required">*</span>
+          </label>
+          <select id="business-type" name="business-type" class="form-select" required>
+            <option value="">Select a type...</option>
+            <option value="corporation">Corporation</option>
+            <option value="llc">LLC</option>
+            <option value="partnership">Partnership</option>
+            <option value="sole-proprietorship">Sole Proprietorship</option>
+            <option value="non-profit">Non-Profit</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section 2: Business Description -->
+      <div class="form-section" data-section="2">
+        <h2>2. Business Description</h2>
+        <p class="form-section-subtitle">Help us understand what your business does and why it exists.</p>
+
+        <div class="form-field">
+          <label class="form-label" for="elevator-pitch">
+            Elevator Pitch <span class="required">*</span>
+          </label>
+          <textarea
+            id="elevator-pitch"
+            name="elevator-pitch"
+            class="form-textarea"
+            required
+            maxlength="280"
+            rows="3"
+            placeholder="Describe your business in one or two sentences..."
+          ></textarea>
+          <p class="form-help">How would you describe your business in a single sentence?</p>
+          <div class="char-counter"><span id="pitch-count">0</span>/280 characters</div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="detailed-description">
+            Detailed Description <span class="required">*</span>
+          </label>
+          <textarea
+            id="detailed-description"
+            name="detailed-description"
+            class="form-textarea"
+            required
+            maxlength="2500"
+            rows="6"
+            placeholder="What does your business do? What problems do you solve? Who do you serve?"
+          ></textarea>
+          <p class="form-help">What does your business do? What problems do you solve? Who do you serve? (2-3 paragraphs, max 500 words)</p>
+          <div class="char-counter"><span id="description-count">0</span>/2500 characters</div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="founding-story">
+            Founding Story (Optional)
+          </label>
+          <textarea
+            id="founding-story"
+            name="founding-story"
+            class="form-textarea"
+            maxlength="1500"
+            rows="4"
+            placeholder="Why was the business started? What inspired the founding?"
+          ></textarea>
+          <p class="form-help">Why was the business started? What inspired the founding? (1-2 paragraphs)</p>
+          <div class="char-counter"><span id="story-count">0</span>/1500 characters</div>
+        </div>
+      </div>
+
+      <!-- Section 3: Products & Services -->
+      <div class="form-section" data-section="3">
+        <h2>3. Products & Services</h2>
+        <p class="form-section-subtitle">What you offer and who you serve.</p>
+
+        <div class="form-field">
+          <label class="form-label" for="primary-offerings">
+            Primary Offerings <span class="required">*</span>
+          </label>
+          <textarea
+            id="primary-offerings"
+            name="primary-offerings"
+            class="form-textarea"
+            required
+            maxlength="1500"
+            rows="5"
+            placeholder="List your key products or services. Be specific."
+          ></textarea>
+          <p class="form-help">List your key products or services. Be specific.</p>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="target-customers">
+            Target Customers <span class="required">*</span>
+          </label>
+          <textarea
+            id="target-customers"
+            name="target-customers"
+            class="form-textarea"
+            required
+            maxlength="1000"
+            rows="4"
+            placeholder="Who are your ideal customers? Industries, company sizes, roles?"
+          ></textarea>
+          <p class="form-help">Who are your ideal customers? Industries, company sizes, roles?</p>
+        </div>
+      </div>
+
+      <!-- Section 4: Location & Contact -->
+      <div class="form-section" data-section="4">
+        <h2>4. Location & Contact</h2>
+        <p class="form-section-subtitle">Where you're located and how to reach you.</p>
+
+        <div class="form-field">
+          <label class="form-label" for="hq-city">
+            Headquarters City <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="hq-city"
+            name="hq-city"
+            class="form-input"
+            required
+            placeholder="e.g., San Francisco"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="hq-state">
+            Headquarters State/Province <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="hq-state"
+            name="hq-state"
+            class="form-input"
+            required
+            placeholder="e.g., California"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="hq-country">
+            Headquarters Country <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="hq-country"
+            name="hq-country"
+            class="form-input"
+            required
+            placeholder="e.g., United States"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="contact-email">
+            Primary Contact Email <span class="required">*</span>
+          </label>
+          <input
+            type="email"
+            id="contact-email"
+            name="contact-email"
+            class="form-input"
+            required
+            placeholder="contact@example.com"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="phone">
+            Phone Number (Optional)
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            class="form-input"
+            placeholder="+1 (555) 123-4567"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="additional-locations">
+            Additional Locations (Optional)
+          </label>
+          <textarea
+            id="additional-locations"
+            name="additional-locations"
+            class="form-textarea"
+            maxlength="500"
+            rows="3"
+            placeholder="List any other office locations or regions you serve..."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Section 5: Leadership -->
+      <div class="form-section" data-section="5">
+        <h2>5. Leadership</h2>
+        <p class="form-section-subtitle">Key people behind your business.</p>
+
+        <div class="form-field">
+          <label class="form-label" for="ceo-founder">
+            CEO/Founder Name (Optional)
+          </label>
+          <input
+            type="text"
+            id="ceo-founder"
+            name="ceo-founder"
+            class="form-input"
+            placeholder="e.g., Jane Smith"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="key-leadership">
+            Key Leadership (Optional)
+          </label>
+          <textarea
+            id="key-leadership"
+            name="key-leadership"
+            class="form-textarea"
+            maxlength="500"
+            rows="3"
+            placeholder="Other key executives you'd like mentioned..."
+          ></textarea>
+          <p class="form-help">Other key executives you'd like mentioned.</p>
+        </div>
+      </div>
+
+      <!-- Section 6: Online Presence -->
+      <div class="form-section" data-section="6">
+        <h2>6. Online Presence</h2>
+        <p class="form-section-subtitle">Your business's digital footprint.</p>
+
+        <div class="form-field">
+          <label class="form-label" for="linkedin-url">
+            LinkedIn Company Page URL
+          </label>
+          <input
+            type="url"
+            id="linkedin-url"
+            name="linkedin-url"
+            class="form-input"
+            placeholder="https://linkedin.com/company/your-company"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="twitter-handle">
+            Twitter/X Handle
+          </label>
+          <input
+            type="text"
+            id="twitter-handle"
+            name="twitter-handle"
+            class="form-input"
+            placeholder="@yourcompany"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="crunchbase-url">
+            Crunchbase URL
+          </label>
+          <input
+            type="url"
+            id="crunchbase-url"
+            name="crunchbase-url"
+            class="form-input"
+            placeholder="https://crunchbase.com/organization/your-company"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="other-profiles">
+            Other Relevant Profiles (Optional)
+          </label>
+          <textarea
+            id="other-profiles"
+            name="other-profiles"
+            class="form-textarea"
+            maxlength="500"
+            rows="3"
+            placeholder="GitHub, Medium, YouTube, industry-specific platforms..."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Section 7: Verification -->
+      <div class="form-section" data-section="7">
+        <h2>7. Verification</h2>
+        <p class="form-section-subtitle">Confirm your authority to represent this business.</p>
+
+        <div class="form-field">
+          <label class="form-label" for="verification-method">
+            How would you like to verify domain ownership? <span class="required">*</span>
+          </label>
+          <select id="verification-method" name="verification-method" class="form-select" required>
+            <option value="">Select a method...</option>
+            <option value="meta-tag">Add verification meta tag to website</option>
+            <option value="dns-txt">DNS TXT record</option>
+            <option value="email">Email from company domain</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="authorized-name">
+            Authorized Contact Name <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="authorized-name"
+            name="authorized-name"
+            class="form-input"
+            required
+            placeholder="Your full name"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="authorized-email">
+            Authorized Contact Email <span class="required">*</span>
+          </label>
+          <input
+            type="email"
+            id="authorized-email"
+            name="authorized-email"
+            class="form-input"
+            required
+            placeholder="yourname@yourcompany.com"
+          />
+          <p class="form-help">Must match your company domain.</p>
+        </div>
+      </div>
+
+      <!-- Section 8: Additional Context -->
+      <div class="form-section" data-section="8">
+        <h2>8. Additional Context</h2>
+        <p class="form-section-subtitle">Help us get your story right from the start.</p>
+
+        <div class="form-field">
+          <label class="form-label" for="recent-changes">
+            Recent Changes or Updates (Optional)
+          </label>
+          <textarea
+            id="recent-changes"
+            name="recent-changes"
+            class="form-textarea"
+            maxlength="1000"
+            rows="4"
+            placeholder="Any recent pivots, rebrands, mergers, product launches we should know about..."
+          ></textarea>
+          <p class="form-help">Recent changes or updates we should know about.</p>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="misconceptions">
+            Common Misconceptions (Optional)
+          </label>
+          <textarea
+            id="misconceptions"
+            name="misconceptions"
+            class="form-textarea"
+            maxlength="1000"
+            rows="4"
+            placeholder="What do people often get wrong about what you do?"
+          ></textarea>
+          <p class="form-help">What do people often get wrong about what you do?</p>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="confused-competitors">
+            Competitors Often Confused With (Optional)
+          </label>
+          <textarea
+            id="confused-competitors"
+            name="confused-competitors"
+            class="form-textarea"
+            maxlength="500"
+            rows="3"
+            placeholder="Are there other companies people confuse you with?"
+          ></textarea>
+          <p class="form-help">Are there other companies people confuse you with?</p>
+        </div>
+      </div>
+
+      <!-- Submit Section -->
+      <div class="submit-section">
+        <p>Review your information and submit when ready. We'll use this to create your VizAI Business Profile and Registry entry.</p>
+        <button type="submit" class="btn-primary btn-primary-full">
+          <span>Submit Business Profile Data</span>
+          <span class="icon">&rarr;</span>
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Confirmation Message (hidden by default) -->
+    <div id="confirmation-message" class="confirmation-message">
+      <h2>Thank You!</h2>
+      <p>Your business profile data has been successfully submitted.</p>
+      <p>We'll review your information and begin creating your canonical business profile and VizAI Registry entry. You'll receive a confirmation email shortly with next steps.</p>
+      <p style="margin-top: 24px;">
+        <a href="/" class="btn-secondary">
+          <span>Return to Home</span>
+          <span class="icon">&rarr;</span>
+        </a>
+      </p>
+    </div>
+
+  </div>
+
+  <script is:inline>
+    // Character counters
+    const textareas = [
+      { id: 'elevator-pitch', counterId: 'pitch-count' },
+      { id: 'detailed-description', counterId: 'description-count' },
+      { id: 'founding-story', counterId: 'story-count' }
+    ];
+
+    textareas.forEach(({ id, counterId }) => {
+      const textarea = document.getElementById(id);
+      const counter = document.getElementById(counterId);
+
+      if (textarea && counter) {
+        textarea.addEventListener('input', () => {
+          counter.textContent = textarea.value.length;
+        });
+      }
+    });
+
+    // Form submission
+    const form = document.getElementById('onboarding-form');
+    const confirmationMessage = document.getElementById('confirmation-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Validate required fields
+      const requiredFields = form.querySelectorAll('[required]');
+      let isValid = true;
+
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.classList.add('error');
+          isValid = false;
+        } else {
+          field.classList.remove('error');
+        }
+      });
+
+      if (!isValid) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      // Submit form
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // Hide form and show confirmation
+          form.style.display = 'none';
+          document.querySelector('.progress-indicator').style.display = 'none';
+          confirmationMessage.classList.add('show');
+          window.scrollTo(0, 0);
+        } else {
+          alert('There was an error submitting your form. Please try again or contact us directly.');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        alert('There was an error submitting your form. Please try again or contact us directly.');
+      }
+    });
+
+    // Scroll-based progress indicator
+    const sections = document.querySelectorAll('.form-section');
+    const progressSteps = document.querySelectorAll('.progress-step');
+
+    function updateProgress() {
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      sections.forEach((section, index) => {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          progressSteps.forEach(step => step.classList.remove('active'));
+          progressSteps[index]?.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateProgress);
+    window.addEventListener('load', updateProgress);
+  </script>
+</BaseLayout>

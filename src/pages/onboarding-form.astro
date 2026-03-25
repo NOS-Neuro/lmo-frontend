@@ -29,7 +29,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
 
       .onboarding-header p {
-        color: var(--muted, #a0a3b1);
+        color: var(--text-muted);
         font-size: 1rem;
         line-height: 1.6;
         max-width: 680px;
@@ -48,29 +48,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .progress-step {
         font-size: 0.8rem;
         padding: 6px 12px;
-        background: var(--bg-soft, #070818);
-        border: 1px solid var(--border-subtle, #303244);
+        background: var(--bg-subtle);
         border-radius: 999px;
-        color: var(--muted, #7e8195);
+        color: var(--text-light);
       }
 
       .progress-step.active {
-        background: rgba(123, 92, 255, 0.15);
-        border-color: var(--accent, #7b5cff);
-        color: var(--accent-strong, #b39cff);
+        background: var(--bg-elevated);
+        color: var(--accent);
       }
 
       .progress-step.completed {
         background: rgba(76, 175, 80, 0.15);
-        border-color: #4caf50;
         color: #4caf50;
       }
 
       /* Form sections */
       .form-section {
-        background: var(--bg-elevated, #050611);
+        background: var(--bg-subtle);
         border-radius: 20px;
-        border: 1px solid var(--border-subtle, #262738);
         padding: 32px 28px;
         margin-bottom: 24px;
       }
@@ -78,11 +74,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .form-section h2 {
         font-size: 1.4rem;
         margin-bottom: 8px;
-        color: var(--accent-light, #b39cff);
+        color: var(--text);
       }
 
       .form-section-subtitle {
-        color: var(--muted, #a0a3b1);
+        color: var(--text-muted);
         font-size: 0.9rem;
         margin-bottom: 24px;
       }
@@ -97,11 +93,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         font-size: 0.9rem;
         font-weight: 500;
         margin-bottom: 6px;
-        color: var(--text, #f8f9ff);
+        color: var(--text);
       }
 
       .form-label .required {
-        color: var(--accent-strong, #b39cff);
+        color: var(--accent);
         margin-left: 2px;
       }
 
@@ -112,9 +108,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         max-width: 100%;
         padding: 0.75rem 0.9rem;
         border-radius: 10px;
-        border: 1px solid var(--border-subtle, #303244);
-        background: var(--bg-soft, #070818);
-        color: var(--text, #f9fafb);
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
         font-size: 0.96rem;
         outline: none;
         box-sizing: border-box;
@@ -128,26 +124,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       .form-input::placeholder,
       .form-textarea::placeholder {
-        color: var(--muted, #7c7f96);
+        color: var(--text-light);
       }
 
       .form-input:focus,
       .form-textarea:focus,
       .form-select:focus {
-        border-color: var(--accent-strong, #8b5cff);
-        box-shadow: 0 0 0 1px rgba(139, 92, 255, 0.5);
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px rgba(26, 26, 46, 0.2);
       }
 
       .form-help {
         font-size: 0.8rem;
-        color: var(--muted, #7e8195);
+        color: var(--text-light);
         margin-top: 4px;
         font-style: italic;
       }
 
       .char-counter {
         font-size: 0.75rem;
-        color: var(--muted, #7e8195);
+        color: var(--text-light);
         text-align: right;
         margin-top: 4px;
       }
@@ -171,13 +167,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         margin-top: 40px;
         text-align: center;
         padding: 32px 28px;
-        background: var(--bg-elevated, #050611);
+        background: var(--bg-subtle);
         border-radius: 20px;
-        border: 1px solid var(--border-subtle, #262738);
       }
 
       .submit-section p {
-        color: var(--muted, #a0a3b1);
+        color: var(--text-muted);
         font-size: 0.9rem;
         margin-bottom: 20px;
       }
@@ -193,9 +188,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         display: none;
         text-align: center;
         padding: 60px 32px;
-        background: var(--bg-elevated, #050611);
+        background: var(--bg-subtle);
         border-radius: 20px;
-        border: 1px solid var(--accent, #7b5cff);
       }
 
       .confirmation-message.show {
@@ -205,11 +199,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .confirmation-message h2 {
         font-size: 2rem;
         margin-bottom: 16px;
-        color: var(--accent-strong, #b39cff);
+        color: var(--text);
       }
 
       .confirmation-message p {
-        color: var(--muted, #c0c2d8);
+        color: var(--text-muted);
         font-size: 1rem;
         line-height: 1.6;
         margin-bottom: 12px;

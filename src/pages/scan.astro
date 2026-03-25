@@ -33,7 +33,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
 
       .scan-header p {
-        color: var(--muted, #a0a3b1);
+        color: var(--text-muted);
         font-size: 0.98rem;
       }
 
@@ -51,16 +51,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       /* Card + form */
       .scan-card {
-        background: var(--bg-elevated, #050611);
+        background: var(--bg-subtle);
         border-radius: 20px;
-        border: 1px solid var(--border-subtle, #262738);
         padding: 24px 20px;
       }
 
       .scan-card h2 { font-size: 1.2rem; margin-bottom: 8px; }
 
       .scan-card p {
-        color: var(--muted, #a0a3b1);
+        color: var(--text-muted);
         font-size: 0.92rem;
         margin-bottom: 18px;
       }
@@ -72,7 +71,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         font-size: 0.85rem;
         font-weight: 500;
         margin-bottom: 6px;
-        color: var(--muted, #c4c5d4);
+        color: var(--text-muted);
       }
 
       .scan-input {
@@ -80,24 +79,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         max-width: 100%;
         padding: 0.75rem 0.9rem;
         border-radius: 10px;
-        border: 1px solid var(--border-subtle, #303244);
-        background: var(--bg-soft, #070818);
-        color: var(--text, #f9fafb);
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
         font-size: 0.96rem;
         outline: none;
         box-sizing: border-box;
       }
 
-      .scan-input::placeholder { color: var(--muted, #7c7f96); }
+      .scan-input::placeholder { color: var(--text-light); }
 
       .scan-input:focus {
-        border-color: var(--accent-strong, #8b5cff);
-        box-shadow: 0 0 0 1px rgba(139, 92, 255, 0.5);
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px rgba(26, 26, 46, 0.2);
       }
 
       .scan-help {
         font-size: 0.8rem;
-        color: var(--muted, #7e8195);
+        color: var(--text-light);
         margin-top: 2px;
       }
 
@@ -108,47 +107,97 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .scan-status {
         margin-top: 10px;
         font-size: 0.85rem;
-        color: var(--muted, #a0a3b1);
+        color: var(--text-muted);
       }
 
       .hidden { display: none; }
 
       .results-card {
-        background: var(--bg-elevated, #050611);
+        background: var(--bg-subtle);
         border-radius: 20px;
-        border: 1px solid var(--border-subtle, #262738);
         padding: 24px 20px;
       }
 
       .results-header {
         display: flex;
-        justify-content: space-between;
-        align-items: baseline;
+        flex-direction: column;
         gap: 12px;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
       }
 
-      .results-header h2 { font-size: 1.1rem; }
+      .results-header h2 {
+        font-size: 1.35rem;
+        margin-bottom: 6px;
+      }
 
-      .overall-score { font-size: 1.6rem; font-weight: 600; }
+      .results-summary {
+        color: var(--text-muted);
+        font-size: 0.94rem;
+        line-height: 1.6;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      @media (max-width: 640px) { .summary-grid { grid-template-columns: 1fr; } }
+
+      .summary-chip {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 14px;
+      }
+
+      .summary-chip-label {
+        color: var(--text-muted);
+        font-size: 0.78rem;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .summary-chip-value {
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.35;
+      }
+
+      .overall-score { font-size: 1.05rem; font-weight: 600; }
+
+      .supporting-metrics {
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+
+      .supporting-metrics-title {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 10px;
+      }
 
       .score-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
-        margin-bottom: 16px;
+        gap: 10px;
       }
 
       @media (max-width: 540px) { .score-grid { grid-template-columns: 1fr; } }
 
       .score-chip {
-        background: var(--bg-soft, #070818);
+        background: var(--bg);
         border-radius: 12px;
+        border: 1px solid var(--border);
         padding: 10px 12px;
         font-size: 0.85rem;
       }
 
-      .score-label { color: var(--muted, #a0a3b1); margin-bottom: 2px; }
+      .score-label { color: var(--text-muted); margin-bottom: 2px; }
 
       .score-value { font-size: 1.1rem; font-weight: 600; }
 
@@ -159,14 +208,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         font-size: 0.8rem;
         padding: 4px 8px;
         border-radius: 999px;
-        background: rgba(139, 92, 255, 0.12);
-        color: var(--accent-strong, #b89cff);
+        background: var(--bg-subtle);
+        color: var(--accent);
         margin-bottom: 8px;
       }
 
       .findings-list {
         font-size: 0.9rem;
-        color: var(--muted, #c0c2d8);
+        color: var(--text-muted);
         margin-top: 6px;
         padding-left: 18px;
       }
@@ -174,15 +223,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .findings-list li + li { margin-top: 4px; }
 
       .strategy-block {
-        margin-top: 14px;
-        padding-top: 12px;
-        border-top: 1px solid var(--border-subtle, #262738);
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
         font-size: 0.9rem;
       }
 
-      .strategy-title { font-weight: 500; margin-bottom: 4px; }
+      .strategy-title {
+        font-weight: 600;
+        margin-bottom: 6px;
+        font-size: 1rem;
+      }
 
-      .strategy-text { color: var(--muted, #c0c2d8); }
+      .strategy-text {
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      .section-intro {
+        color: var(--text-light);
+        font-size: 0.84rem;
+        line-height: 1.5;
+        margin-bottom: 8px;
+      }
+
+      .diagnostic-note {
+        margin-top: 18px;
+        padding: 14px 16px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+      }
+
+      .diagnostic-note-title {
+        font-weight: 600;
+        margin-bottom: 6px;
+        font-size: 0.92rem;
+      }
+
+      .diagnostic-note-text {
+        color: var(--text-muted);
+        font-size: 0.88rem;
+        line-height: 1.6;
+      }
 
       /* Checkbox row */
       .check-row {
@@ -191,8 +274,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         gap: 10px;
         padding: 10px 12px;
         border-radius: 12px;
-        background: var(--bg-soft, #070818);
-        border: 1px solid var(--border-subtle, #303244);
+        background: var(--bg-subtle);
         margin-top: 8px;
       }
 
@@ -200,19 +282,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         width: 16px;
         height: 16px;
         margin-top: 2px;
-        accent-color: var(--accent-strong, #8b5cff);
+        accent-color: var(--accent);
       }
 
       .check-row label {
         font-size: 0.88rem;
-        color: var(--muted, #c0c2d8);
+        color: var(--text-muted);
         line-height: 1.25rem;
         cursor: pointer;
       }
 
       .mini-note {
         font-size: 0.78rem;
-        color: var(--muted, #7e8195);
+        color: var(--text-light);
         margin-top: 8px;
       }
 
@@ -243,7 +325,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         width: 14px;
         height: 14px;
         border: 2px solid rgba(255, 255, 255, 0.3);
-        border-top-color: #0b0d13;
+        border-top-color: #fff;
         border-radius: 50%;
         animation: spin 0.6s linear infinite;
       }
@@ -271,28 +353,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
 
       /* Q&A collapsible section */
-      .qa-details {
-        margin-top: 12px;
-      }
+      .qa-details { margin-top: 4px; }
 
       .qa-summary {
         cursor: pointer;
         list-style: none;
         padding: 12px 16px;
-        background: var(--bg-soft, #070818);
-        border: 1px solid var(--border-subtle, #303244);
+        background: var(--bg-subtle);
         border-radius: 12px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-weight: 500;
-        color: var(--accent-strong, #b39cff);
+        color: var(--accent);
         transition: all 0.2s;
       }
 
       .qa-summary:hover {
-        background: rgba(123, 92, 255, 0.05);
-        border-color: var(--accent, #7b5cff);
+        background: var(--bg-elevated);
       }
 
       .qa-summary::-webkit-details-marker {
@@ -311,32 +389,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .qa-content {
         margin-top: 12px;
         padding: 16px;
-        background: var(--bg-soft, #070818);
-        border: 1px solid var(--border-subtle, #303244);
+        background: var(--bg-subtle);
         border-radius: 12px;
       }
 
       .qa-item {
         margin-bottom: 20px;
         padding-bottom: 20px;
-        border-bottom: 1px solid var(--border-subtle, #303244);
       }
 
       .qa-item:last-child {
         margin-bottom: 0;
         padding-bottom: 0;
-        border-bottom: none;
       }
 
       .qa-question {
         font-weight: 600;
-        color: var(--text, #f8f9ff);
+        color: var(--text);
         margin-bottom: 8px;
         font-size: 0.95rem;
       }
 
       .qa-answer {
-        color: var(--muted, #c0c2d8);
+        color: var(--text-muted);
         line-height: 1.6;
         font-size: 0.9rem;
         white-space: pre-wrap;
@@ -344,7 +419,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       .request-id-display {
         font-size: 0.75rem;
-        color: var(--muted, #7e8195);
+        color: var(--text-light);
         margin-top: 8px;
         font-family: monospace;
       }
@@ -361,18 +436,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <!-- What You'll Get Section -->
-    <div style="max-width: 620px; margin: 0 auto 32px; padding: 20px 24px; background: rgba(123, 92, 255, 0.06); border: 1px solid rgba(123, 92, 255, 0.15); border-radius: 16px;">
-      <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text, #f9fafb);">What This Free Scan Provides</h3>
-      <ul style="margin: 0; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">
+    <div style="max-width: 620px; margin: 0 auto 32px; padding: 20px 24px; background: var(--bg-subtle); border-radius: 16px;">
+      <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text);">What This Free Scan Provides</h3>
+      <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">
         <li>AI-assisted scores (Discovery, Accuracy, Authority)</li>
         <li>Automated directional assessment</li>
         <li>High-level visibility flags</li>
         <li>Recommended next step based on your scores</li>
       </ul>
-      <p style="margin: 12px 0 0; font-size: 0.85rem; color: var(--muted, #a0a3b1); border-top: 1px solid rgba(123, 92, 255, 0.12); padding-top: 12px;">
+      <p style="margin: 12px 0 0; font-size: 0.85rem; color: var(--text-muted); padding-top: 12px;">
         <strong>Important:</strong> This is a lightweight, automated baseline — not a comprehensive audit.
         For human-reviewed analysis across ChatGPT, Claude, and Perplexity with detailed interpretation,
-        see our <a href="/packages" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Tier 0 AI Understanding Snapshot ($495 CAD)</a>.
+        see our <a href="/packages" style="color: var(--accent); text-decoration: underline;">Tier 0 AI Understanding Snapshot ($495 CAD)</a>.
       </p>
     </div>
 
@@ -458,7 +533,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                  data-sitekey="0x4AAAAAACKFgDePvecVK5kQ"
                  data-callback="onCaptchaSuccess"
                  data-error-callback="onCaptchaError"
-                 data-theme="dark"></div>
+                 data-theme="light"></div>
           </div>
           <div id="captchaError" class="captcha-error hidden"></div>
 
@@ -488,37 +563,75 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div>
             <div class="package-tag" id="scoreBandTag">
               <span>&#x25CE;</span>
-              <span>Score band</span>
+              <span>AI visibility</span>
             </div>
-            <h2 id="resultsTitle">Your VizAI results</h2>
+            <h2 id="resultsTitle">AI visibility assessment</h2>
+            <div class="results-summary" id="resultsSummary">
+              This report prioritizes what the scan could verify, where support was weak, and which signals appear to be missing.
+            </div>
           </div>
-          <div class="overall-score" id="overallScore"></div>
         </div>
 
-        <div class="score-grid">
-          <div class="score-chip">
-            <div class="score-label">Discovery</div>
-            <div class="score-value" id="discoveryScore">&ndash;</div>
+        <div class="summary-grid">
+          <div class="summary-chip">
+            <div class="summary-chip-label">AI visibility</div>
+            <div class="summary-chip-value" id="visibilityStatus">Assessing</div>
           </div>
-          <div class="score-chip">
-            <div class="score-label">Accuracy</div>
-            <div class="score-value" id="accuracyScore">&ndash;</div>
+          <div class="summary-chip">
+            <div class="summary-chip-label">Confidence / evidence strength</div>
+            <div class="summary-chip-value" id="evidenceStrength">Assessing</div>
           </div>
-          <div class="score-chip">
-            <div class="score-label">Authority</div>
-            <div class="score-value" id="authorityScore">&ndash;</div>
+          <div class="summary-chip">
+            <div class="summary-chip-label">Diagnostic score</div>
+            <div class="summary-chip-value overall-score" id="overallScore">&ndash;</div>
           </div>
+        </div>
+
+        <div class="supporting-metrics">
+          <div class="supporting-metrics-title">Supporting metrics</div>
+          <div class="score-grid">
+            <div class="score-chip">
+              <div class="score-label">Discovery</div>
+              <div class="score-value" id="discoveryScore">&ndash;</div>
+            </div>
+            <div class="score-chip">
+              <div class="score-label">Accuracy</div>
+              <div class="score-value" id="accuracyScore">&ndash;</div>
+            </div>
+            <div class="score-chip">
+              <div class="score-label">Authority</div>
+              <div class="score-value" id="authorityScore">&ndash;</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="strategy-block">
+          <div class="strategy-title">Verified by AI</div>
+          <div class="section-intro">Signals the scan could identify with comparatively stronger support.</div>
+          <ul class="findings-list" id="verifiedList"></ul>
+        </div>
+
+        <div class="strategy-block">
+          <div class="strategy-title">Unclear or weakly supported</div>
+          <div class="section-intro">Claims that appeared incomplete, inconsistent, or not strongly supported by the evidence available to the scan.</div>
+          <ul class="findings-list" id="unclearList"></ul>
+        </div>
+
+        <div class="strategy-block">
+          <div class="strategy-title">Missing or not detected</div>
+          <div class="section-intro">Signals the scan expected to find but could not verify clearly from available sources.</div>
+          <ul class="findings-list" id="missingList"></ul>
         </div>
 
         <div id="packageBlock" class="strategy-block">
-          <div class="strategy-title" id="packageTitle">Recommended next step</div>
+          <div class="strategy-title" id="packageTitle">Recommended next fix</div>
           <div class="strategy-text" id="packageText"></div>
           <div class="request-id-display" id="requestIdDisplay" style="display: none;"></div>
         </div>
 
-        <div class="strategy-block">
-          <div class="strategy-title">Key findings</div>
-          <ul class="findings-list" id="findingsList"></ul>
+        <div id="diagnosticNote" class="diagnostic-note hidden">
+          <div class="diagnostic-note-title" id="diagnosticNoteTitle">Scan limitations</div>
+          <div class="diagnostic-note-text" id="diagnosticNoteText"></div>
         </div>
 
         <div class="strategy-block" id="qaBlock" style="display: none;">
@@ -533,7 +646,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <!-- Next Steps Card (shown after results) -->
-      <div id="nextStepsCard" class="scan-card hidden" style="margin-top: 24px; border: 1px solid rgba(123, 92, 255, 0.2);">
+      <div id="nextStepsCard" class="scan-card hidden" style="margin-top: 24px;">
         <h2>What to Do Next</h2>
         <div id="nextStepsContent"></div>
         <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
@@ -550,7 +663,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <script is:inline>
+  <script>
+    import { calibrateScanReport } from "../lib/scan-calibration.js";
+
     const API_BASE = "https://lmo-backend.onrender.com";
 
     const form = document.getElementById("scanForm");
@@ -567,14 +682,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const captchaErrorEl = document.getElementById("captchaError");
 
     const overallScoreEl = document.getElementById("overallScore");
+    const resultsTitleEl = document.getElementById("resultsTitle");
+    const resultsSummaryEl = document.getElementById("resultsSummary");
+    const visibilityStatusEl = document.getElementById("visibilityStatus");
+    const evidenceStrengthEl = document.getElementById("evidenceStrength");
     const discoveryScoreEl = document.getElementById("discoveryScore");
     const accuracyScoreEl = document.getElementById("accuracyScore");
     const authorityScoreEl = document.getElementById("authorityScore");
-    const findingsListEl = document.getElementById("findingsList");
+    const verifiedListEl = document.getElementById("verifiedList");
+    const unclearListEl = document.getElementById("unclearList");
+    const missingListEl = document.getElementById("missingList");
     const scoreBandTagEl = document.getElementById("scoreBandTag");
     const packageTitleEl = document.getElementById("packageTitle");
     const packageTextEl = document.getElementById("packageText");
     const requestIdDisplayEl = document.getElementById("requestIdDisplay");
+    const diagnosticNoteEl = document.getElementById("diagnosticNote");
+    const diagnosticNoteTitleEl = document.getElementById("diagnosticNoteTitle");
+    const diagnosticNoteTextEl = document.getElementById("diagnosticNoteText");
     const qaBlockEl = document.getElementById("qaBlock");
     const qaContentEl = document.getElementById("qaContent");
     const nextStepsCardEl = document.getElementById("nextStepsCard");
@@ -638,6 +762,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       return { valid: true, value: sanitized };
     }
 
+    function renderList(element, items, emptyText) {
+      element.innerHTML = "";
+      var listItems = items.length ? items : [emptyText];
+      listItems.forEach(function(item) {
+        var li = document.createElement("li");
+        li.textContent = item;
+        element.appendChild(li);
+      });
+    }
+
     // Show validation error
     function showError(input, message) {
       input.classList.add("error");
@@ -691,74 +825,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         clearError(contactEmailInput);
       }
     });
-
-    function computePackage(overall) {
-      var bandLabel, nextStepTitle, strategy, nextStepsHTML;
-
-      if (overall >= 80) {
-        bandLabel = "Strong visibility (80\u2013100)";
-        nextStepTitle = "Recommended: Monitoring + drift checks";
-        strategy =
-          "You're in a strong position. The next step is monitoring and small fixes as AI answers drift over time. " +
-          "We can help lock in a Truth File, verify schema, and run re-audits on a schedule.";
-        nextStepsHTML =
-          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
-            'Your scores show <strong>strong AI visibility</strong>. You\'re being found and described accurately by AI systems.' +
-          '</p>' +
-          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
-            '<strong>Recommended:</strong> Tier 1 (Foundation) to lock in your canonical truth and monitor for drift over time. ' +
-            'AI responses change as training data evolves \u2014 proactive monitoring prevents issues before they cost you deals.' +
-          '</p>' +
-          '<ul style="margin: 0; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">' +
-            '<li><strong>Tier 1 - Foundation ($1,950 setup + $650/mo):</strong> Canonical Truth File, schema deployment, monthly monitoring \u2014 <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Get started</a></li>' +
-            '<li><strong>Or schedule a consultation</strong> to discuss monitoring-only options</li>' +
-          '</ul>';
-      } else if (overall >= 40) {
-        bandLabel = "Partial visibility (40\u201379)";
-        nextStepTitle = "Recommended: Fix gaps + add structured signals";
-        strategy =
-          "AI likely finds you but misses key details or relies on weak sources. " +
-          "Next step is improving structured data, strengthening your About/FAQ, " +
-          "and seeding authoritative profiles so AI cites you correctly.";
-        nextStepsHTML =
-          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
-            'Your scores show <strong>partial visibility</strong>. AI can find you, but it\'s missing key details or citing weak sources.' +
-          '</p>' +
-          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
-            '<strong>Recommended path:</strong>' +
-          '</p>' +
-          '<ul style="margin: 0 0 16px; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">' +
-            '<li><strong>Start with Tier 0 ($495 CAD):</strong> Get a human-reviewed snapshot showing exactly WHAT the problem is \u2014 <a href="https://buy.stripe.com/eVqfZad4zc3SapnfhgcMM00" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Purchase snapshot</a></li>' +
-            '<li><strong>Then move to Tier 1 ($1,950 + $650/mo):</strong> Build your canonical profile, deploy schema, and start monitoring \u2014 <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Get started</a></li>' +
-          '</ul>' +
-          '<p style="color: var(--muted, #c0c2d8); font-size: 0.9rem;">' +
-            'Without fixes, AI will continue giving prospects incomplete or inaccurate information about your business.' +
-          '</p>';
-      } else {
-        bandLabel = "High-risk visibility (0\u201339)";
-        nextStepTitle = "Recommended: Rebuild your AI presence";
-        strategy =
-          "AI may not recognize you, may confuse your services, or may cite competitors/directories instead. " +
-          "Next step is establishing a canonical Truth File, deploying schema, and building authority sources to correct the record.";
-        nextStepsHTML =
-          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
-            'Your scores indicate <strong>high-risk AI visibility</strong>. AI may not be finding you at all, or it\'s confusing you with competitors.' +
-          '</p>' +
-          '<p style="color: var(--muted, #c0c2d8); margin-bottom: 16px; line-height: 1.6;">' +
-            '<strong>Recommended path:</strong>' +
-          '</p>' +
-          '<ul style="margin: 0 0 16px; padding-left: 20px; color: var(--muted, #c0c2d8); font-size: 0.9rem; line-height: 1.7;">' +
-            '<li><strong>Start with Tier 0 ($495 CAD):</strong> Human-reviewed analysis across ChatGPT, Claude, and Perplexity to identify confusion patterns \u2014 <a href="https://buy.stripe.com/eVqfZad4zc3SapnfhgcMM00" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Purchase snapshot</a></li>' +
-            '<li><strong>Then move to Tier 1 ($1,950 + $650/mo):</strong> Build canonical profile from scratch, deploy structured data, establish authority sources \u2014 <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Get started</a></li>' +
-            '<li><strong>Consider Tier 2 ($3,750 + $2,250/mo):</strong> If you need ongoing corrections and active management \u2014 <a href="https://buy.stripe.com/bJeaEQ9Sn4BqeFDd98cMM02" target="_blank" rel="noopener noreferrer" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">Get started</a></li>' +
-          '</ul>' +
-          '<p style="color: var(--muted, #c0c2d8); font-size: 0.9rem;">' +
-            '<strong>Why this matters:</strong> Every prospect asking AI about your business is getting the wrong story. This directly impacts pipeline.' +
-          '</p>';
-      }
-
-      return { bandLabel: bandLabel, nextStepTitle: nextStepTitle, strategy: strategy, nextStepsHTML: nextStepsHTML };
-    }
 
     // Set loading state
     function setLoading(loading) {
@@ -913,33 +979,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           ? Number(data.overall_score)
           : Math.round((d + a + au) / 3);
 
-        var pkg = computePackage(overall);
+        var calibration = calibrateScanReport(data, { overallScore: overall });
 
         overallScoreEl.textContent = overall + "/100";
         discoveryScoreEl.textContent = d;
         accuracyScoreEl.textContent = a;
         authorityScoreEl.textContent = au;
+        resultsTitleEl.textContent = calibration.headline;
+        resultsSummaryEl.textContent = calibration.summary;
+        visibilityStatusEl.textContent = calibration.visibilityStatus;
+        evidenceStrengthEl.textContent = calibration.evidenceStrength;
 
-        scoreBandTagEl.innerHTML = "<span>\u25CE</span><span>" + pkg.bandLabel + "</span>";
-        packageTitleEl.textContent = pkg.nextStepTitle;
-        packageTextEl.textContent = pkg.strategy;
+        scoreBandTagEl.innerHTML = "<span>\u25CE</span><span>" + calibration.bandLabel + "</span>";
+        packageTitleEl.textContent = calibration.recommendationTitle;
+        packageTextEl.textContent = calibration.recommendationText;
 
         // Populate next steps card
-        nextStepsContentEl.innerHTML = pkg.nextStepsHTML;
+        nextStepsContentEl.innerHTML = calibration.nextStepsHTML;
         nextStepsCardEl.classList.remove("hidden");
 
-        findingsListEl.innerHTML = "";
-        var findings = Array.isArray(data.findings) ? data.findings : [];
-        if (findings.length) {
-          findings.forEach(function(f) {
-            var li = document.createElement("li");
-            li.textContent = f;
-            findingsListEl.appendChild(li);
-          });
+        renderList(
+          verifiedListEl,
+          calibration.verified,
+          "The scan did not return any clearly verified signals in this response."
+        );
+        renderList(
+          unclearListEl,
+          calibration.unclear,
+          "The scan did not flag any additional weakly supported claims in this response."
+        );
+        renderList(
+          missingListEl,
+          calibration.missing,
+          "The scan did not report specific missing signals in this response."
+        );
+
+        if (calibration.noteText) {
+          diagnosticNoteTitleEl.textContent = calibration.noteTitle;
+          diagnosticNoteTextEl.textContent = calibration.noteText;
+          diagnosticNoteEl.classList.remove("hidden");
         } else {
-          var li = document.createElement("li");
-          li.textContent = "No detailed findings were returned for this scan.";
-          findingsListEl.appendChild(li);
+          diagnosticNoteTextEl.textContent = "";
+          diagnosticNoteEl.classList.add("hidden");
         }
 
         // Display request ID
@@ -947,6 +1028,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         if (requestId) {
           requestIdDisplayEl.textContent = "Request ID: " + requestId;
           requestIdDisplayEl.style.display = "block";
+        } else {
+          requestIdDisplayEl.style.display = "none";
         }
 
         // Display Q&A pairs
@@ -970,6 +1053,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             qaContentEl.appendChild(qaItem);
           });
           qaBlockEl.style.display = "block";
+        } else {
+          qaContentEl.innerHTML = "";
+          qaBlockEl.style.display = "none";
         }
 
         resultsCard.classList.remove("hidden");

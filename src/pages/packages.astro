@@ -11,7 +11,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 >
   <Fragment slot="head">
     <style>
-      /* Pricing-specific styles */
       .pricing-hero {
         text-align: center;
         padding: 60px 20px 40px;
@@ -22,21 +21,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .pricing-hero h1 {
         font-size: 2.5rem;
         margin-bottom: 16px;
-        background: linear-gradient(135deg, var(--text, #f8f9ff), var(--accent-strong, #b39cff));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: var(--text);
       }
 
       .pricing-hero p {
-        font-size: 1.1rem;
-        color: var(--muted, #c0c2d8);
+        font-size: 1.05rem;
+        color: var(--text-muted);
         margin-bottom: 8px;
       }
 
       .pricing-note {
-        font-size: 0.85rem;
-        color: var(--muted, #7e8195);
+        font-size: 0.82rem;
+        color: var(--text-light);
         margin-top: 8px;
       }
 
@@ -44,59 +40,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 10px;
         margin: 40px auto;
         flex-wrap: wrap;
         max-width: 900px;
       }
 
       .tier-step {
-        padding: 8px 16px;
-        background: var(--bg-soft, #070818);
-        border: 1px solid var(--border-subtle, #303244);
-        border-radius: 20px;
-        font-size: 0.9rem;
-        color: var(--muted, #c0c2d8);
+        padding: 6px 14px;
+        background: var(--bg-subtle);
+        border-radius: var(--radius-md);
+        font-size: 0.85rem;
+        color: var(--text-muted);
       }
 
       .tier-step.active {
-        background: rgba(123, 92, 255, 0.15);
-        border-color: var(--accent, #7b5cff);
-        color: var(--accent-strong, #b39cff);
+        background: var(--accent);
+        color: var(--bg);
+        font-weight: 600;
       }
 
       .tier-arrow {
-        color: var(--accent, #7b5cff);
-        font-size: 1.2rem;
+        color: var(--text-light);
+        font-size: 1rem;
       }
 
       .packages-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 24px;
+        gap: 16px;
         margin: 40px auto;
         max-width: 1200px;
       }
 
       .package-card {
-        background: var(--bg-soft, #070818);
-        border: 1px solid var(--border-subtle, #303244);
-        border-radius: 16px;
-        padding: 32px 24px;
-        transition: all 0.3s ease;
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
+        padding: 28px 22px;
         position: relative;
         overflow: hidden;
       }
 
-      .package-card:hover {
-        border-color: var(--accent, #7b5cff);
-        transform: translateY(-4px);
-        box-shadow: 0 8px 24px rgba(123, 92, 255, 0.2);
-      }
-
       .package-card.featured {
-        border-color: var(--accent, #7b5cff);
-        background: rgba(123, 92, 255, 0.05);
       }
 
       .package-card.featured::before {
@@ -104,32 +89,33 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         position: absolute;
         top: 12px;
         right: -32px;
-        background: var(--accent, #7b5cff);
-        color: #0b0d13;
+        background: var(--accent);
+        color: var(--bg);
         padding: 4px 40px;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         font-weight: 600;
         transform: rotate(45deg);
       }
 
       .package-tier {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--accent-strong, #b39cff);
+        letter-spacing: 0.08em;
+        color: var(--text-light);
         margin-bottom: 8px;
+        font-weight: 500;
       }
 
       .package-name {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: 600;
         margin-bottom: 8px;
-        color: var(--text, #f8f9ff);
+        color: var(--text);
       }
 
       .package-tagline {
-        font-size: 0.95rem;
-        color: var(--muted, #c0c2d8);
+        font-size: 0.9rem;
+        color: var(--text-muted);
         margin-bottom: 20px;
         font-style: italic;
       }
@@ -139,38 +125,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
 
       .price-setup {
-        font-size: 1.1rem;
-        color: var(--muted, #c0c2d8);
+        font-size: 1rem;
+        color: var(--text-muted);
         margin-bottom: 4px;
       }
 
       .price-monthly {
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: 700;
-        color: var(--accent-strong, #b39cff);
+        color: var(--text);
+        font-variant-numeric: tabular-nums;
       }
 
       .price-monthly .currency {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: 400;
-        color: var(--muted, #c0c2d8);
+        color: var(--text-light);
       }
 
       .price-onetime {
-        font-size: 2.2rem;
+        font-size: 2rem;
         font-weight: 700;
-        color: var(--accent-strong, #b39cff);
+        color: var(--text);
+        font-variant-numeric: tabular-nums;
       }
 
       .price-onetime .currency {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: 400;
-        color: var(--muted, #c0c2d8);
+        color: var(--text-light);
       }
 
       .price-note {
-        font-size: 0.8rem;
-        color: var(--muted, #7e8195);
+        font-size: 0.78rem;
+        color: var(--text-light);
         margin-top: 4px;
       }
 
@@ -179,10 +167,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
 
       .package-section-title {
-        font-size: 0.85rem;
+        font-size: 0.78rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--muted, #c0c2d8);
+        color: var(--text-light);
         margin-bottom: 12px;
         font-weight: 600;
       }
@@ -194,9 +182,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
 
       .package-list li {
-        padding: 8px 0;
-        font-size: 0.9rem;
-        color: var(--muted, #c0c2d8);
+        padding: 6px 0;
+        font-size: 0.875rem;
+        color: var(--text-muted);
         display: flex;
         align-items: flex-start;
         gap: 8px;
@@ -204,19 +192,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       .package-list li::before {
         content: "\2713";
-        color: var(--accent, #7b5cff);
+        color: var(--text-muted);
         font-weight: bold;
         flex-shrink: 0;
       }
 
       .package-list.excludes li::before {
         content: "\2717";
-        color: var(--muted, #7e8195);
+        color: var(--text-light);
       }
 
       .package-list.excludes li {
-        color: var(--muted, #7e8195);
-        opacity: 0.7;
+        color: var(--text-light);
+        opacity: 0.6;
       }
 
       .package-cta {
@@ -226,14 +214,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .package-best-for {
         margin-top: 16px;
         padding: 12px;
-        background: rgba(123, 92, 255, 0.1);
-        border-radius: 8px;
-        font-size: 0.85rem;
-        color: var(--muted, #c0c2d8);
+        background: var(--bg-subtle);
+        border-radius: var(--radius-md);
+        font-size: 0.82rem;
+        color: var(--text-muted);
       }
 
       .package-best-for strong {
-        color: var(--accent-strong, #b39cff);
+        color: var(--text);
       }
 
       .comparison-section {
@@ -249,44 +237,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .comparison-table table {
         width: 100%;
         border-collapse: collapse;
-        background: var(--bg-soft, #070818);
-        border-radius: 12px;
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
         overflow: hidden;
       }
 
       .comparison-table th {
-        background: rgba(123, 92, 255, 0.1);
-        padding: 16px 12px;
+        background: var(--bg-subtle);
+        padding: 14px 12px;
         text-align: left;
-        font-size: 0.85rem;
+        font-size: 0.78rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--accent-strong, #b39cff);
-        border-bottom: 1px solid var(--border-subtle, #303244);
+        color: var(--text);
+        font-weight: 600;
       }
 
       .comparison-table td {
         padding: 12px;
-        border-bottom: 1px solid var(--border-subtle, #303244);
-        font-size: 0.9rem;
-        color: var(--muted, #c0c2d8);
-      }
-
-      .comparison-table tr:last-child td {
-        border-bottom: none;
+        font-size: 0.875rem;
+        color: var(--text-muted);
       }
 
       .check-yes {
-        color: var(--accent, #7b5cff);
-        font-weight: bold;
+        color: var(--text);
+        font-weight: 600;
       }
 
       .check-no {
-        color: var(--muted, #7e8195);
-        opacity: 0.5;
+        color: var(--text-light);
+        opacity: 0.4;
       }
 
-      /* Add-ons Section */
       .addons-section {
         max-width: 1100px;
         margin: 64px auto;
@@ -296,72 +278,65 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .addon-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 24px;
+        gap: 16px;
         margin-top: 32px;
       }
 
       .addon-card {
-        background: var(--bg-elevated, #050611);
-        border-radius: 16px;
-        border: 1px solid var(--border-subtle, #262738);
-        padding: 24px;
-        transition: transform 0.2s, border-color 0.2s;
-      }
-
-      .addon-card:hover {
-        transform: translateY(-2px);
-        border-color: var(--accent, #7b5cff);
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
+        padding: 22px;
       }
 
       .addon-card h3 {
-        font-size: 1.2rem;
-        margin-bottom: 12px;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
       }
 
       .addon-card p {
-        color: var(--muted, #c0c2d8);
+        color: var(--text-muted);
         line-height: 1.6;
-        margin-bottom: 16px;
+        margin-bottom: 14px;
       }
 
       .addon-card ul {
         list-style: none;
         padding: 0;
-        margin: 16px 0;
+        margin: 14px 0;
       }
 
       .addon-card ul li {
-        padding: 6px 0;
-        color: var(--muted, #c0c2d8);
-        font-size: 0.9rem;
+        padding: 5px 0;
+        color: var(--text-muted);
+        font-size: 0.875rem;
       }
 
       .addon-card ul li:before {
         content: "\2713 ";
-        color: var(--accent-strong, #b89cff);
+        color: var(--text-muted);
         margin-right: 8px;
       }
 
       .addon-price {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         font-weight: 600;
-        color: var(--accent-strong, #b89cff);
-        margin-top: 16px;
+        color: var(--text);
+        margin-top: 14px;
+        font-variant-numeric: tabular-nums;
       }
 
       .addon-cta {
         text-align: center;
         margin-top: 48px;
         padding: 32px;
-        background: rgba(123, 92, 255, 0.05);
-        border-radius: 16px;
-        border: 1px solid rgba(123, 92, 255, 0.15);
+        background: var(--bg-subtle);
+        border-radius: var(--radius-lg);
       }
 
       .addon-cta p {
         margin-bottom: 20px;
-        color: var(--muted, #c0c2d8);
-        font-size: 1.1rem;
+        color: var(--text-muted);
+        font-size: 1.05rem;
       }
 
       .faq-packages {
@@ -370,23 +345,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
 
       .faq-item {
-        margin-bottom: 24px;
+        margin-bottom: 16px;
         padding: 20px;
-        background: var(--bg-soft, #070818);
-        border: 1px solid var(--border-subtle, #303244);
-        border-radius: 12px;
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
       }
 
       .faq-question {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         font-weight: 600;
-        color: var(--text, #f8f9ff);
-        margin-bottom: 12px;
+        color: var(--text);
+        margin-bottom: 10px;
       }
 
       .faq-answer {
-        font-size: 0.95rem;
-        color: var(--muted, #c0c2d8);
+        font-size: 0.9rem;
+        color: var(--text-muted);
         line-height: 1.6;
       }
 
@@ -540,7 +514,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <strong>Best for:</strong> Teams that need to understand WHAT the problem is before committing to fixes
         </div>
 
-        <p class="pricing-note" style="margin-top: 12px; padding: 12px; background: rgba(123, 92, 255, 0.1); border-radius: 8px;">
+        <p class="pricing-note" style="margin-top: 12px; padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-md);">
           One-time. Shows you WHAT the problem is + gets you INTO the registry.
         </p>
 
@@ -602,7 +576,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <strong>Best for:</strong> Businesses that want to own their AI narrative and prevent drift
         </div>
 
-        <p class="pricing-note" style="margin-top: 12px; padding: 12px; background: rgba(123, 92, 255, 0.1); border-radius: 8px;">
+        <p class="pricing-note" style="margin-top: 12px; padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-md);">
           $1,950 CAD setup. Fix it, verify it, and maintain it.
         </p>
 

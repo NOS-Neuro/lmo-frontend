@@ -6,7 +6,8 @@
       "Bash(find /c/Projects/lmo-frontend -name .gitignore -o -name vercel.json -o -name *.config.*)",
       "Bash(npm install:*)",
       "Bash(npx astro:*)",
-      "Bash(find /c/Projects/lmo-frontend/dist -name *.html)"
+      "Bash(find /c/Projects/lmo-frontend/dist -name *.html)",
+      "WebFetch(domain:www.palantir.com)"
     ]
   }
 }

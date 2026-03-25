@@ -8,8 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .faq-item {
         margin-bottom: 24px;
         padding: 20px;
-        background: var(--bg-soft, #070818);
-        border: 1px solid var(--border-subtle, #303244);
+        background: var(--bg-subtle);
         border-radius: 12px;
       }
       .faq-item h3 {
@@ -100,7 +99,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="faq-item">
           <h3>Can we white-label VizAI for our clients?</h3>
-          <p>Yes. Agencies can bundle VizAI services under their own brand. See <a href="/agencies" style="color: var(--accent-strong, #b89cff); text-decoration: underline;">VizAI for Agencies</a> for details.</p>
+          <p>Yes. Agencies can bundle VizAI services under their own brand. See <a href="/agencies" style="color: var(--accent); text-decoration: underline;">VizAI for Agencies</a> for details.</p>
         </div>
 
         <div class="faq-item">
@@ -140,7 +139,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h4 style="margin-top: 16px; font-size: 1rem;">Overall Score</h4>
           <p>Weighted average of Discovery, Accuracy, and Authority scores, providing a single metric for your AI visibility health.</p>
 
-          <p style="margin-top: 12px; padding: 12px; background: rgba(123, 92, 255, 0.08); border-radius: 8px; font-size: 0.85rem;">
+          <p style="margin-top: 12px; padding: 12px; background: var(--bg-subtle); border-radius: 8px; font-size: 0.85rem;">
             <strong>Note:</strong> Free scan uses AI-assisted estimation. Tier 1+ services use comprehensive multi-platform testing for precise scores.
           </p>
         </div>
@@ -151,7 +150,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div style="margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap;">
             <a href="/scan" class="btn-primary" style="text-decoration: none;">
               <span>Run Free Scan</span>
-              <span class="icon">⚡</span>
+              <span class="icon">→</span>
             </a>
             <a href="/packages" class="btn-secondary" style="text-decoration: none;">
               <span>View Pricing</span>

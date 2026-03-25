@@ -45,10 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // ------------------------------------------------------------
   setupOrbParallax();
 
-  // ------------------------------------------------------------
-  // Soft cursor glow (futuristic, subtle)
-  // ------------------------------------------------------------
-  setupCursorGlow();
 });
 
 // -------------------------
@@ -138,56 +134,4 @@ function setupOrbParallax() {
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 }
-
-// -------------------------
-// Cursor glow
-// -------------------------
-function setupCursorGlow() {
-  // Disable on touch devices to avoid weirdness
-  const isTouch =
-    "ontouchstart" in window || navigator.maxTouchPoints > 0;
-  if (isTouch) return;
-
-  const glow = document.createElement("div");
-  glow.setAttribute("aria-hidden", "true");
-  glow.style.cssText = `
-    position: fixed;
-    left: 0; top: 0;
-    width: 280px; height: 280px;
-    border-radius: 999px;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(123,92,255,0.18), rgba(123,92,255,0.06), transparent 70%);
-    filter: blur(2px);
-    transition: opacity 220ms ease;
-  `;
-  document.body.appendChild(glow);
-
-  let raf = null;
-  let mouseX = 0;
-  let mouseY = 0;
-
-  const move = (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    glow.style.opacity = "1";
-
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      glow.style.left = `${mouseX}px`;
-      glow.style.top = `${mouseY}px`;
-      raf = null;
-    });
-  };
-
-  const leave = () => {
-    glow.style.opacity = "0";
-  };
-
-  window.addEventListener("mousemove", move, { passive: true });
-  window.addEventListener("mouseleave", leave, { passive: true });
-}
-
 

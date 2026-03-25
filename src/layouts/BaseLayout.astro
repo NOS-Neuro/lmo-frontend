@@ -51,6 +51,9 @@ const currentYear = new Date().getFullYear();
 
   {canonical && <link rel="canonical" href={canonical} />}
 
+  <!-- Tailwind utilities (no base reset — our global.css handles that) -->
+  <style is:global>@import "../styles/tailwind.css";</style>
+
   <!-- Global Styles -->
   <link rel="stylesheet" href="/styles/critical.css" />
   <link rel="stylesheet" href="/styles/global.css" media="print" onload="this.media='all'; this.onload=null;" />
@@ -82,7 +85,7 @@ const currentYear = new Date().getFullYear();
   <nav class="navbar">
     <div class="navbar-inner">
       <a href="/" class="brand">
-        <div class="logo-mark"></div>
+        <img src="/assets/vizai-icon.svg" alt="VizAI" class="logo-mark" />
         <div class="logo-text">VizAI</div>
       </a>
       <div class="nav-links">
@@ -93,8 +96,8 @@ const currentYear = new Date().getFullYear();
         <a href="/onboarding-form">Onboarding</a>
         <a href="/contact">Contact</a>
         <a href="/scan" class="cta">
-          <span>Run Free Scan</span>
-          <span class="icon">⚡</span>
+          <span>Free Scan</span>
+          <span class="icon">→</span>
         </a>
       </div>
     </div>

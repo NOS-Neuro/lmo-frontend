@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { HeroSpline } from '../components/ui/hero-spline';
+import { VizAIPricing } from '../components/ui/vizai-pricing';
 ---
 
 <BaseLayout
@@ -27,40 +29,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="container">
 
     <!-- HERO -->
-    <section class="section-dark">
-      <div class="stack-hero">
-        <div class="hero-badge">
-          <span>●</span>
-          <span>VizAI · AI Visibility Governance</span>
-        </div>
-
-        <h1>AI is describing your business right now. Make sure it gets the story right.</h1>
-
-        <p>
-          40% of customers ask ChatGPT or Claude about companies before visiting their website.
-          If AI gets your story wrong — outdated details, confused with competitors — you lose deals you never knew existed.
-        </p>
-
-        <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 24px;">
-          <a href="/scan" class="btn-primary" data-role="scan-button">
-            <span>Run Free Visibility Scan</span>
-            <span class="icon">↗</span>
-          </a>
-          <a href="/packages" class="btn-secondary">
-            <span>View Pricing</span>
-            <span class="icon">→</span>
-          </a>
-        </div>
-
-        <div class="micro">
-          Free scan gives you directional scores. Comprehensive analysis starts at $495 CAD.
-        </div>
-
-        <div style="margin-top: 32px; padding: 16px; background: rgba(123, 92, 255, 0.08); border-radius: 12px; font-size: 0.85rem; color: var(--muted, #c0c2d8); max-width: 600px; margin-left: auto; margin-right: auto;">
+    <section style="padding-top: 48px; padding-bottom: 24px;">
+      <HeroSpline client:load />
+      <div class="center" style="margin-top: 20px;">
+        <div style="padding: 10px 18px; background: var(--bg-card); border-radius: var(--radius-md); font-size: 0.8rem; color: var(--text-light); display: inline-block;">
           Built using real-world AI citation behavior across ChatGPT, Claude, and Perplexity
         </div>
-
-        <div class="hero-orb" aria-hidden="true"></div>
       </div>
     </section>
 
@@ -98,7 +72,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <section class="section">
       <div class="container narrow center">
         <h2 class="section-title">The VizAI Business Registry</h2>
-        <h3 style="font-size: 1.4rem; margin: 16px 0 24px; color: var(--accent-light, #b39cff);">
+        <h3 style="font-size: 1.15rem; margin: 16px 0 24px; color: var(--text-muted); font-weight: 500;">
           Building the Business Database AI Can Trust
         </h3>
         <p class="section-subtitle">
@@ -111,15 +85,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="why-grid" style="margin-top: 40px;">
           <div class="why-card">
-            <h3>📚 Open & Accessible</h3>
+            <h3>Open & Accessible</h3>
             <p>Public GitHub repository that AI systems can access and reference freely.</p>
           </div>
           <div class="why-card">
-            <h3>✓ Verified Entries</h3>
+            <h3>Verified Entries</h3>
             <p>Paying clients get verification badges and premium placement in the registry.</p>
           </div>
           <div class="why-card">
-            <h3>🔄 Living Data</h3>
+            <h3>Living Data</h3>
             <p>Registry entries are versioned and updated, creating a history of business evolution.</p>
           </div>
         </div>
@@ -187,17 +161,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
           <div class="lmo-pillars-grid" style="margin-top: 28px;">
             <div class="pillar-card">
-              <h3>🔍 Discovery</h3>
+              <h3>Discovery</h3>
               <p>Can AI reliably find and recognize your business?</p>
               <p class="pillar-mini">If AI can't find you, it can't recommend you.</p>
             </div>
             <div class="pillar-card">
-              <h3>🧠 Accuracy</h3>
+              <h3>Accuracy</h3>
               <p>Does AI describe what you do the way you would?</p>
               <p class="pillar-mini">Clarity builds trust before you ever meet.</p>
             </div>
             <div class="pillar-card">
-              <h3>🏛 Authority</h3>
+              <h3>Authority</h3>
               <p>Does AI trust your sources — or someone else's?</p>
               <p class="pillar-mini">Authority keeps your story from being overwritten.</p>
             </div>
@@ -283,15 +257,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h3 class="pipeline-title">What you get (when you want to go further)</h3>
           <div class="delivery-grid">
             <div class="delivery-card">
-              <h4>📘 A Truth File</h4>
+              <h4>A Truth File</h4>
               <p>Your canonical business profile — clear, consistent, and easy for AI to reuse correctly.</p>
             </div>
             <div class="delivery-card">
-              <h4>🌐 Strong signals</h4>
+              <h4>Strong Signals</h4>
               <p>Structured content that makes it harder for AI to confuse you with others.</p>
             </div>
             <div class="delivery-card">
-              <h4>🛰 Drift monitoring</h4>
+              <h4>Drift Monitoring</h4>
               <p>We re-check over time so you can correct drift early — before it spreads.</p>
             </div>
           </div>
@@ -306,91 +280,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p>Run the free scan. Get directional scores in under a minute.</p>
         <a href="/scan" class="btn-primary" data-role="scan-button">
           <span>Run Free Visibility Scan</span>
-          <span class="icon">⚡</span>
+          <span class="icon">→</span>
         </a>
         <p class="micro" style="margin-top: 12px;">
-          For comprehensive human-reviewed analysis, <a href="/packages#tier-0" style="color: var(--accent-strong); text-decoration: underline;">see Tier 0 ($495 CAD)</a>
+          For comprehensive human-reviewed analysis, <a href="/packages#tier-0" style="color: rgba(255,255,255,0.8); text-decoration: underline;">see Tier 0 ($495 CAD)</a>
         </p>
       </div>
     </section>
 
     <!-- PRICING -->
-    <section id="pricing">
-      <div class="section-header center">
-        <div class="pill">Transparent Pricing</div>
-        <h2>Choose Your Level of Control</h2>
-        <p>From free awareness to comprehensive governance. All pricing in CAD.</p>
-      </div>
-
-      <div class="pricing-grid">
-        <div class="pricing-card">
-          <div class="pricing-label">Tier 0</div>
-          <div class="pricing-title">AI Snapshot + Registry Entry</div>
-          <div class="pricing-amount">$495<span> CAD</span></div>
-          <ul class="pricing-list">
-            <li>Human-reviewed AI analysis</li>
-            <li>Test ChatGPT, Claude, Perplexity</li>
-            <li>Confusion flags & source analysis</li>
-            <li>Written recommendations</li>
-            <li>Your business added to VizAI Business Registry</li>
-          </ul>
-          <div class="pricing-note">One-time. Shows you WHAT the problem is + gets you INTO the registry.</div>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-label">Tier 1 — Popular</div>
-          <div class="pricing-title">Foundation + Verified Registry Entry</div>
-          <div class="pricing-amount">$650<span>/month</span></div>
-          <ul class="pricing-list">
-            <li>Verified Business Profile in VizAI Registry</li>
-            <li>Premium verification badge</li>
-            <li>Schema.org implementation</li>
-            <li>Monthly AI monitoring</li>
-            <li>Drift detection alerts</li>
-          </ul>
-          <div class="pricing-note">$1,950 CAD setup. Fix it, verify it, and maintain it.</div>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-label">Tier 2</div>
-          <div class="pricing-title">Reinforcement</div>
-          <div class="pricing-amount">$2,250<span>/month</span></div>
-          <ul class="pricing-list">
-            <li>Everything in Tier 1</li>
-            <li>2-3 additional AI surfaces</li>
-            <li>Bi-weekly monitoring</li>
-            <li>Before/after verification</li>
-          </ul>
-          <div class="pricing-note">$3,750 CAD setup. Strengthen your signals.</div>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-label">Tier 3</div>
-          <div class="pricing-title">Governance</div>
-          <div class="pricing-amount">Custom</div>
-          <ul class="pricing-list">
-            <li>Everything in Tiers 1 & 2</li>
-            <li>4-5 authority placements</li>
-            <li>Managed corrections</li>
-            <li>Executive reporting</li>
-          </ul>
-          <div class="pricing-note">Starting $4,950 CAD/month. We manage it for you.</div>
-        </div>
-      </div>
-
-      <div class="center" style="margin-top: 24px;">
-        <a href="/packages" class="btn-secondary">
-          <span>See Full Pricing & Comparison</span>
-          <span>→</span>
-        </a>
-      </div>
-
-      <div class="center" style="margin-top: 18px;">
-        <div class="pill-note">
-          <span>ⓘ</span>
-          <span>All pricing in CAD. USD equivalents available on request.</span>
-        </div>
-      </div>
+    <section id="pricing" style="padding: 0;">
+      <VizAIPricing client:load />
     </section>
 
     <!-- WHO THIS IS FOR -->
@@ -430,7 +330,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="center" style="margin-top: 32px;">
         <a href="/scan" class="btn-primary" data-role="scan-button">
           <span>Run Free Scan</span>
-          <span class="icon">⚡</span>
+          <span class="icon">→</span>
         </a>
       </div>
     </section>

@@ -956,8 +956,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           var errorMessage = "API error " + resp.status;
           try {
             var errorData = await resp.json();
-            if (errorData.detail) {
-              errorMessage = errorData.detail;
+            if (errorData && typeof errorData === "object") {
+              if (typeof errorData.detail === "string" && errorData.detail.trim()) {
+                errorMessage = errorData.detail;
+              } else if (typeof errorData.error === "string" && errorData.error.trim()) {
+                errorMessage = errorData.error;
+              }
             }
           } catch (jsonErr) {
             var txt = "";

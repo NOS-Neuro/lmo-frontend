@@ -572,7 +572,11 @@
           <h2>What to Do Next</h2>
           <div id="nextStepsContent"></div>
           <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="packages.html" class="btn-primary" style="text-decoration: none;">
+            <a id="platformCta" href="https://app.vizai.io/onboarding?ref=free-scan" class="btn-primary" style="text-decoration: none;">
+              <span>Get Full Intelligence</span>
+              <span class="icon">→</span>
+            </a>
+            <a href="packages.html" class="btn-secondary" style="text-decoration: none;">
               <span>View All Packages</span>
               <span class="icon">→</span>
             </a>
@@ -619,6 +623,7 @@
     const qaContentEl = document.getElementById("qaContent");
     const nextStepsCardEl = document.getElementById("nextStepsCard");
     const nextStepsContentEl = document.getElementById("nextStepsContent");
+    const platformCtaEl = document.getElementById("platformCta");
 
     // CAPTCHA token
     let captchaToken = null;
@@ -969,6 +974,17 @@
         // Populate next steps card
         nextStepsContentEl.innerHTML = nextStepsHTML;
         nextStepsCardEl.classList.remove("hidden");
+
+        // Platform handoff: carry the scan context into the intelligence
+        // platform's onboarding so the account starts pre-filled.
+        if (platformCtaEl) {
+          const platformParams = new URLSearchParams({
+            ref: "free-scan",
+            businessName,
+            website
+          });
+          platformCtaEl.href = "https://app.vizai.io/onboarding?" + platformParams.toString();
+        }
 
         findingsListEl.innerHTML = "";
         const findings = Array.isArray(data.findings) ? data.findings : [];

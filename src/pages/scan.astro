@@ -650,7 +650,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h2>What to Do Next</h2>
         <div id="nextStepsContent"></div>
         <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="/packages" class="btn-primary" style="text-decoration: none;">
+          <a id="platformCta" href="/packages" class="btn-primary" style="text-decoration: none;">
+            <span>Get Full Intelligence</span>
+            <span class="icon">&rarr;</span>
+          </a>
+          <a href="/packages" class="btn-secondary" style="text-decoration: none;">
             <span>View All Packages</span>
             <span class="icon">&rarr;</span>
           </a>
@@ -1001,6 +1005,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         // Populate next steps card
         nextStepsContentEl.innerHTML = calibration.nextStepsHTML;
         nextStepsCardEl.classList.remove("hidden");
+
+        var platformCta = document.getElementById("platformCta");
+        if (platformCta) {
+          var params = new URLSearchParams({
+            ref: "free-scan",
+            businessName: businessName,
+            website: website,
+          });
+          platformCta.href = "https://app.vizai.io/onboarding?" + params.toString();
+        }
 
         renderList(
           verifiedListEl,

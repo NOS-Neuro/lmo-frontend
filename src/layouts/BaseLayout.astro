@@ -68,6 +68,12 @@ const currentYear = new Date().getFullYear();
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
 
+  <!-- Vercel Speed Insights -->
+  <script is:inline>
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+
   <!-- Page-specific head content -->
   <slot name="head" />
 </head>

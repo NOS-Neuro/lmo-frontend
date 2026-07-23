@@ -1,954 +1,112 @@
----
-import BaseLayout from '../layouts/BaseLayout.astro';
----
-
-<BaseLayout
-  title="Pricing & Packages – VizAI"
-  description="Transparent pricing for AI visibility governance. From free scans to comprehensive managed services. All pricing in CAD."
-  canonicalPath="/packages"
-  ogTitle="Pricing & Packages – VizAI"
-  ogDescription="Transparent pricing for AI visibility governance. From free scans to comprehensive managed services."
->
-  <Fragment slot="head">
-    <style>
-      .pricing-hero {
-        text-align: center;
-        padding: 60px 20px 40px;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .pricing-hero h1 {
-        font-size: 2.5rem;
-        margin-bottom: 16px;
-        color: var(--text);
-      }
-
-      .pricing-hero p {
-        font-size: 1.05rem;
-        color: var(--text-muted);
-        margin-bottom: 8px;
-      }
-
-      .pricing-note {
-        font-size: 0.82rem;
-        color: var(--text-light);
-        margin-top: 8px;
-      }
-
-      .tier-progression {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin: 40px auto;
-        flex-wrap: wrap;
-        max-width: 900px;
-      }
-
-      .tier-step {
-        padding: 6px 14px;
-        background: var(--bg-subtle);
-        border-radius: var(--radius-md);
-        font-size: 0.85rem;
-        color: var(--text-muted);
-      }
-
-      .tier-step.active {
-        background: var(--accent);
-        color: var(--bg);
-        font-weight: 600;
-      }
-
-      .tier-arrow {
-        color: var(--text-light);
-        font-size: 1rem;
-      }
-
-      .packages-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 16px;
-        margin: 40px auto;
-        max-width: 1200px;
-      }
-
-      .package-card {
-        background: var(--bg-card);
-        border-radius: var(--radius-lg);
-        padding: 28px 22px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .package-card.featured {
-      }
-
-      .package-card.featured::before {
-        content: "Most Popular";
-        position: absolute;
-        top: 12px;
-        right: -32px;
-        background: var(--accent);
-        color: var(--bg);
-        padding: 4px 40px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        transform: rotate(45deg);
-      }
-
-      .package-tier {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--text-light);
-        margin-bottom: 8px;
-        font-weight: 500;
-      }
-
-      .package-name {
-        font-size: 1.6rem;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: var(--text);
-      }
-
-      .package-tagline {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        margin-bottom: 20px;
-        font-style: italic;
-      }
-
-      .package-price {
-        margin: 20px 0;
-      }
-
-      .price-setup {
-        font-size: 1rem;
-        color: var(--text-muted);
-        margin-bottom: 4px;
-      }
-
-      .price-monthly {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--text);
-        font-variant-numeric: tabular-nums;
-      }
-
-      .price-monthly .currency {
-        font-size: 0.85rem;
-        font-weight: 400;
-        color: var(--text-light);
-      }
-
-      .price-onetime {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--text);
-        font-variant-numeric: tabular-nums;
-      }
-
-      .price-onetime .currency {
-        font-size: 0.85rem;
-        font-weight: 400;
-        color: var(--text-light);
-      }
-
-      .price-note {
-        font-size: 0.78rem;
-        color: var(--text-light);
-        margin-top: 4px;
-      }
-
-      .package-includes {
-        margin: 24px 0;
-      }
-
-      .package-section-title {
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--text-light);
-        margin-bottom: 12px;
-        font-weight: 600;
-      }
-
-      .package-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .package-list li {
-        padding: 6px 0;
-        font-size: 0.875rem;
-        color: var(--text-muted);
-        display: flex;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .package-list li::before {
-        content: "\2713";
-        color: var(--text-muted);
-        font-weight: bold;
-        flex-shrink: 0;
-      }
-
-      .package-list.excludes li::before {
-        content: "\2717";
-        color: var(--text-light);
-      }
-
-      .package-list.excludes li {
-        color: var(--text-light);
-        opacity: 0.6;
-      }
-
-      .package-cta {
-        margin-top: 24px;
-      }
-
-      .package-best-for {
-        margin-top: 16px;
-        padding: 12px;
-        background: var(--bg-subtle);
-        border-radius: var(--radius-md);
-        font-size: 0.82rem;
-        color: var(--text-muted);
-      }
-
-      .package-best-for strong {
-        color: var(--text);
-      }
-
-      .comparison-section {
-        margin: 60px auto;
-        max-width: 1200px;
-      }
-
-      .comparison-table {
-        overflow-x: auto;
-        margin: 30px 0;
-      }
-
-      .comparison-table table {
-        width: 100%;
-        border-collapse: collapse;
-        background: var(--bg-card);
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-      }
-
-      .comparison-table th {
-        background: var(--bg-subtle);
-        padding: 14px 12px;
-        text-align: left;
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--text);
-        font-weight: 600;
-      }
-
-      .comparison-table td {
-        padding: 12px;
-        font-size: 0.875rem;
-        color: var(--text-muted);
-      }
-
-      .check-yes {
-        color: var(--text);
-        font-weight: 600;
-      }
-
-      .check-no {
-        color: var(--text-light);
-        opacity: 0.4;
-      }
-
-      .addons-section {
-        max-width: 1100px;
-        margin: 64px auto;
-        padding: 0 16px;
-      }
-
-      .addon-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 16px;
-        margin-top: 32px;
-      }
-
-      .addon-card {
-        background: var(--bg-card);
-        border-radius: var(--radius-lg);
-        padding: 22px;
-      }
-
-      .addon-card h3 {
-        font-size: 1.1rem;
-        margin-bottom: 10px;
-      }
-
-      .addon-card p {
-        color: var(--text-muted);
-        line-height: 1.6;
-        margin-bottom: 14px;
-      }
-
-      .addon-card ul {
-        list-style: none;
-        padding: 0;
-        margin: 14px 0;
-      }
-
-      .addon-card ul li {
-        padding: 5px 0;
-        color: var(--text-muted);
-        font-size: 0.875rem;
-      }
-
-      .addon-card ul li:before {
-        content: "\2713 ";
-        color: var(--text-muted);
-        margin-right: 8px;
-      }
-
-      .addon-price {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--text);
-        margin-top: 14px;
-        font-variant-numeric: tabular-nums;
-      }
-
-      .addon-cta {
-        text-align: center;
-        margin-top: 48px;
-        padding: 32px;
-        background: var(--bg-subtle);
-        border-radius: var(--radius-lg);
-      }
-
-      .addon-cta p {
-        margin-bottom: 20px;
-        color: var(--text-muted);
-        font-size: 1.05rem;
-      }
-
-      .faq-packages {
-        margin: 60px auto;
-        max-width: 800px;
-      }
-
-      .faq-item {
-        margin-bottom: 16px;
-        padding: 20px;
-        background: var(--bg-card);
-        border-radius: var(--radius-lg);
-      }
-
-      .faq-question {
-        font-size: 1.05rem;
-        font-weight: 600;
-        color: var(--text);
-        margin-bottom: 10px;
-      }
-
-      .faq-answer {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        line-height: 1.6;
-      }
-
-      .faq-answer p {
-        margin-bottom: 12px;
-      }
-
-      .faq-answer p:last-child {
-        margin-bottom: 0;
-      }
-
-      @media (max-width: 768px) {
-        .pricing-hero h1 {
-          font-size: 2rem;
-        }
-
-        .packages-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .tier-progression {
-          flex-direction: column;
-          align-items: stretch;
-        }
-
-        .tier-arrow {
-          transform: rotate(90deg);
-        }
-
-        .comparison-table {
-          font-size: 0.8rem;
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-          padding: 8px 6px;
-        }
-      }
-    </style>
-  </Fragment>
-
-  <div class="container">
-
-    <!-- HERO -->
-    <section class="pricing-hero">
-      <h1>Choose Your Level of AI Visibility Control</h1>
-      <p>From free awareness to comprehensive governance. Transparent pricing, no hidden fees.</p>
-      <p class="pricing-note">All pricing in CAD. USD equivalents available on request.</p>
-    </section>
-
-    <!-- TIER PROGRESSION -->
-    <section class="tier-progression">
-      <div class="tier-step">Free Scan</div>
-      <div class="tier-arrow">&rarr;</div>
-      <div class="tier-step">Tier 0: Snapshot</div>
-      <div class="tier-arrow">&rarr;</div>
-      <div class="tier-step active">Tier 1: Foundation</div>
-      <div class="tier-arrow">&rarr;</div>
-      <div class="tier-step">Tier 2: Reinforcement</div>
-      <div class="tier-arrow">&rarr;</div>
-      <div class="tier-step">Tier 3: Governance</div>
-    </section>
-
-    <!-- PACKAGES GRID -->
-    <section class="packages-grid">
-      <!-- FREE SCAN -->
-      <div class="package-card">
-        <div class="package-tier">Free</div>
-        <h2 class="package-name">Free Visibility Scan</h2>
-        <p class="package-tagline">See that a problem exists</p>
-
-        <div class="package-price">
-          <div class="price-onetime">$0</div>
-          <p class="price-note">Automated lead magnet</p>
-        </div>
-
-        <div class="package-includes">
-          <h3 class="package-section-title">What You Get</h3>
-          <ul class="package-list">
-            <li>Automated AI visibility check</li>
-            <li>Discovery/Accuracy/Authority scores</li>
-            <li>High-level findings</li>
-            <li>Immediate results</li>
-          </ul>
-        </div>
-
-        <div class="package-includes">
-          <h3 class="package-section-title">What's Not Included</h3>
-          <ul class="package-list excludes">
-            <li>No comprehensive testing</li>
-            <li>No human review</li>
-            <li>No actionable guidance</li>
-            <li>Just directional scores</li>
-          </ul>
-        </div>
-
-        <div class="package-cta">
-          <a href="/scan" class="btn-primary btn-primary-full">
-            <span>Run Free Scan</span>
-            <span class="icon">&rarr;</span>
-          </a>
-        </div>
-
-        <div class="package-best-for">
-          <strong>Best for:</strong> Initial awareness and lead generation
-        </div>
-      </div>
-
-      <!-- TIER 0 -->
-      <div class="package-card" id="tier-0">
-        <div class="package-tier">Tier 0</div>
-        <h2 class="package-name">AI Snapshot + Registry Entry</h2>
-        <p class="package-tagline">See how AI currently understands your business</p>
-
-        <div class="package-price">
-          <div class="price-onetime">$495 <span class="currency">CAD</span></div>
-          <p class="price-note">One-time, human-reviewed analysis</p>
-        </div>
-
-        <div class="package-includes">
-          <h3 class="package-section-title">What's Included</h3>
-          <ul class="package-list">
-            <li>Lightweight canonical business profile</li>
-            <li>Human-reviewed AI snapshot across ChatGPT, Claude, Perplexity</li>
-            <li>Confusion flags (if AI merges you with others)</li>
-            <li>Source visibility analysis</li>
-            <li>Written interpretation & recommendations</li>
-            <li>Your business added to VizAI Business Registry</li>
-            <li>Clear guidance on next steps</li>
-          </ul>
-        </div>
-
-        <div class="package-includes">
-          <h3 class="package-section-title">What's Not Included</h3>
-          <ul class="package-list excludes">
-            <li>No structured repository</li>
-            <li>No schema builds</li>
-            <li>No ongoing monitoring</li>
-            <li>No corrections or fixes</li>
-          </ul>
-        </div>
-
-        <div class="package-cta">
-          <a href="https://buy.stripe.com/eVqfZad4zc3SapnfhgcMM00" class="btn-primary btn-primary-full" target="_blank" rel="noopener noreferrer">
-            <span>Get Your Snapshot - $495 CAD</span>
-            <span class="icon">&rarr;</span>
-          </a>
-        </div>
-
-        <div class="package-best-for">
-          <strong>Best for:</strong> Teams that need to understand WHAT the problem is before committing to fixes
-        </div>
-
-        <p class="pricing-note" style="margin-top: 12px; padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-md);">
-          One-time. Shows you WHAT the problem is + gets you INTO the registry.
-        </p>
-
-        <p class="pricing-note" style="margin-top: 12px; font-style: italic;">
-          <strong>After purchase:</strong> You'll receive a link to our business profile data collection form.
-        </p>
-
-        <p class="pricing-note" style="margin-top: 8px; font-style: italic;">
-          Optional: Refresh snapshot for $195 CAD
-        </p>
-      </div>
-
-      <!-- TIER 1 -->
-      <div class="package-card featured" id="tier-1">
-        <div class="package-tier">Tier 1 — Most Popular</div>
-        <h2 class="package-name">Foundation + Verified Registry Entry</h2>
-        <p class="package-tagline">Define what your business is for AI systems</p>
-
-        <div class="package-price">
-          <div class="price-setup">$1,950 CAD setup +</div>
-          <div class="price-monthly">$650<span class="currency"> CAD/month</span></div>
-          <p class="price-note">Minimum 3 months</p>
-        </div>
-
-        <div class="package-includes">
-          <h3 class="package-section-title">What's Included</h3>
-          <ul class="package-list">
-            <li>Verified Business Profile in VizAI Registry</li>
-            <li>Premium verification badge</li>
-            <li>Canonical AI Business Model (version-controlled repository)</li>
-            <li>Core business definition & disambiguation</li>
-            <li>Baseline AI audit (30 queries)</li>
-            <li>Versioned Truth File (v1.0)</li>
-            <li>Schema.org JSON-LD for your website</li>
-            <li>Monthly AI monitoring</li>
-            <li>Drift detection alerts</li>
-            <li>Monthly governance reports</li>
-          </ul>
-        </div>
-
-        <div class="package-includes">
-          <h3 class="package-section-title">What's Not Included</h3>
-          <ul class="package-list excludes">
-            <li>No Wikipedia editing</li>
-            <li>No extended structured surfaces</li>
-            <li>No citation cleanup</li>
-            <li>No heavy execution work</li>
-          </ul>
-        </div>
-
-        <div class="package-cta">
-          <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" class="btn-primary btn-primary-full" target="_blank" rel="noopener noreferrer">
-            <span>Build Your Foundation</span>
-            <span class="icon">&rarr;</span>
-          </a>
-        </div>
-
-        <div class="package-best-for">
-          <strong>Best for:</strong> Businesses that want to own their AI narrative and prevent drift
-        </div>
-
-        <p class="pricing-note" style="margin-top: 12px; padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-md);">
-          $1,950 CAD setup. Fix it, verify it, and maintain it.
-        </p>
-
-        <p class="pricing-note" style="margin-top: 12px; font-style: italic;">
-          <strong>After purchase:</strong> You'll receive a link to our business profile data collection form.
-        </p>
-      </div>
-
-      <!-- TIER 2 -->
-      <div class="package-card" id="tier-2">
-        <div class="package-tier">Tier 2</div>
-        <h2 class="package-name">AI Signal Reinforcement</h2>
-        <p class="package-tagline">Strengthen where and how AI learns about you</p>
-
-        <div class="package-price">
-          <div class="price-setup">$3,750 CAD setup +</div>
-          <div class="price-monthly">$2,250<span class="currency"> CAD/month</span></div>
-          <p class="price-note">Minimum 3-6 months</p>
-        </div>
-
-        <div class="package-includes">
-          <h3 class="package-section-title">What's Included</h3>
-          <ul class="package-list">
-            <li>Everything in Tier 1</li>
-            <li>Extended schema (FAQ, Service, Product)</li>
-            <li>2-3 additional AI surfaces (Wikidata, Q&A library)</li>
-            <li>Bi-weekly monitoring</li>
-            <li>Drift & regression alerts</li>
-            <li>Before/after verification snapshots</li>
-            <li>Structured correction playbooks</li>
-          </ul>
-        </div>
-
-        <div class="package-includes">
-          <h3 class="package-section-title">What's Not Included</h3>
-          <ul class="package-list excludes">
-            <li>No guaranteed Wikipedia entries</li>
-            <li>No manual industry authority work</li>
-            <li>No manual citation cleanup</li>
-          </ul>
-        </div>
-
-        <div class="package-cta">
-          <a href="https://buy.stripe.com/bJeaEQ9Sn4BqeFDd98cMM02" class="btn-primary btn-primary-full" target="_blank" rel="noopener noreferrer">
-            <span>Reinforce Your Presence</span>
-            <span class="icon">&rarr;</span>
-          </a>
-        </div>
-
-        <div class="package-best-for">
-          <strong>Best for:</strong> Growing companies that rely on inbound discovery and need stronger signals
-        </div>
-      </div>
-
-      <!-- TIER 3 -->
-      <div class="package-card" id="tier-3">
-        <div class="package-tier">Tier 3 — Enterprise</div>
-        <h2 class="package-name">Managed AI Accuracy Governance</h2>
-        <p class="package-tagline">We actively manage how AI represents you</p>
-
-        <div class="package-price">
-          <div class="price-setup">Starting at $5,950 CAD setup +</div>
-          <div class="price-monthly">$4,950<span class="currency"> CAD/month</span></div>
-          <p class="price-note">Minimum 6 months &middot; Custom pricing</p>
-        </div>
-
-        <div class="package-includes">
-          <h3 class="package-section-title">What's Included</h3>
-          <ul class="package-list">
-            <li>Everything in Tiers 1 & 2</li>
-            <li>4-5 authority-grade structured placements</li>
-            <li>Wikipedia strategy (if eligible — not guaranteed)</li>
-            <li>Industry association listings</li>
-            <li>Weekly monitoring</li>
-            <li>Managed execution of corrections</li>
-            <li>Full correction logs & provenance</li>
-            <li>Executive reporting</li>
-            <li>Priority support</li>
-          </ul>
-        </div>
-
-        <div class="package-cta">
-          <a href="https://calendly.com/vizai-governance" target="_blank" rel="noopener noreferrer" class="btn-primary btn-primary-full">
-            <span>Request Governance Consultation</span>
-            <span class="icon">&#x1F4C5;</span>
-          </a>
-        </div>
-
-        <div class="package-best-for">
-          <strong>Best for:</strong> Organizations treating AI visibility as critical infrastructure
-        </div>
-
-        <p class="pricing-note" style="margin-top: 16px; padding: 12px; background: rgba(255, 107, 107, 0.1); border-radius: 8px; font-size: 0.85rem;">
-          <strong>Important:</strong> Wikipedia inclusion depends on meeting their independent notability requirements and is not guaranteed.
-        </p>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VizAI Pricing | Start with the Evidence</title>
+  <meta name="description" content="Transparent pricing for VizAI representation checks, infrastructure builds, and managed maintenance.">
+  <link rel="canonical" href="https://vizai.io/packages">
+  <meta property="og:title" content="VizAI Pricing | Start with the Evidence">
+  <meta property="og:description" content="Transparent pricing for representation checks, infrastructure builds, and managed maintenance.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vizai.io/packages">
+  <meta property="og:image" content="https://vizai.io/assets/vizai-redesign-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/styles/redesign.css">
+  <script is:inline>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav-shell">
+      <a class="brand" href="/" aria-label="VizAI home"><span class="brand-sigil" aria-hidden="true"><i></i><i></i><i></i></span><span>VizAI</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-toggle><span></span></button>
+      <nav class="primary-nav" aria-label="Primary navigation" data-primary-nav>
+        <a href="/#how-it-works">How it works</a><a href="/#services">Services</a><a href="/packages" aria-current="page">Pricing</a><a href="/sample-report">Sample report</a><a href="/registry">Registry</a>
+      </nav>
+      <div class="nav-actions"><a class="button-secondary" href="/portal">Customer portal</a><a class="button" href="/scan">Run the free scan</a></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="shell page-hero-grid">
+        <div><div class="eyebrow">Services and pricing</div><h1>Start where the evidence says you should.</h1></div>
+        <div><p class="page-hero-copy">Use the free check for direction, the Snapshot for a reviewed diagnosis, and the Build only when the underlying information infrastructure needs work.</p><div class="inline-meta"><span class="tag">CAD pricing</span><span class="tag">Managed delivery</span><span class="tag">Human approval gates</span></div></div>
       </div>
     </section>
 
-    <!-- COMPARISON TABLE -->
-    <section class="comparison-section">
-      <div class="section-header center">
-        <h2 class="section-title">Feature Comparison</h2>
-        <p class="section-subtitle">See what's included at each tier</p>
-      </div>
+    <div class="shell"><div class="trust-boundary"><span class="trust-icon" aria-hidden="true">i</span><span>VizAI improves business-information quality and accessibility. Pricing does not imply guaranteed crawling, citation, ranking, recommendation, or model-output changes.</span></div></div>
 
-      <div class="comparison-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Free</th>
-              <th>Tier 0</th>
-              <th>Tier 1</th>
-              <th>Tier 2</th>
-              <th>Tier 3</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>AI visibility scores</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-            </tr>
-            <tr>
-              <td>Human-reviewed analysis</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-            </tr>
-            <tr>
-              <td>Multi-platform testing</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-            </tr>
-            <tr>
-              <td>Canonical Truth File</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-            </tr>
-            <tr>
-              <td>Schema.org implementation</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-            </tr>
-            <tr>
-              <td>Monthly monitoring</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check; Bi-weekly</td>
-              <td class="check-yes">&check; Weekly</td>
-            </tr>
-            <tr>
-              <td>Drift detection alerts</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-              <td class="check-yes">&check;</td>
-            </tr>
-            <tr>
-              <td>Extended structured surfaces</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check; 2-3</td>
-              <td class="check-yes">&check; 4-5</td>
-            </tr>
-            <tr>
-              <td>Managed corrections</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check;</td>
-            </tr>
-            <tr>
-              <td>Wikipedia strategy</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check; If eligible</td>
-            </tr>
-            <tr>
-              <td>Executive reporting</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-no">&cross;</td>
-              <td class="check-yes">&check;</td>
-            </tr>
-          </tbody>
-        </table>
+    <section class="section compact">
+      <div class="shell">
+        <div class="pricing-grid" data-service-grid></div>
       </div>
     </section>
 
-    <!-- ADD-ONS -->
-    <section id="addons" class="addons-section">
-      <div class="section-header center">
-        <h2 class="section-title">Service Add-Ons</h2>
-        <p class="section-subtitle">Enhance any tier with these specialized services</p>
-      </div>
-
-      <div class="addon-grid">
-        <div class="addon-card">
-          <h3>&#x1F3AF; Competitor Comparison Report</h3>
-          <p>See how AI describes you vs. your top 3 competitors</p>
-          <ul>
-            <li>Side-by-side analysis</li>
-            <li>Gap identification</li>
-            <li>Positioning recommendations</li>
-          </ul>
-          <p class="addon-price">$750 CAD one-time</p>
+    <section class="section tint">
+      <div class="shell">
+        <div class="section-head"><div class="section-kicker">Scope at a glance</div><h2 class="section-title">Know what changes at each level.</h2><p class="section-copy">The paid path separates diagnosis, creation, maintenance, and active improvement so the commitment stays legible.</p></div>
+        <div class="comparison-wrap">
+          <table class="comparison-table">
+            <thead><tr><th scope="col">Capability</th><th scope="col">Snapshot</th><th scope="col">Build</th><th scope="col">Maintenance</th><th scope="col">Managed</th></tr></thead>
+            <tbody>
+              <tr><td>Customer fact confirmation</td><td>Baseline</td><td><span class="included" aria-label="Included">✓</span></td><td>As changed</td><td><span class="included" aria-label="Included">✓</span></td></tr>
+              <tr><td>VizAI owner approval</td><td>Deliverable</td><td>Canon + publish</td><td>Exceptions</td><td>External actions</td></tr>
+              <tr><td>Selected AI-system testing</td><td><span class="included" aria-label="Included">✓</span></td><td>Baseline</td><td>Monthly</td><td>Bi-weekly</td></tr>
+              <tr><td>Canonical profile and JSON record</td><td><span class="excluded" aria-label="Not included">—</span></td><td><span class="included" aria-label="Included">✓</span></td><td>Maintained</td><td>Maintained</td></tr>
+              <tr><td>Relevant website structured data</td><td><span class="excluded" aria-label="Not included">—</span></td><td><span class="included" aria-label="Included">✓</span></td><td>Small correction</td><td>Implementation tasks</td></tr>
+              <tr><td>Source and provenance map</td><td>Observations</td><td><span class="included" aria-label="Included">✓</span></td><td>Maintained</td><td>Gap analysis</td></tr>
+              <tr><td>Competitor coverage</td><td><span class="excluded" aria-label="Not included">—</span></td><td><span class="excluded" aria-label="Not included">—</span></td><td><span class="excluded" aria-label="Not included">—</span></td><td>Up to three</td></tr>
+              <tr><td>Strategy review</td><td>Recommendations</td><td>Handoff</td><td>Quarterly</td><td>Monthly</td></tr>
+            </tbody>
+          </table>
         </div>
-
-        <div class="addon-card">
-          <h3>&#x1F4CA; Extended Query Pack</h3>
-          <p>50 additional custom queries beyond standard baseline</p>
-          <ul>
-            <li>Industry-specific questions</li>
-            <li>Product/service deep-dive</li>
-            <li>Geographic variations</li>
-          </ul>
-          <p class="addon-price">$500 CAD one-time</p>
-        </div>
-
-        <div class="addon-card">
-          <h3>&#x1F504; Quarterly Deep Audit</h3>
-          <p>Comprehensive re-audit every 3 months</p>
-          <ul>
-            <li>Full baseline re-run</li>
-            <li>Trend analysis</li>
-            <li>Strategy recommendations</li>
-          </ul>
-          <p class="addon-price">$950 CAD per quarter</p>
-        </div>
-
-        <div class="addon-card">
-          <h3>&#x1F4DD; Content Optimization</h3>
-          <p>Rewrite key website pages for AI optimization</p>
-          <ul>
-            <li>About page restructure</li>
-            <li>Service descriptions</li>
-            <li>FAQ creation</li>
-          </ul>
-          <p class="addon-price">$1,200 CAD per page</p>
-        </div>
-
-        <div class="addon-card">
-          <h3>&#x1F310; Multi-Language Testing</h3>
-          <p>Test AI visibility in additional languages</p>
-          <ul>
-            <li>French, Spanish, German, etc.</li>
-            <li>Localized recommendations</li>
-            <li>Cross-language consistency check</li>
-          </ul>
-          <p class="addon-price">$600 CAD per language</p>
-        </div>
-
-        <div class="addon-card">
-          <h3>&#x26A1; Priority Support</h3>
-          <p>Faster response times and direct access</p>
-          <ul>
-            <li>4-hour response guarantee</li>
-            <li>Direct phone/video support</li>
-            <li>Emergency drift alerts</li>
-          </ul>
-          <p class="addon-price">$250 CAD/month</p>
-        </div>
-      </div>
-
-      <div class="addon-cta">
-        <p>Want to discuss custom add-ons for your specific needs?</p>
-        <a href="/contact" class="btn-primary">
-          <span>Contact Us</span>
-          <span class="icon">&rarr;</span>
-        </a>
+        <div class="method-note"><strong>Important:</strong> “Included” refers to the defined service scope, not a guaranteed external-system result. Final scope is confirmed before work begins; multi-brand, multilingual, large-catalog, and integration requirements are custom.</div>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="faq-packages">
-      <div class="section-header center">
-        <h2 class="section-title">Pricing FAQ</h2>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-question">How is Tier 0 different from the free scan?</h3>
-        <div class="faq-answer">
-          <p>The <strong>free scan</strong> is an automated, AI-assisted estimate that gives you directional scores (Discovery, Accuracy, Authority). It's designed to show you THAT a problem might exist.</p>
-          <p><strong>Tier 0 ($495)</strong> is a human-reviewed snapshot where we actually query ChatGPT, Claude, and Perplexity about your business, analyze the responses against your actual truth, identify specific errors and confusion points, and give you written recommendations. It shows you WHAT the problem is.</p>
-          <p>Think of it like: Free scan = smoke detector. Tier 0 = Fire inspection report.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-question">Can I upgrade later?</h3>
-        <div class="faq-answer">
-          <p>Yes. Many clients start with Tier 0 to understand the scope, then move to Tier 1 for ongoing management. We'll credit your Tier 0 payment toward Tier 1 setup if you upgrade within 30 days.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-question">What if I only need monitoring, not setup?</h3>
-        <div class="faq-answer">
-          <p>If your AI signals are already strong, we can offer monitoring-only packages starting at $650 CAD/month (similar to Tier 1 without the setup work). Contact us to discuss.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-question">Do you offer monthly payment plans?</h3>
-        <div class="faq-answer">
-          <p>Setup fees are due upfront. Monthly service fees are billed at the beginning of each month. For Tier 3 enterprise clients, we can discuss custom payment terms.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-question">What's included in the setup fee?</h3>
-        <div class="faq-answer">
-          <p>Setup includes: initial business profile creation, baseline AI audit, Truth File v1.0, schema implementation, repository setup, and initial recommendations. This is one-time work that establishes your canonical foundation.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-question">Can I cancel anytime?</h3>
-        <div class="faq-answer">
-          <p>After your minimum commitment period (3 months for Tier 1, 3-6 months for Tier 2, 6 months for Tier 3), you can cancel with 30 days' notice. Setup fees are non-refundable.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <h3 class="faq-question">Do you guarantee Wikipedia inclusion?</h3>
-        <div class="faq-answer">
-          <p>No. Wikipedia has strict independent notability requirements that we cannot control. For Tier 3 clients, we develop a Wikipedia strategy IF you meet their criteria, but inclusion is never guaranteed. Most businesses don't qualify — and that's okay. We focus on what you CAN control.</p>
+    <section class="section">
+      <div class="shell">
+        <div class="section-head center"><div class="section-kicker">A simple buying path</div><h2 class="section-title">Diagnose before you build.</h2></div>
+        <div class="four-grid">
+          <article class="step-card"><span class="step-number">1</span><h3>Run the check</h3><p>Get a directional indication without paying for analysis.</p></article>
+          <article class="step-card"><span class="step-number">2</span><h3>Let VizAI prepare</h3><p>VizAI performs the research, analysis, structuring, and drafting within the defined service scope.</p></article>
+          <article class="step-card"><span class="step-number">3</span><h3>Confirm and approve</h3><p>The customer confirms facts; VizAI reviews quality and approves the deliverable or action.</p></article>
+          <article class="step-card"><span class="step-number">4</span><h3>Maintain what matters</h3><p>VizAI executes the cadence while decisions and exceptions continue through human gates.</p></article>
         </div>
       </div>
     </section>
 
-    <!-- FINAL CTA -->
-    <section class="section final-cta contrast">
-      <div class="container center narrow">
-        <h2 class="section-title">Ready to take control of your AI narrative?</h2>
-        <p class="section-subtitle">
-          Start with a free scan to see where you stand, or jump straight to comprehensive analysis.
-        </p>
-        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
-          <a href="/scan" class="btn-primary">
-            <span>Run Free Scan</span>
-            <span class="icon">&rarr;</span>
-          </a>
-          <a href="/contact" class="btn-secondary">
-            <span>Schedule Consultation</span>
-            <span class="icon">&#x1F4C5;</span>
-          </a>
+    <section class="section dark">
+      <div class="shell">
+        <div class="section-head"><div class="section-kicker">Maintenance scope</div><h2 class="section-title">Recurring work has explicit boundaries.</h2><p class="section-copy">The baseline plan includes one monthly fact-change request, up to five factual changes, one small infrastructure correction, and a defined monthly monitoring set. Larger work is estimated separately.</p></div>
+        <div class="maintenance-loop">
+          <div class="loop-step"><span>Weekly</span><strong>Technical validation</strong><p>Check hosted profile and record integrity.</p></div>
+          <div class="loop-step"><span>Monthly</span><strong>Monitoring set</strong><p>Run the agreed systems, prompts, and observations.</p></div>
+          <div class="loop-step"><span>As requested</span><strong>Fact maintenance</strong><p>Process the included factual changes and correction.</p></div>
+          <div class="loop-step"><span>Quarterly</span><strong>Review</strong><p>Review trends, material alerts, and next priorities.</p></div>
         </div>
       </div>
     </section>
 
-  </div>
-</BaseLayout>
+    <section class="section tint">
+      <div class="shell">
+        <div class="section-head center"><div class="section-kicker">Pricing questions</div><h2 class="section-title">Before you commit.</h2></div>
+        <div class="faq-list">
+          <details><summary>Is the $495 Snapshot credited toward a Build?</summary><p>Yes. The Snapshot fee can be credited toward a qualifying Infrastructure Build started within 30 days.</p></details>
+          <details><summary>Does the Infrastructure Build require Maintenance?</summary><p>The mockup treats the Build as a standalone deliverable. Maintenance is recommended when the underlying facts, sources, or representation need recurring attention.</p></details>
+          <details><summary>What falls outside the standard Build?</summary><p>Additional brands, domains, markets, languages, large catalogs, feed integrations, and complex workflows require a custom scope.</p></details>
+          <details><summary>What is a “small infrastructure correction”?</summary><p>A contained adjustment to the maintained Truth Profile, machine-readable record, or previously implemented structured data. New templates, integrations, or broad website work are excluded.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell final-cta"><div><h2>Unsure where to start? Start free.</h2><p>The automated check is directional. If it identifies a meaningful issue, a reviewed Snapshot is the next step.</p></div><div class="button-row"><a class="button" href="/scan">Run the free scan</a><a class="button-secondary" href="/contact">Discuss scope</a></div></section>
+  </main>
+
+  <footer class="site-footer"><div class="shell"><div class="footer-grid"><div class="footer-brand"><a class="brand" href="/"><span class="brand-sigil" aria-hidden="true"><i></i><i></i><i></i></span><span>VizAI</span></a><p>Structured, verified business information—managed for an AI-mediated world.</p></div><div class="footer-column"><strong>Explore</strong><a href="/#how-it-works">How it works</a><a href="/packages">Pricing</a><a href="/sample-report">Sample report</a></div><div class="footer-column"><strong>Product</strong><a href="/scan">Free scan</a><a href="/portal">Customer portal</a><a href="/registry">Registry</a></div><div class="footer-column"><strong>Company</strong><a href="/contact">Contact</a><a href="/#faq">FAQ</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></div><div class="footer-bottom"><span>© 2026 VizAI.</span><span>All prices shown in CAD.</span></div></div></footer>
+  <script is:inline src="/scripts/redesign.js"></script>
+</body>
+</html>

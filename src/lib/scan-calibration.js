@@ -368,10 +368,11 @@ function buildRecommendation(summary) {
       recommendationText: "Critical business details are missing or weakly supported. VizAI should first establish a clearer truth source, add structured contact and location data, and then validate supporting proof points before expecting reliable AI answers.",
       nextStepsHTML:
         '<p style="color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">The scan found multiple evidence gaps in the core business profile. That makes omission, confusion, and low-confidence AI answers more likely.</p>' +
-        '<p style="color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;"><strong>Recommended next step from VizAI:</strong> Start with Tier 0 to identify the exact contradictions and missing proof points, then move into foundational fixes.</p>' +
+        '<p style="color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;"><strong>Recommended next step from VizAI:</strong> Start with a reviewed Snapshot to identify the exact contradictions and missing proof points, then scope an Infrastructure Build only if the evidence supports it.</p>' +
         '<ul style="margin: 0 0 16px; padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">' +
-          '<li><strong>Tier 0 ($495 CAD):</strong> Human-reviewed diagnosis of conflicting, missing, and weak evidence — <a href="https://buy.stripe.com/eVqfZad4zc3SapnfhgcMM00" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">Purchase snapshot</a></li>' +
-          '<li><strong>Then Tier 1 ($1,950 + $650/mo):</strong> Build canonical truth, deploy schema, and repair the evidence base — <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">Get started</a></li>' +
+          '<li><strong>Human-Reviewed Snapshot ($495 CAD):</strong> Diagnose conflicting, missing, and weak evidence.</li>' +
+          '<li><strong>Infrastructure Build (from $1,950 CAD):</strong> Build the private Canon and approved public artifacts when the diagnosis justifies it.</li>' +
+          '<li><a href="/contact" style="color: var(--accent); text-decoration: underline;">Discuss the right scope with VizAI</a></li>' +
         '</ul>'
     };
   }
@@ -383,10 +384,11 @@ function buildRecommendation(summary) {
       recommendationText: "The scan found some usable evidence, but enough important details remain unclear that AI systems may still return incomplete or inconsistent answers. VizAI should strengthen missing proof and reduce ambiguity before relying on the current result.",
       nextStepsHTML:
         '<p style="color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">The scan found partial support, but there are still enough unclear or missing signals to limit confidence.</p>' +
-        '<p style="color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;"><strong>Recommended next step from VizAI:</strong> Use Tier 0 to confirm the weak spots, then ship the highest-value fixes into canonical pages and structured data.</p>' +
+        '<p style="color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;"><strong>Recommended next step from VizAI:</strong> Use a reviewed Snapshot to confirm the weak spots, then scope only the highest-value canonical and structured-data fixes.</p>' +
         '<ul style="margin: 0 0 16px; padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">' +
-          '<li><strong>Tier 0 ($495 CAD):</strong> Validate which claims are real, weak, or unsupported — <a href="https://buy.stripe.com/eVqfZad4zc3SapnfhgcMM00" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">Purchase snapshot</a></li>' +
-          '<li><strong>Then Tier 1 ($1,950 + $650/mo):</strong> Add structured signals and authoritative proof to reduce ambiguity — <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">Get started</a></li>' +
+          '<li><strong>Human-Reviewed Snapshot ($495 CAD):</strong> Validate which claims are confirmed, weak, or unsupported.</li>' +
+          '<li><strong>Infrastructure Build (from $1,950 CAD):</strong> Add structured facts and authoritative evidence when required.</li>' +
+          '<li><a href="/contact" style="color: var(--accent); text-decoration: underline;">Ask VizAI to review the result</a></li>' +
         '</ul>'
     };
   }
@@ -397,9 +399,10 @@ function buildRecommendation(summary) {
     recommendationText: "The scan found explicit support for core business details and several supporting proof points. VizAI should focus on monitoring, minor hardening, and catching drift before answers regress.",
     nextStepsHTML:
       '<p style="color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">The scan found evidence-backed support for the core business profile. The main risk now is answer drift, not basic discoverability.</p>' +
-      '<p style="color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;"><strong>Recommended next step from VizAI:</strong> Harden canonical sources and monitor changes over time.</p>' +
+      '<p style="color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;"><strong>Recommended next step from VizAI:</strong> Maintain the approved sources and monitor for meaningful drift.</p>' +
       '<ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">' +
-        '<li><strong>Tier 1 - Foundation ($1,950 setup + $650/mo):</strong> Canonical Truth File, schema deployment, and monitoring — <a href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">Get started</a></li>' +
+        '<li><strong>Infrastructure Maintenance (from $650 CAD/month):</strong> Technical validation, fact changes, monitoring, and reviewed reporting.</li>' +
+        '<li><a href="/contact" style="color: var(--accent); text-decoration: underline;">Discuss maintenance fit with VizAI</a></li>' +
       '</ul>'
   };
 }

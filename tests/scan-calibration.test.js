@@ -27,6 +27,8 @@ test("weak evidence stays conservative and recommends rebuilding evidence", func
   assert.ok(result.unclear.some((item) => item.includes("Service coverage")));
   assert.ok(result.missing.some((item) => item.includes("Location coverage")));
   assert.ok(result.missing.some((item) => item.includes("Contact coverage")));
+  assert.match(result.nextStepsHTML, /href="\/contact"/);
+  assert.doesNotMatch(result.nextStepsHTML, /stripe|buy\.stripe\.com/i);
 });
 
 test("partial evidence stays mixed when one critical signal is still unclear", function() {

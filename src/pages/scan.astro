@@ -3,13 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Run VizAI Scan | VizAI"
-  description="Run a free VizAI scan to see how AI understands your business. Get Discovery, Accuracy, and Authority scores in under 60 seconds."
+  title="Free AI Representation Check | VizAI"
+  description="Run a free VizAI representation check for explainable assessment bands, selected evidence, material findings, and a practical next step."
   canonicalPath="/scan"
-  ogTitle="Run VizAI Scan | VizAI"
-  ogDescription="Run a free VizAI scan to see how AI understands your business. Get Discovery, Accuracy, and Authority scores in under 60 seconds."
-  twitterTitle="Run VizAI Scan | VizAI"
-  twitterDescription="Run a free VizAI scan to see how AI understands your business."
+  ogTitle="Free AI Representation Check | VizAI"
+  ogDescription="Get an explainable, directional view of how AI can currently interpret your business."
+  twitterTitle="Free AI Representation Check | VizAI"
+  twitterDescription="Get an explainable, directional view of how AI can currently interpret your business."
 >
   <Fragment slot="head">
     <link rel="dns-prefetch" href="https://lmo-backend.onrender.com">
@@ -200,6 +200,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       .score-label { color: var(--text-muted); margin-bottom: 2px; }
 
       .score-value { font-size: 1.1rem; font-weight: 600; }
+
+      .score-basis {
+        display: block;
+        margin-top: 8px;
+        color: var(--text-light);
+        font-size: 0.78rem;
+        line-height: 1.45;
+      }
 
       .package-tag {
         display: inline-flex;
@@ -428,10 +436,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <section class="scan-page">
     <div class="scan-header">
-      <div class="pill">Free AI Visibility Scan</div>
-      <h1>See how AI understands your business</h1>
+      <div class="pill">Free AI Representation Check</div>
+      <h1>See how AI can currently interpret your business</h1>
       <p>
-        Get directional scores to understand IF visibility issues exist — then decide if you need deeper analysis.
+        Get a directional, explainable assessment before deciding whether deeper review is warranted.
       </p>
     </div>
 
@@ -439,10 +447,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div style="max-width: 620px; margin: 0 auto 32px; padding: 20px 24px; background: var(--bg-subtle); border-radius: 16px;">
       <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text);">What This Free Scan Provides</h3>
       <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">
-        <li>AI-assisted scores (Discovery, Accuracy, Authority)</li>
-        <li>Automated directional assessment</li>
-        <li>High-level visibility flags</li>
-        <li>Recommended next step based on your scores</li>
+        <li>Three qualitative representation bands</li>
+        <li>Selected supporting evidence</li>
+        <li>Material gaps that may require review</li>
+        <li>A practical next step tied to the findings</li>
       </ul>
       <p style="margin: 12px 0 0; font-size: 0.85rem; color: var(--text-muted); padding-top: 12px;">
         <strong>Important:</strong> This is a lightweight, automated baseline — not a comprehensive audit.
@@ -543,7 +551,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
           <div class="scan-submit">
             <button type="submit" class="btn-primary btn-primary-full" id="scanSubmitButton" aria-busy="false">
-              <span id="btnText">Run VizAI Scan</span>
+              <span id="btnText">Run representation check</span>
               <span class="icon" id="btnIcon">&#x26A1;</span>
               <span class="btn-spinner hidden" id="btnSpinner"></span>
             </button>
@@ -563,56 +571,44 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div>
             <div class="package-tag" id="scoreBandTag">
               <span>&#x25CE;</span>
-              <span>AI visibility</span>
+              <span>Directional representation check</span>
             </div>
-            <h2 id="resultsTitle">AI visibility assessment</h2>
+            <h2 id="resultsTitle">AI representation assessment</h2>
             <div class="results-summary" id="resultsSummary">
               This report prioritizes what the scan could verify, where support was weak, and which signals appear to be missing.
             </div>
           </div>
         </div>
 
-        <div class="summary-grid">
-          <div class="summary-chip">
-            <div class="summary-chip-label">AI visibility</div>
-            <div class="summary-chip-value" id="visibilityStatus">Assessing</div>
-          </div>
-          <div class="summary-chip">
-            <div class="summary-chip-label">Confidence / evidence strength</div>
-            <div class="summary-chip-value" id="evidenceStrength">Assessing</div>
-          </div>
-          <div class="summary-chip">
-            <div class="summary-chip-label">Diagnostic score</div>
-            <div class="summary-chip-value overall-score" id="overallScore">&ndash;</div>
-          </div>
-        </div>
-
         <div class="supporting-metrics">
-          <div class="supporting-metrics-title">Supporting metrics</div>
+          <div class="supporting-metrics-title">Assessment bands</div>
           <div class="score-grid">
             <div class="score-chip">
-              <div class="score-label">Discovery</div>
-              <div class="score-value" id="discoveryScore">&ndash;</div>
+              <div class="score-label">Findability</div>
+              <div class="score-value" id="findabilityBand">Assessing</div>
+              <small class="score-basis" id="findabilityBasis">Reviewing whether the business can be consistently identified.</small>
             </div>
             <div class="score-chip">
-              <div class="score-label">Accuracy</div>
-              <div class="score-value" id="accuracyScore">&ndash;</div>
+              <div class="score-label">Fidelity</div>
+              <div class="score-value" id="fidelityBand">Assessing</div>
+              <small class="score-basis" id="fidelityBasis">Comparing observed descriptions with the submitted business details.</small>
             </div>
             <div class="score-chip">
-              <div class="score-label">Authority</div>
-              <div class="score-value" id="authorityScore">&ndash;</div>
+              <div class="score-label">Source readiness</div>
+              <div class="score-value" id="sourceReadinessBand">Assessing</div>
+              <small class="score-basis" id="sourceReadinessBasis">Reviewing the strength and structure of available sources.</small>
             </div>
           </div>
         </div>
 
         <div class="strategy-block">
-          <div class="strategy-title">Verified by AI</div>
-          <div class="section-intro">Signals the scan could identify with comparatively stronger support.</div>
+          <div class="strategy-title">Selected supporting evidence</div>
+          <div class="section-intro">Signals the check could identify with comparatively stronger support.</div>
           <ul class="findings-list" id="verifiedList"></ul>
         </div>
 
         <div class="strategy-block">
-          <div class="strategy-title">Unclear or weakly supported</div>
+          <div class="strategy-title">Findings requiring review</div>
           <div class="section-intro">Claims that appeared incomplete, inconsistent, or not strongly supported by the evidence available to the scan.</div>
           <ul class="findings-list" id="unclearList"></ul>
         </div>
@@ -634,6 +630,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="diagnostic-note-text" id="diagnosticNoteText"></div>
         </div>
 
+        <div class="diagnostic-note">
+          <div class="diagnostic-note-title">Methodology boundary</div>
+          <div class="diagnostic-note-text">This automated check is directional, time-specific, and dependent on selected systems and available public information. The assessment bands explain the observed signal; they do not guarantee crawling, citation, ranking, recommendation, or future answer changes.</div>
+        </div>
+
         <div class="strategy-block" id="qaBlock" style="display: none;">
           <details class="qa-details">
             <summary class="qa-summary">
@@ -650,17 +651,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h2>What to Do Next</h2>
         <div id="nextStepsContent"></div>
         <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
-          <a id="platformCta" href="/packages" class="btn-primary" style="text-decoration: none;">
-            <span>Get Full Intelligence</span>
+          <a href="/contact" class="btn-primary" style="text-decoration: none;">
+            <span>Discuss This Result</span>
             <span class="icon">&rarr;</span>
           </a>
           <a href="/packages" class="btn-secondary" style="text-decoration: none;">
             <span>View All Packages</span>
             <span class="icon">&rarr;</span>
           </a>
-          <a href="https://calendly.com/vizai/consultation" class="btn-secondary" style="text-decoration: none;">
-            <span>Schedule Consultation</span>
-            <span class="icon">&#x1F4C5;</span>
+          <a href="/sample-report" class="btn-secondary" style="text-decoration: none;">
+            <span>See the Reviewed Report</span>
+            <span class="icon">&rarr;</span>
           </a>
         </div>
       </div>
@@ -685,14 +686,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const contactEmailInput = document.getElementById("contactEmail");
     const captchaErrorEl = document.getElementById("captchaError");
 
-    const overallScoreEl = document.getElementById("overallScore");
     const resultsTitleEl = document.getElementById("resultsTitle");
     const resultsSummaryEl = document.getElementById("resultsSummary");
-    const visibilityStatusEl = document.getElementById("visibilityStatus");
-    const evidenceStrengthEl = document.getElementById("evidenceStrength");
-    const discoveryScoreEl = document.getElementById("discoveryScore");
-    const accuracyScoreEl = document.getElementById("accuracyScore");
-    const authorityScoreEl = document.getElementById("authorityScore");
+    const findabilityBandEl = document.getElementById("findabilityBand");
+    const fidelityBandEl = document.getElementById("fidelityBand");
+    const sourceReadinessBandEl = document.getElementById("sourceReadinessBand");
+    const findabilityBasisEl = document.getElementById("findabilityBasis");
+    const fidelityBasisEl = document.getElementById("fidelityBasis");
+    const sourceReadinessBasisEl = document.getElementById("sourceReadinessBasis");
     const verifiedListEl = document.getElementById("verifiedList");
     const unclearListEl = document.getElementById("unclearList");
     const missingListEl = document.getElementById("missingList");
@@ -776,6 +777,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       });
     }
 
+    function assessmentBand(score, strong, developing, limited) {
+      if (score >= 75) return strong;
+      if (score >= 45) return developing;
+      return limited;
+    }
+
     // Show validation error
     function showError(input, message) {
       input.classList.add("error");
@@ -836,11 +843,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       submitBtn.setAttribute("aria-busy", loading ? "true" : "false");
 
       if (loading) {
-        btnText.textContent = "Scanning...";
+        btnText.textContent = "Checking representation...";
         btnIcon.classList.add("hidden");
         btnSpinner.classList.remove("hidden");
       } else {
-        btnText.textContent = "Run VizAI Scan";
+        btnText.textContent = "Run representation check";
         btnIcon.classList.remove("hidden");
         btnSpinner.classList.add("hidden");
       }
@@ -929,7 +936,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       var industry = sanitizeInput(document.getElementById("industry").value) || null;
 
       lastSubmitTime = now;
-      statusEl.textContent = "Running VizAI Scan\u2026 (30\u201360s)";
+      statusEl.textContent = "Running representation check\u2026 (30\u201360s)";
       statusEl.classList.remove("hidden");
       resultsCard.classList.add("hidden");
       setLoading(true);
@@ -989,14 +996,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         var calibration = calibrateScanReport(data, { overallScore: overall });
 
-        overallScoreEl.textContent = overall + "/100";
-        discoveryScoreEl.textContent = d;
-        accuracyScoreEl.textContent = a;
-        authorityScoreEl.textContent = au;
+        findabilityBandEl.textContent = assessmentBand(d, "Established", "Developing", "Limited");
+        fidelityBandEl.textContent = assessmentBand(a, "Mostly aligned", "Needs review", "Material gaps");
+        sourceReadinessBandEl.textContent = assessmentBand(au, "Well supported", "Developing", "Needs structure");
+        findabilityBasisEl.textContent = "Basis: selected-system discovery and identity observations.";
+        fidelityBasisEl.textContent = "Basis: submitted facts compared with observed descriptions.";
+        sourceReadinessBasisEl.textContent = "Basis: available public sources, proof points, and structure.";
         resultsTitleEl.textContent = calibration.headline;
         resultsSummaryEl.textContent = calibration.summary;
-        visibilityStatusEl.textContent = calibration.visibilityStatus;
-        evidenceStrengthEl.textContent = calibration.evidenceStrength;
 
         scoreBandTagEl.innerHTML = "<span>\u25CE</span><span>" + calibration.bandLabel + "</span>";
         packageTitleEl.textContent = calibration.recommendationTitle;
@@ -1005,16 +1012,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         // Populate next steps card
         nextStepsContentEl.innerHTML = calibration.nextStepsHTML;
         nextStepsCardEl.classList.remove("hidden");
-
-        var platformCta = document.getElementById("platformCta");
-        if (platformCta) {
-          var params = new URLSearchParams({
-            ref: "free-scan",
-            businessName: businessName,
-            website: website,
-          });
-          platformCta.href = "https://app.vizai.io/onboarding?" + params.toString();
-        }
 
         renderList(
           verifiedListEl,

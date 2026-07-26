@@ -20,8 +20,8 @@ export function VizAIPricing() {
             tier="Snapshot"
             price="$495"
             bestFor="One-time AI analysis + registry entry"
-            CTA="Get Snapshot"
-            href="https://buy.stripe.com/eVqfZad4zc3SapnfhgcMM00"
+            CTA="Request Snapshot"
+            href="/contact"
             benefits={[
               { text: "Human-reviewed AI analysis", checked: true },
               { text: "Test ChatGPT, Claude, Perplexity", checked: true },
@@ -37,8 +37,8 @@ export function VizAIPricing() {
             tier="Foundation"
             price="$650/mo"
             bestFor="$1,950 setup · Fix, verify, and maintain"
-            CTA="Get Started"
-            href="https://buy.stripe.com/9B6bIU7Kf7NC2WVc54cMM01"
+            CTA="Discuss Scope"
+            href="/contact"
             benefits={[
               { text: "Verified Business Profile", checked: true },
               { text: "Premium verification badge", checked: true },
@@ -54,8 +54,8 @@ export function VizAIPricing() {
             tier="Reinforcement"
             price="$2,250/mo"
             bestFor="$3,750 setup · Strengthen your signals"
-            CTA="Get Started"
-            href="https://buy.stripe.com/bJeaEQ9Sn4BqeFDd98cMM02"
+            CTA="Discuss Scope"
+            href="/contact"
             benefits={[
               { text: "Everything in Foundation", checked: true },
               { text: "2-3 additional AI surfaces", checked: true },

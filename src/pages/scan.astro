@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import RedesignLayout from '../layouts/RedesignLayout.astro';
 ---
 
-<BaseLayout
+<RedesignLayout
   title="Free AI Representation Check | VizAI"
   description="Run a free VizAI representation check for explainable assessment bands, selected evidence, material findings, and a practical next step."
   canonicalPath="/scan"
@@ -432,19 +432,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         font-family: monospace;
       }
     </style>
+    <link rel="stylesheet" href="/styles/scan-redesign.css">
   </Fragment>
 
   <section class="scan-page">
     <div class="scan-header">
-      <div class="pill">Free AI Representation Check</div>
-      <h1>See how AI can currently interpret your business</h1>
+      <div>
+        <div class="pill">Free AI Representation Check</div>
+        <h1>See how AI can currently interpret your business</h1>
+      </div>
       <p>
         Get a directional, explainable assessment before deciding whether deeper review is warranted.
       </p>
     </div>
 
     <!-- What You'll Get Section -->
-    <div style="max-width: 620px; margin: 0 auto 32px; padding: 20px 24px; background: var(--bg-subtle); border-radius: 16px;">
+    <div class="scan-guide" style="max-width: 620px; margin: 0 auto 32px; padding: 20px 24px; background: var(--bg-subtle); border-radius: 16px;">
       <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text);">What This Free Scan Provides</h3>
       <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">
         <li>Three qualitative representation bands</li>
@@ -1093,4 +1096,4 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
     });
   </script>
-</BaseLayout>
+</RedesignLayout>

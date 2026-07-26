@@ -1,0 +1,83 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+}
+
+const {
+  title,
+  description = "VizAI helps businesses structure and maintain verified business information for an AI-mediated world.",
+  canonicalPath,
+  ogTitle,
+  ogDescription,
+  twitterTitle,
+  twitterDescription,
+} = Astro.props;
+
+const siteUrl = "https://vizai.io";
+const canonical = canonicalPath ? `${siteUrl}${canonicalPath}` : siteUrl;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  <meta property="og:title" content={ogTitle || title}>
+  <meta property="og:description" content={ogDescription || description}>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={canonical}>
+  <meta property="og:image" content="https://vizai.io/assets/vizai-redesign-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={twitterTitle || ogTitle || title}>
+  <meta name="twitter:description" content={twitterDescription || ogDescription || description}>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/styles/redesign.css">
+  <script is:inline src="/error-tracking.js"></script>
+  <script is:inline>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <slot name="head" />
+</head>
+<body>
+  <a class="scan-skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="shell nav-shell">
+      <a class="brand" href="/" aria-label="VizAI home"><span class="brand-sigil" aria-hidden="true"><i></i><i></i><i></i></span><span>VizAI</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-toggle><span></span></button>
+      <nav class="primary-nav" aria-label="Primary navigation" data-primary-nav>
+        <a href="/#how-it-works">How it works</a>
+        <a href="/#services">Services</a>
+        <a href="/packages">Pricing</a>
+        <a href="/sample-report">Sample report</a>
+        <a href="/registry">Registry</a>
+      </nav>
+      <div class="nav-actions"><a class="button-secondary" href="/portal">Portal preview</a><a class="button" href="/scan" aria-current="page">Run the free scan</a></div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand"><a class="brand" href="/"><span class="brand-sigil" aria-hidden="true"><i></i><i></i><i></i></span><span>VizAI</span></a><p>Structured, verified business information—managed for an AI-mediated world.</p></div>
+        <div class="footer-column"><strong>Explore</strong><a href="/#how-it-works">How it works</a><a href="/packages">Pricing</a><a href="/sample-report">Sample report</a></div>
+        <div class="footer-column"><strong>Product</strong><a href="/scan">Free scan</a><a href="/portal">Portal preview</a><a href="/registry">Registry</a></div>
+        <div class="footer-column"><strong>Company</strong><a href="/contact">Contact</a><a href="/#faq">FAQ</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 VizAI.</span><span>Directional baseline. Explainable findings.</span></div>
+    </div>
+  </footer>
+  <script is:inline src="/scripts/redesign.js"></script>
+</body>
+</html>

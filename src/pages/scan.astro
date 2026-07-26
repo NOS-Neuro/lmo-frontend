@@ -714,16 +714,37 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
 
     // CAPTCHA token
     var captchaToken = null;
+    var captchaFailureCode = "";
 
     // CAPTCHA callbacks (must be global for Turnstile)
     window.onCaptchaSuccess = function(token) {
       captchaToken = token;
+      captchaFailureCode = "";
+      submitBtn.disabled = false;
       captchaErrorEl.classList.add("hidden");
     };
 
-    window.onCaptchaError = function() {
+    window.onCaptchaError = function(errorCode) {
       captchaToken = null;
-      captchaErrorEl.textContent = "CAPTCHA verification failed. Please try again.";
+      captchaFailureCode = String(errorCode || "");
+
+      if (captchaFailureCode.indexOf("110200") === 0) {
+        captchaErrorEl.textContent = "The security check is not enabled for this preview address yet.";
+        submitBtn.disabled = true;
+      } else if (
+        captchaFailureCode.indexOf("110100") === 0 ||
+        captchaFailureCode.indexOf("110110") === 0 ||
+        captchaFailureCode.indexOf("400020") === 0 ||
+        captchaFailureCode.indexOf("400070") === 0
+      ) {
+        captchaErrorEl.textContent = "The security check is temporarily unavailable because its site configuration is invalid.";
+        submitBtn.disabled = true;
+      } else if (captchaFailureCode.indexOf("200500") === 0) {
+        captchaErrorEl.textContent = "The security check could not load. Please disable content blocking for this page and refresh.";
+      } else {
+        captchaErrorEl.textContent = "CAPTCHA verification failed. Please refresh the page and try again.";
+      }
+
       captchaErrorEl.classList.remove("hidden");
     };
 
@@ -927,7 +948,9 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
 
       // Validate CAPTCHA
       if (!captchaToken) {
-        captchaErrorEl.textContent = "Please complete the CAPTCHA verification.";
+        if (!captchaFailureCode) {
+          captchaErrorEl.textContent = "Please complete the CAPTCHA verification.";
+        }
         captchaErrorEl.classList.remove("hidden");
         return;
       }

@@ -1,5 +1,8 @@
 ---
 import RedesignLayout from '../layouts/RedesignLayout.astro';
+import { getPreviewHostRedirect } from '../lib/preview-host-redirect.js';
+
+const previewHostRedirect = getPreviewHostRedirect(process.env);
 ---
 
 <RedesignLayout
@@ -13,6 +16,21 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
 >
   <Fragment slot="head">
     <link rel="dns-prefetch" href="https://lmo-backend.onrender.com">
+    {previewHostRedirect && (
+      <script
+        is:inline
+        define:vars={{
+          deploymentHost: previewHostRedirect.deploymentHost,
+          branchHost: previewHostRedirect.branchHost
+        }}
+      >
+        if (window.location.hostname === deploymentHost) {
+          window.location.replace(
+            "https://" + branchHost + window.location.pathname + window.location.search + window.location.hash
+          );
+        }
+      </script>
+    )}
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <style>
       /* Page layout */

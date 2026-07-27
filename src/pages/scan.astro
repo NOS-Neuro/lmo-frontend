@@ -360,6 +360,21 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
         text-align: center;
       }
 
+      .captcha-status {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        margin-top: 4px;
+        text-align: center;
+      }
+
+      .captcha-status[data-state="ready"] {
+        color: var(--success, #1f7a4d);
+      }
+
+      .captcha-status[data-state="error"] {
+        color: var(--danger, #ff6b6b);
+      }
+
       /* Q&A collapsible section */
       .qa-details { margin-top: 4px; }
 
@@ -544,9 +559,15 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
                  data-sitekey="0x4AAAAAACKFgDePvecVK5kQ"
                  data-callback="onCaptchaSuccess"
                  data-error-callback="onCaptchaError"
+                 data-expired-callback="onCaptchaExpired"
+                 data-timeout-callback="onCaptchaTimeout"
+                 data-response-field="false"
                  data-theme="light"></div>
           </div>
-          <div id="captchaError" class="captcha-error hidden"></div>
+          <div id="captchaStatus" class="captcha-status" role="status" aria-live="polite">
+            Security check is loading&hellip;
+          </div>
+          <div id="captchaError" class="captcha-error hidden" role="alert"></div>
 
           <p class="scan-help" style="margin-top: 10px; margin-bottom: 10px;">
             This scan typically takes 30–60 seconds. The report is AI-assisted and intended as a directional baseline.
@@ -673,6 +694,7 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
 
   <script>
     import { calibrateScanReport } from "../lib/scan-calibration.js";
+    import { describeTurnstileError } from "../lib/turnstile-state.js";
 
     const API_BASE = "https://lmo-backend.onrender.com";
 
@@ -687,6 +709,7 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
     const businessNameInput = document.getElementById("businessName");
     const websiteInput = document.getElementById("website");
     const contactEmailInput = document.getElementById("contactEmail");
+    const captchaStatusEl = document.getElementById("captchaStatus");
     const captchaErrorEl = document.getElementById("captchaError");
 
     const resultsTitleEl = document.getElementById("resultsTitle");
@@ -715,37 +738,58 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
     // CAPTCHA token
     var captchaToken = null;
     var captchaFailureCode = "";
+    var captchaBlocked = false;
+    var isSubmitting = false;
+
+    function syncSubmitAvailability() {
+      submitBtn.disabled = isSubmitting || captchaBlocked;
+    }
+
+    function setCaptchaStatus(message, state) {
+      captchaStatusEl.textContent = message;
+      captchaStatusEl.dataset.state = state;
+    }
+
+    function resetCaptcha() {
+      captchaToken = null;
+      captchaFailureCode = "";
+      captchaBlocked = false;
+      setCaptchaStatus("Security check is refreshing\u2026", "pending");
+      captchaErrorEl.classList.add("hidden");
+      syncSubmitAvailability();
+
+      if (window.turnstile) {
+        window.turnstile.reset("#captcha-widget");
+      }
+    }
 
     // CAPTCHA callbacks (must be global for Turnstile)
     window.onCaptchaSuccess = function(token) {
       captchaToken = token;
       captchaFailureCode = "";
-      submitBtn.disabled = false;
+      captchaBlocked = false;
+      setCaptchaStatus("Security check ready.", "ready");
       captchaErrorEl.classList.add("hidden");
+      syncSubmitAvailability();
     };
 
     window.onCaptchaError = function(errorCode) {
       captchaToken = null;
       captchaFailureCode = String(errorCode || "");
-
-      if (captchaFailureCode.indexOf("110200") === 0) {
-        captchaErrorEl.textContent = "The security check is not enabled for this preview address yet.";
-        submitBtn.disabled = true;
-      } else if (
-        captchaFailureCode.indexOf("110100") === 0 ||
-        captchaFailureCode.indexOf("110110") === 0 ||
-        captchaFailureCode.indexOf("400020") === 0 ||
-        captchaFailureCode.indexOf("400070") === 0
-      ) {
-        captchaErrorEl.textContent = "The security check is temporarily unavailable because its site configuration is invalid.";
-        submitBtn.disabled = true;
-      } else if (captchaFailureCode.indexOf("200500") === 0) {
-        captchaErrorEl.textContent = "The security check could not load. Please disable content blocking for this page and refresh.";
-      } else {
-        captchaErrorEl.textContent = "CAPTCHA verification failed. Please refresh the page and try again.";
-      }
-
+      var failure = describeTurnstileError(captchaFailureCode, window.location.hostname);
+      captchaBlocked = failure.blocking;
+      setCaptchaStatus("Security check unavailable.", "error");
+      captchaErrorEl.textContent = failure.message;
       captchaErrorEl.classList.remove("hidden");
+      syncSubmitAvailability();
+    };
+
+    window.onCaptchaExpired = function() {
+      resetCaptcha();
+    };
+
+    window.onCaptchaTimeout = function() {
+      resetCaptcha();
     };
 
     // Rate limiting
@@ -863,7 +907,8 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
 
     // Set loading state
     function setLoading(loading) {
-      submitBtn.disabled = loading;
+      isSubmitting = loading;
+      syncSubmitAvailability();
       submitBtn.setAttribute("aria-busy", loading ? "true" : "false");
 
       if (loading) {
@@ -949,7 +994,8 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
       // Validate CAPTCHA
       if (!captchaToken) {
         if (!captchaFailureCode) {
-          captchaErrorEl.textContent = "Please complete the CAPTCHA verification.";
+          setCaptchaStatus("Security check is still running\u2026", "pending");
+          captchaErrorEl.textContent = "Wait a moment for the automatic security check, then try again.";
         }
         captchaErrorEl.classList.remove("hidden");
         return;
@@ -1116,6 +1162,7 @@ import RedesignLayout from '../layouts/RedesignLayout.astro';
       } finally {
         clearTimeout(timeoutId);
         setLoading(false);
+        resetCaptcha();
       }
     });
   </script>

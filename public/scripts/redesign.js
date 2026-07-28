@@ -115,19 +115,3 @@ document.querySelectorAll("[data-scan-form]").forEach((form) => {
     if (status) status.textContent = "Mockup interaction only—no information was submitted.";
   });
 });
-
-const portalViewButtons = document.querySelectorAll("[data-portal-view]");
-const portalPanels = document.querySelectorAll("[data-portal-panel]");
-
-portalViewButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const selectedView = button.dataset.portalView;
-    portalViewButtons.forEach((item) => {
-      item.classList.toggle("active", item === button);
-      item.setAttribute("aria-pressed", String(item === button));
-    });
-    portalPanels.forEach((panel) => {
-      panel.hidden = panel.dataset.portalPanel !== selectedView;
-    });
-  });
-});

@@ -37,11 +37,7 @@
 
     <section class="section compact">
       <div class="shell">
-        <div class="section-head"><div class="section-kicker">Two sides of one governed workflow</div><h2 class="section-title">Switch between the customer workspace and your review queue.</h2><p class="section-copy">This is a concept for a separately built portal. It is not part of the current website release, and the controls do not log in, submit, approve, store, or publish anything.</p></div>
-        <div class="portal-view-switch" aria-label="Portal preview view">
-          <button class="active" type="button" data-portal-view="customer" aria-pressed="true">Customer view</button>
-          <button type="button" data-portal-view="owner" aria-pressed="false">VizAI owner review</button>
-        </div>
+        <div class="section-head"><div class="section-kicker">Customer workspace concept</div><h2 class="section-title">A clear view of work, evidence, and decisions.</h2><p class="section-copy">This is a concept for a separately built customer portal. It is not part of the current website release, and the controls do not log in, submit, approve, store, or publish anything.</p></div>
 
         <div class="portal-shell" style="margin-top:16px;">
           <aside class="portal-sidebar">
@@ -50,7 +46,7 @@
           </aside>
 
           <div class="portal-main">
-            <div data-portal-panel="customer">
+            <div>
               <div class="portal-head"><div><h2>Northstar Logistics</h2><small>Infrastructure Maintenance · July 2026</small></div><span class="status-badge">Canon current</span></div>
               <div class="service-banner"><span class="service-avatar">VM</span><div><strong>VizAI maintenance is underway</strong><small>Running the monthly monitoring set, preparing the representation report, and tracking two corrections.</small></div><span class="status-badge">3 tasks active</span></div>
               <div class="portal-metrics">
@@ -75,28 +71,6 @@
               </div>
             </div>
 
-            <div data-portal-panel="owner" hidden>
-              <div class="portal-head"><div><h2>VizAI review queue</h2><small>Paid deliverables and external actions requiring owner authority</small></div><span class="sample-badge">Owner console</span></div>
-              <div class="review-summary">
-                <div class="review-metric"><span>Ready for review</span><strong>3</strong></div>
-                <div class="review-metric"><span>Work in progress</span><strong>5</strong></div>
-                <div class="review-metric"><span>Waiting on customer</span><strong>2</strong></div>
-                <div class="review-metric"><span>Approved today</span><strong>4</strong></div>
-              </div>
-
-              <section class="portal-panel" style="margin-top:12px;">
-                <h3>Service work queue</h3>
-                <div class="task-board">
-                  <div class="task-row"><div><strong>Northstar · July Snapshot report</strong><small>Evidence ledger and findings attached</small></div><span class="task-meta">Snapshot service</span><span class="task-status review">Ready for review</span><button class="task-action" type="button">Review</button></div>
-                  <div class="task-row"><div><strong>Northstar · Canon v1.5 update</strong><small>Reverse logistics description</small></div><span class="task-meta">Infrastructure build</span><span class="task-status customer">Customer confirmation</span><button class="task-action" type="button">View status</button></div>
-                  <div class="task-row"><div><strong>Cedar &amp; Finch · Directory correction</strong><small>External submission packet prepared</small></div><span class="task-meta">Managed improvement</span><span class="task-status review">Ready for review</span><button class="task-action" type="button">Review</button></div>
-                  <div class="task-row"><div><strong>Brightline · Monthly monitoring report</strong><small>Selected systems and observations</small></div><span class="task-meta">Maintenance service</span><span class="task-status working">In progress</span><button class="task-action" type="button">View progress</button></div>
-                </div>
-              </section>
-
-              <div class="approval-card"><div><h3>Approval focus: Northstar July Snapshot</h3><p>VizAI completed source review, representation testing, evidence mapping, and the draft report. Customer-declared baseline facts are confirmed. Approval releases the deliverable to the customer; it does not guarantee an external-system outcome.</p></div><div class="approval-actions"><button type="button">View evidence</button><button type="button">Request changes</button><button class="primary" type="button">Approve deliverable</button></div></div>
-              <div class="method-note"><strong>Authority boundary:</strong> Research, drafting, validation, monitoring, and action preparation remain separate from customer fact confirmation and final approval. A Canon or external action cannot move forward without the applicable human gate.</div>
-            </div>
           </div>
         </div>
       </div>

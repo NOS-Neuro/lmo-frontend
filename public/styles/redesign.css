@@ -869,29 +869,6 @@ img { max-width: 100%; }
 .activity-row strong { display: block; font-size: 0.74rem; }
 .activity-row small { display: block; margin-top: 3px; color: var(--muted); font-size: 0.67rem; }
 
-.portal-view-switch {
-  display: inline-flex;
-  gap: 4px;
-  padding: 4px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fff;
-}
-
-.portal-view-switch button {
-  min-height: 36px;
-  padding: 0 12px;
-  border: 0;
-  border-radius: 8px;
-  color: var(--muted);
-  background: transparent;
-  font-size: 0.72rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.portal-view-switch button.active { color: #fff; background: var(--blue); }
-
 .service-banner {
   margin-top: 18px;
   padding: 16px 18px;
@@ -939,35 +916,6 @@ img { max-width: 100%; }
 .task-status.customer { color: var(--aqua-dark); background: var(--aqua-soft); }
 .task-status.approved { color: var(--success); background: var(--aqua-soft); }
 .task-action { min-height: 34px; padding: 0 10px; border: 1px solid var(--line); border-radius: 9px; background: #fff; font-size: 0.67rem; font-weight: 700; }
-
-.review-summary {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 20px;
-}
-.review-metric { padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
-.review-metric span { color: var(--muted); font-size: 0.64rem; }
-.review-metric strong { display: block; margin-top: 7px; font-size: 1.35rem; }
-
-.approval-card {
-  margin-top: 12px;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 18px;
-  align-items: center;
-  border: 1px solid rgba(216, 137, 34, 0.28);
-  border-radius: 14px;
-  background: #fffaf0;
-}
-.approval-card h3 { margin: 0; font-size: 0.9rem; }
-.approval-card p { margin: 6px 0 0; color: var(--muted); font-size: 0.72rem; line-height: 1.5; }
-.approval-actions { display: flex; gap: 8px; }
-.approval-actions button { min-height: 38px; padding: 0 11px; border-radius: 9px; border: 1px solid var(--line); background: #fff; font-size: 0.68rem; font-weight: 800; }
-.approval-actions button.primary { color: #fff; border-color: var(--blue); background: var(--blue); }
-
-[data-portal-panel][hidden] { display: none !important; }
 
 .registry-search { padding: 24px; display: grid; grid-template-columns: 1fr auto; gap: 11px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
 .registry-search input { min-width: 0; min-height: 48px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: 11px; }
@@ -1072,7 +1020,6 @@ img { max-width: 100%; }
   .form-row { grid-template-columns: 1fr; }
   .workflow-grid,
   .role-flow,
-  .review-summary { grid-template-columns: 1fr; }
   .console-panel.monitoring { display: none; }
   .truth-console { padding: 11px; border-radius: 23px; }
   .fact-row { grid-template-columns: 0.72fr 1.28fr; }
@@ -1098,8 +1045,6 @@ img { max-width: 100%; }
   .service-banner { grid-template-columns: auto 1fr; }
   .service-banner .status-badge { grid-column: 2; justify-self: start; }
   .task-row { grid-template-columns: 1fr; }
-  .approval-card { grid-template-columns: 1fr; }
-  .approval-actions { flex-wrap: wrap; }
   .primary-nav.open + .nav-actions { grid-template-columns: 1fr; transform: none; }
 }
 

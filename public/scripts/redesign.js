@@ -157,3 +157,47 @@ customerPortalTabs.forEach((tab, index) => {
     }
   });
 });
+
+const registrySearchForm = document.querySelector("[data-registry-search]");
+
+if (registrySearchForm) {
+  const registryQueryInput = registrySearchForm.querySelector("[data-registry-query]");
+  const registryRecords = Array.from(document.querySelectorAll("[data-registry-record]"));
+  const registryStatus = document.querySelector("[data-registry-status]");
+  const registryEmptyState = document.querySelector("[data-registry-empty]");
+
+  const filterRegistryRecords = () => {
+    const query = registryQueryInput.value.trim().toLowerCase();
+    const terms = query.split(/\s+/).filter(Boolean);
+    let visibleCount = 0;
+
+    registryRecords.forEach((record) => {
+      const searchableText = (record.dataset.search || record.textContent).toLowerCase();
+      const isMatch = terms.every((term) => searchableText.includes(term));
+      record.hidden = !isMatch;
+      if (isMatch) visibleCount += 1;
+    });
+
+    registryEmptyState.hidden = visibleCount !== 0;
+
+    if (!query) {
+      registryStatus.textContent = `Showing all ${registryRecords.length} illustrative records.`;
+    } else {
+      const label = visibleCount === 1 ? "record" : "records";
+      registryStatus.textContent = `Showing ${visibleCount} illustrative ${label} for “${registryQueryInput.value.trim()}”.`;
+    }
+  };
+
+  registrySearchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    filterRegistryRecords();
+  });
+
+  registryQueryInput.addEventListener("input", filterRegistryRecords);
+  registryQueryInput.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && registryQueryInput.value) {
+      registryQueryInput.value = "";
+      filterRegistryRecords();
+    }
+  });
+}

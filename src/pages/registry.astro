@@ -26,12 +26,17 @@
 
     <section class="section compact">
       <div class="shell">
-        <div class="registry-search"><input type="search" aria-label="Search the registry" placeholder="Search by business, domain, or location"><button class="button" type="button">Search registry</button></div>
-        <div class="registry-list">
-          <article class="registry-item"><span class="record-mark">N</span><div class="registry-meta"><strong>Northstar Logistics Inc.</strong><small>Transportation and logistics · northstarlogistics.example</small></div><div class="registry-stat"><strong>Toronto, ON</strong><small>Primary location</small></div><div class="registry-stat"><strong>18 Jul 2026</strong><small>Last reviewed</small></div><span class="status-badge">Verified record</span></article>
-          <article class="registry-item"><span class="record-mark">C</span><div class="registry-meta"><strong>Cedar &amp; Finch Advisory</strong><small>Professional services · cedarfinch.example</small></div><div class="registry-stat"><strong>Ottawa, ON</strong><small>Primary location</small></div><div class="registry-stat"><strong>16 Jul 2026</strong><small>Last reviewed</small></div><span class="status-badge">Verified record</span></article>
-          <article class="registry-item"><span class="record-mark">B</span><div class="registry-meta"><strong>Brightline Manufacturing</strong><small>Industrial manufacturing · brightline.example</small></div><div class="registry-stat"><strong>Hamilton, ON</strong><small>Primary location</small></div><div class="registry-stat"><strong>11 Jul 2026</strong><small>Last reviewed</small></div><span class="status-badge">Verified record</span></article>
+        <form class="registry-search" data-registry-search>
+          <input type="search" aria-label="Search the registry" placeholder="Search by business, domain, or location" autocomplete="off" aria-controls="registry-results" data-registry-query>
+          <button class="button" type="submit">Search registry</button>
+        </form>
+        <p class="registry-search-status" aria-live="polite" data-registry-status>Showing all 3 illustrative records.</p>
+        <div class="registry-list" id="registry-results" data-registry-list>
+          <article class="registry-item" data-registry-record data-search="northstar logistics inc northstarlogistics.example transportation logistics toronto ontario on"><span class="record-mark">N</span><div class="registry-meta"><strong>Northstar Logistics Inc.</strong><small>Transportation and logistics · northstarlogistics.example</small></div><div class="registry-stat"><strong>Toronto, ON</strong><small>Primary location</small></div><div class="registry-stat"><strong>18 Jul 2026</strong><small>Last reviewed</small></div><span class="status-badge">Verified record</span></article>
+          <article class="registry-item" data-registry-record data-search="cedar finch advisory cedarfinch.example professional services ottawa ontario on"><span class="record-mark">C</span><div class="registry-meta"><strong>Cedar &amp; Finch Advisory</strong><small>Professional services · cedarfinch.example</small></div><div class="registry-stat"><strong>Ottawa, ON</strong><small>Primary location</small></div><div class="registry-stat"><strong>16 Jul 2026</strong><small>Last reviewed</small></div><span class="status-badge">Verified record</span></article>
+          <article class="registry-item" data-registry-record data-search="brightline manufacturing brightline.example industrial manufacturing hamilton ontario on"><span class="record-mark">B</span><div class="registry-meta"><strong>Brightline Manufacturing</strong><small>Industrial manufacturing · brightline.example</small></div><div class="registry-stat"><strong>Hamilton, ON</strong><small>Primary location</small></div><div class="registry-stat"><strong>11 Jul 2026</strong><small>Last reviewed</small></div><span class="status-badge">Verified record</span></article>
         </div>
+        <div class="registry-empty" hidden data-registry-empty><strong>No illustrative records match that search.</strong><span>Try a business name, domain, city, province, or industry.</span></div>
         <div class="method-note"><strong>Preview content:</strong> All businesses, domains, dates, and records shown here are fictional examples created to demonstrate the Registry concept.</div>
       </div>
     </section>

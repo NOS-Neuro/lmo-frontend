@@ -42,11 +42,20 @@
         <div class="portal-shell" style="margin-top:16px;">
           <aside class="portal-sidebar">
             <div class="portal-brand">VizAI · Portal</div>
-            <div class="portal-nav"><span class="active">Overview</span><span>My source of truth</span><span>Fact review</span><span>Evidence</span><span>Reports</span><span>Findings</span><span>Tasks &amp; requests</span><span>Publication</span></div>
+            <div class="portal-nav" role="tablist" aria-label="Customer portal pages" aria-orientation="vertical">
+              <button class="active" id="portal-tab-overview" type="button" role="tab" data-customer-view="overview" aria-controls="portal-overview" aria-selected="true" tabindex="0">Overview</button>
+              <button id="portal-tab-truth" type="button" role="tab" data-customer-view="truth" aria-controls="portal-truth" aria-selected="false" tabindex="-1">My source of truth</button>
+              <button id="portal-tab-facts" type="button" role="tab" data-customer-view="facts" aria-controls="portal-facts" aria-selected="false" tabindex="-1">Fact review</button>
+              <button id="portal-tab-evidence" type="button" role="tab" data-customer-view="evidence" aria-controls="portal-evidence" aria-selected="false" tabindex="-1">Evidence</button>
+              <button id="portal-tab-reports" type="button" role="tab" data-customer-view="reports" aria-controls="portal-reports" aria-selected="false" tabindex="-1">Reports</button>
+              <button id="portal-tab-findings" type="button" role="tab" data-customer-view="findings" aria-controls="portal-findings" aria-selected="false" tabindex="-1">Findings</button>
+              <button id="portal-tab-tasks" type="button" role="tab" data-customer-view="tasks" aria-controls="portal-tasks" aria-selected="false" tabindex="-1">Tasks &amp; requests</button>
+              <button id="portal-tab-publication" type="button" role="tab" data-customer-view="publication" aria-controls="portal-publication" aria-selected="false" tabindex="-1">Publication</button>
+            </div>
           </aside>
 
           <div class="portal-main">
-            <div>
+            <section class="portal-page" id="portal-overview" role="tabpanel" aria-labelledby="portal-tab-overview" data-customer-page="overview">
               <div class="portal-head"><div><h2>Northstar Logistics</h2><small>Infrastructure Maintenance · July 2026</small></div><span class="status-badge">Canon current</span></div>
               <div class="service-banner"><span class="service-avatar">VM</span><div><strong>VizAI maintenance is underway</strong><small>Running the monthly monitoring set, preparing the representation report, and tracking two corrections.</small></div><span class="status-badge">3 tasks active</span></div>
               <div class="portal-metrics">
@@ -54,7 +63,6 @@
                 <div class="portal-metric"><span>Open findings</span><strong>2</strong></div>
                 <div class="portal-metric"><span>Your actions</span><strong>1</strong></div>
               </div>
-
               <section class="portal-panel" style="margin-top:12px;">
                 <h3>Work in progress</h3>
                 <div class="task-board">
@@ -64,13 +72,90 @@
                   <div class="task-row"><div><strong>Customs certification claim</strong><small>Authority-grade support is required</small></div><span class="task-meta">Evidence gate</span><span class="task-status customer">Needs evidence</span><button class="task-action" type="button">Add evidence</button></div>
                 </div>
               </section>
-
               <div class="portal-content">
                 <section class="portal-panel"><h3>Recent activity</h3><div class="activity-row"><span class="activity-dot"></span><div><strong>Canon v1.4 approved and published</strong><small>Owner approved · 18 Jul 2026</small></div></div><div class="activity-row"><span class="activity-dot"></span><div><strong>Monthly monitoring set completed</strong><small>Two material findings prepared · 15 Jul 2026</small></div></div><div class="activity-row"><span class="activity-dot"></span><div><strong>Headquarters evidence accepted</strong><small>Customer-supplied source passed review · 12 Jul 2026</small></div></div></section>
                 <section class="portal-panel"><h3>Current priorities</h3><div class="finding-line"><i>1</i><div><strong>Former office listing</strong><small>Correction prepared; awaiting owner approval.</small></div></div><div class="finding-line"><i>2</i><div><strong>Service coverage</strong><small>Two newer services need stronger approved sources.</small></div></div><div class="finding-line"><i>✓</i><div><strong>Canonical record</strong><small>Customer-confirmed and technically valid.</small></div></div></section>
               </div>
-            </div>
+            </section>
 
+            <section class="portal-page" id="portal-truth" role="tabpanel" aria-labelledby="portal-tab-truth" data-customer-page="truth" hidden>
+              <div class="portal-head"><div><h2>My source of truth</h2><small>The approved facts VizAI uses across your service work</small></div><span class="status-badge">Canon v1.4</span></div>
+              <div class="service-banner"><span class="service-avatar">TC</span><div><strong>Your Canon is current</strong><small>Twenty-four customer-confirmed facts are organized with their evidence and approval history.</small></div><span class="status-badge">Updated 18 Jul</span></div>
+              <div class="portal-metrics"><div class="portal-metric"><span>Approved facts</span><strong>24</strong></div><div class="portal-metric"><span>Evidence linked</span><strong>18</strong></div><div class="portal-metric"><span>Pending changes</span><strong>1</strong></div></div>
+              <section class="portal-panel" style="margin-top:12px;"><h3>Core business record</h3><div class="task-board">
+                <div class="task-row"><div><strong>Northstar Logistics Ltd.</strong><small>Legal and operating name</small></div><span class="task-meta">Identity</span><span class="task-status approved">Confirmed</span><button class="task-action" type="button">View sources</button></div>
+                <div class="task-row"><div><strong>88 Harbour Road, Halifax, NS</strong><small>Primary headquarters</small></div><span class="task-meta">Location</span><span class="task-status approved">Confirmed</span><button class="task-action" type="button">View sources</button></div>
+                <div class="task-row"><div><strong>Freight, warehousing, and reverse logistics</strong><small>Current service definition</small></div><span class="task-meta">Services</span><span class="task-status customer">Change proposed</span><button class="task-action" type="button">Review change</button></div>
+                <div class="task-row"><div><strong>Atlantic Canada and northeastern U.S.</strong><small>Approved service coverage</small></div><span class="task-meta">Coverage</span><span class="task-status approved">Confirmed</span><button class="task-action" type="button">View sources</button></div>
+              </div></section>
+              <div class="portal-content"><section class="portal-panel"><h3>Version history</h3><div class="activity-row"><span class="activity-dot"></span><div><strong>v1.4 · Headquarters evidence refreshed</strong><small>Published 18 Jul 2026</small></div></div><div class="activity-row"><span class="activity-dot"></span><div><strong>v1.3 · Service coverage clarified</strong><small>Published 02 Jun 2026</small></div></div></section><section class="portal-panel"><h3>How this is used</h3><div class="finding-line"><i>1</i><div><strong>Reports</strong><small>Approved facts anchor every managed report.</small></div></div><div class="finding-line"><i>2</i><div><strong>Corrections</strong><small>Changes are prepared from the current Canon.</small></div></div></section></div>
+            </section>
+
+            <section class="portal-page" id="portal-facts" role="tabpanel" aria-labelledby="portal-tab-facts" data-customer-page="facts" hidden>
+              <div class="portal-head"><div><h2>Fact review</h2><small>Only decisions that require your business authority</small></div><span class="task-status customer">1 action required</span></div>
+              <div class="service-banner"><span class="service-avatar">FR</span><div><strong>Confirm one proposed Canon change</strong><small>VizAI prepared the wording and supporting record. Confirm whether it accurately describes the business.</small></div><span class="status-badge">Due 24 Jul</span></div>
+              <section class="portal-panel" style="margin-top:12px;"><h3>Waiting for your confirmation</h3><div class="task-board">
+                <div class="task-row"><div><strong>Reverse logistics service description</strong><small>“Returns processing, refurbishment routing, and inventory recovery across Atlantic Canada.”</small></div><span class="task-meta">Proposed by VizAI</span><span class="task-status customer">Your confirmation</span><button class="task-action" type="button">Review proposal</button></div>
+              </div></section>
+              <section class="portal-panel" style="margin-top:12px;"><h3>Recently resolved</h3><div class="task-board">
+                <div class="task-row"><div><strong>Halifax headquarters address</strong><small>Customer-confirmed against the current lease record</small></div><span class="task-meta">18 Jul 2026</span><span class="task-status approved">Confirmed</span><button class="task-action" type="button">View record</button></div>
+                <div class="task-row"><div><strong>Cross-border coverage</strong><small>Northeastern U.S. service region clarified</small></div><span class="task-meta">02 Jun 2026</span><span class="task-status approved">Confirmed</span><button class="task-action" type="button">View record</button></div>
+              </div></section>
+              <div class="method-note"><strong>Customer authority:</strong> You confirm business facts. VizAI prepares the research, wording, evidence links, and downstream updates.</div>
+            </section>
+
+            <section class="portal-page" id="portal-evidence" role="tabpanel" aria-labelledby="portal-tab-evidence" data-customer-page="evidence" hidden>
+              <div class="portal-head"><div><h2>Evidence</h2><small>Sources supporting your approved facts and current findings</small></div><span class="status-badge">18 accepted</span></div>
+              <div class="portal-metrics"><div class="portal-metric"><span>Accepted sources</span><strong>18</strong></div><div class="portal-metric"><span>Needs replacement</span><strong>2</strong></div><div class="portal-metric"><span>Customer requests</span><strong>1</strong></div></div>
+              <section class="portal-panel" style="margin-top:12px;"><h3>Evidence library</h3><div class="task-board">
+                <div class="task-row"><div><strong>Nova Scotia Registry profile</strong><small>Legal name and registration status · checked 12 Jul</small></div><span class="task-meta">Authority source</span><span class="task-status approved">Accepted</span><button class="task-action" type="button">View record</button></div>
+                <div class="task-row"><div><strong>Halifax lease summary</strong><small>Headquarters address · supplied by customer</small></div><span class="task-meta">Private evidence</span><span class="task-status approved">Accepted</span><button class="task-action" type="button">View record</button></div>
+                <div class="task-row"><div><strong>Service capabilities page</strong><small>Warehousing and freight services · checked 15 Jul</small></div><span class="task-meta">First-party source</span><span class="task-status review">Refresh planned</span><button class="task-action" type="button">View finding</button></div>
+                <div class="task-row"><div><strong>Customs certification document</strong><small>Required before the certification claim can be approved</small></div><span class="task-meta">Customer source</span><span class="task-status customer">Requested</span><button class="task-action" type="button">Add evidence</button></div>
+              </div></section>
+            </section>
+
+            <section class="portal-page" id="portal-reports" role="tabpanel" aria-labelledby="portal-tab-reports" data-customer-page="reports" hidden>
+              <div class="portal-head"><div><h2>Reports</h2><small>Reviewed deliverables from your VizAI services</small></div><span class="status-badge">3 available</span></div>
+              <div class="service-banner"><span class="service-avatar">RP</span><div><strong>July representation report is being prepared</strong><small>Testing is complete. VizAI is validating evidence links and material findings before review.</small></div><span class="task-status working">In progress</span></div>
+              <section class="portal-panel" style="margin-top:12px;"><h3>Report library</h3><div class="task-board">
+                <div class="task-row"><div><strong>June 2026 Representation Report</strong><small>Selected systems, agreed prompts, evidence ledger, and findings</small></div><span class="task-meta">Monthly maintenance</span><span class="task-status approved">Delivered</span><button class="task-action" type="button">Open report</button></div>
+                <div class="task-row"><div><strong>Infrastructure Baseline</strong><small>Canon v1.0, source map, and publication plan</small></div><span class="task-meta">Infrastructure Build</span><span class="task-status approved">Delivered</span><button class="task-action" type="button">Open report</button></div>
+                <div class="task-row"><div><strong>Initial Representation Snapshot</strong><small>Directional baseline completed before infrastructure work</small></div><span class="task-meta">Snapshot</span><span class="task-status approved">Delivered</span><button class="task-action" type="button">Open report</button></div>
+              </div></section>
+            </section>
+
+            <section class="portal-page" id="portal-findings" role="tabpanel" aria-labelledby="portal-tab-findings" data-customer-page="findings" hidden>
+              <div class="portal-head"><div><h2>Findings</h2><small>Material issues identified through contracted review and monitoring</small></div><span class="task-status review">2 open</span></div>
+              <div class="portal-metrics"><div class="portal-metric"><span>Open findings</span><strong>2</strong></div><div class="portal-metric"><span>Correction underway</span><strong>1</strong></div><div class="portal-metric"><span>Resolved this cycle</span><strong>3</strong></div></div>
+              <section class="portal-panel" style="margin-top:12px;"><h3>Current findings</h3>
+                <div class="finding-line"><i>1</i><div><strong>Former office listing remains visible</strong><small>Material because it can create location ambiguity. VizAI has prepared a correction packet.</small></div></div>
+                <div class="finding-line"><i>2</i><div><strong>Two newer services have weak source support</strong><small>The claims are approved, but stronger first-party evidence should be published before broader use.</small></div></div>
+                <div class="finding-line"><i>✓</i><div><strong>Legal identity conflict resolved</strong><small>Registry and first-party naming are now aligned.</small></div></div>
+              </section>
+              <div class="method-note"><strong>Finding standard:</strong> The portal shows material, evidenced issues—not every model variation or cosmetic inconsistency.</div>
+            </section>
+
+            <section class="portal-page" id="portal-tasks" role="tabpanel" aria-labelledby="portal-tab-tasks" data-customer-page="tasks" hidden>
+              <div class="portal-head"><div><h2>Tasks &amp; requests</h2><small>Track managed work and the few items that need your input</small></div><span class="status-badge">4 active</span></div>
+              <section class="portal-panel" style="margin-top:12px;"><h3>Active work</h3><div class="task-board">
+                <div class="task-row"><div><strong>Monthly representation report</strong><small>Validation and report preparation</small></div><span class="task-meta">VizAI task</span><span class="task-status working">In progress</span><button class="task-action" type="button">View progress</button></div>
+                <div class="task-row"><div><strong>Directory correction packet</strong><small>External listing correction prepared from approved facts</small></div><span class="task-meta">VizAI task</span><span class="task-status review">Owner review</span><button class="task-action" type="button">View record</button></div>
+                <div class="task-row"><div><strong>Confirm reverse logistics description</strong><small>Proposed Canon wording · due 24 Jul</small></div><span class="task-meta">Your task</span><span class="task-status customer">Action required</span><button class="task-action" type="button">Review facts</button></div>
+                <div class="task-row"><div><strong>Provide customs certification</strong><small>Needed only if the certification claim should remain in scope</small></div><span class="task-meta">Your request</span><span class="task-status customer">Evidence needed</span><button class="task-action" type="button">Add evidence</button></div>
+              </div></section>
+            </section>
+
+            <section class="portal-page" id="portal-publication" role="tabpanel" aria-labelledby="portal-tab-publication" data-customer-page="publication" hidden>
+              <div class="portal-head"><div><h2>Publication</h2><small>Approved public artifacts and prepared external updates</small></div><span class="status-badge">No action required</span></div>
+              <div class="service-banner"><span class="service-avatar">PB</span><div><strong>Your core public record is current</strong><small>No public artifact is changed until the applicable facts, evidence, and final action are approved.</small></div><span class="task-status approved">Current</span></div>
+              <section class="portal-panel" style="margin-top:12px;"><h3>Public artifacts</h3><div class="task-board">
+                <div class="task-row"><div><strong>VizAI Registry record</strong><small>Canonical identity and approved service summary</small></div><span class="task-meta">Published 18 Jul</span><span class="task-status approved">Current</span><button class="task-action" type="button">View record</button></div>
+                <div class="task-row"><div><strong>Organization structured data</strong><small>Website identity, headquarters, and service coverage</small></div><span class="task-meta">Published 18 Jul</span><span class="task-status approved">Current</span><button class="task-action" type="button">View artifact</button></div>
+                <div class="task-row"><div><strong>Former office directory correction</strong><small>Submission packet prepared; final review pending</small></div><span class="task-meta">External action</span><span class="task-status review">Owner review</span><button class="task-action" type="button">View record</button></div>
+              </div></section>
+              <div class="method-note"><strong>Publication boundary:</strong> This preview does not publish anything. In the planned portal, approved actions would be versioned and recorded with their authority history.</div>
+            </section>
           </div>
         </div>
       </div>

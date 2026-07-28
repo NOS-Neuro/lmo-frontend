@@ -115,3 +115,45 @@ document.querySelectorAll("[data-scan-form]").forEach((form) => {
     if (status) status.textContent = "Mockup interaction only—no information was submitted.";
   });
 });
+
+const customerPortalTabs = Array.from(document.querySelectorAll("[data-customer-view]"));
+const customerPortalPages = Array.from(document.querySelectorAll("[data-customer-page]"));
+
+function activateCustomerPortalTab(nextTab, moveFocus = false) {
+  const selectedPage = nextTab.dataset.customerView;
+
+  customerPortalTabs.forEach((tab) => {
+    const isSelected = tab === nextTab;
+    tab.classList.toggle("active", isSelected);
+    tab.setAttribute("aria-selected", String(isSelected));
+    tab.tabIndex = isSelected ? 0 : -1;
+  });
+
+  customerPortalPages.forEach((page) => {
+    page.hidden = page.dataset.customerPage !== selectedPage;
+  });
+
+  if (moveFocus) nextTab.focus();
+}
+
+customerPortalTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => activateCustomerPortalTab(tab));
+  tab.addEventListener("keydown", (event) => {
+    let nextIndex = null;
+
+    if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+      nextIndex = (index + 1) % customerPortalTabs.length;
+    } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+      nextIndex = (index - 1 + customerPortalTabs.length) % customerPortalTabs.length;
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = customerPortalTabs.length - 1;
+    }
+
+    if (nextIndex !== null) {
+      event.preventDefault();
+      activateCustomerPortalTab(customerPortalTabs[nextIndex], true);
+    }
+  });
+});
